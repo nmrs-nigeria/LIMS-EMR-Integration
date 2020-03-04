@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.openmrs.module.limsemrops.dbmanager.utility;
+package org.openmrs.module.limsemrops.service;
 
 /**
  *
  * @author MORRISON.I
  */
-public class ConstantUtils {
+public class ViralLoadInfo {
     
 }
