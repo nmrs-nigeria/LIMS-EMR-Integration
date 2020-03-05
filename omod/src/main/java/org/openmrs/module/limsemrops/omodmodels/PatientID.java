@@ -6,31 +6,28 @@
 package org.openmrs.module.limsemrops.omodmodels;
 
 /**
- *
  * @author MORRISON.I
  */
 public class PatientID {
-    
-    private String IDNumber;
-    private String IDTypeCode;
-
-    public String getIDNumber() {
-        return IDNumber;
-    }
-
-    public void setIDNumber(String IDNumber) {
-        this.IDNumber = IDNumber;
-    }
-
-    public String getIDTypeCode() {
-        return IDTypeCode;
-    }
-
-    public void setIDTypeCode(String IDTypeCode) {
-        this.IDTypeCode = IDTypeCode;
-    }
-    
-    
-    
-    
+	
+	private String IDNumber;
+	
+	private String IDTypeCode;
+	
+	public String getIDNumber() {
+		return IDNumber;
+	}
+	
+	public void setIDNumber(String IDNumber) {
+		this.IDNumber = IDNumber;
+	}
+	
+	public String getIDTypeCode() {
+		return IDTypeCode;
+	}
+	
+	public void setIDTypeCode(String IDTypeCode) {
+		this.IDTypeCode = IDTypeCode;
+	}
+	
 }

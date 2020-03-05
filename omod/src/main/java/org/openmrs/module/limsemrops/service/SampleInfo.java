@@ -6,9 +6,8 @@
 package org.openmrs.module.limsemrops.service;
 
 /**
- *
  * @author MORRISON.I
  */
 public class SampleInfo {
-    
+	
 }

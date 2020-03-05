@@ -6,9 +6,10 @@
 package org.openmrs.module.limsemrops.utility;
 
 /**
- *
  * @author MORRISON.I
  */
 public class ConstantUtils {
-    
+	
+	public final static int Laboratory_Encounter_Type_Id = 11;
+	
 }
