@@ -11,11 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import org.openmrs.Cohort;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformation;
 import org.openmrs.module.limsemrops.utility.LabFormUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
@@ -63,9 +65,13 @@ public class ViralLoadInfo {
 		return "";
 	}
 	
-	public void getRecentSampleCollected() {
+	public VLSampleCollectionBatchManifest getRecentSampleCollectedManifest() {
 		
 		Patient patient = null;
+                VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = 
+                        new VLSampleCollectionBatchManifest();
+                
+                List<VLSampleInformation> vLSampleInformations = new ArrayList<>();
 		
 		fillUpEncounters(encounterIDList);
 		
@@ -74,14 +80,25 @@ public class ViralLoadInfo {
 			patient = e.getPatient();
 			Set<Obs> obsSet = e.getAllObs();
 			obsList.addAll(obsSet);
-			
+			 VLSampleInformation vLSampleInformation = extractVLInfo(obsList, patient, e);
+                         vLSampleInformations.add(vLSampleInformation);
+                         
 		}
+                
+               
+                        vLSampleCollectionBatchManifest.setManifestId(UUID.randomUUID().toString());
+                        vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
+                        
+                        
+                        return vLSampleCollectionBatchManifest;
 		
 	}
 	
-	public VLSampleInformation extractVLInfo(List<Obs> sampleObs, Patient p, Encounter e) {
+	private VLSampleInformation extractVLInfo(List<Obs> sampleObs, Patient p, Encounter e) {
 		
 		VLSampleInformation vLSampleInformation = new VLSampleInformation();
+                PatientDemographics patientDemographics = new PatientDemographics(p);
+                vLSampleInformation = patientDemographics.fillUpDemographics();
 		
 		//sample ID
 		rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_TYPE, obsList);
@@ -139,6 +156,11 @@ public class ViralLoadInfo {
 		return vLSampleInformation;
 		
 	}
+        
+        
+        
+        
+        
 	
 	//    public List<Obs> getAllObs(List<Encounter> encounterList){
 	//    
@@ -154,7 +176,7 @@ public class ViralLoadInfo {
 	//        return responseObs;
 	//        
 	//    }
-	public void fillUpEncounters(List<Integer> encs) {
+	private void fillUpEncounters(List<Integer> encs) {
 
         encounterList.clear();
 
