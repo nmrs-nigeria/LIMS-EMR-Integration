@@ -5,13 +5,14 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author MORRISON.I
  */
-public class EIDSampleInformation {
+public class EIDSampleInformation implements Serializable {
 	
 	private List<PatientID> patientID;
 	

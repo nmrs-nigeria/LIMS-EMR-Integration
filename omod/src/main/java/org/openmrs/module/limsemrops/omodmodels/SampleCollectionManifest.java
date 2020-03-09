@@ -5,10 +5,12 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import java.io.Serializable;
+
 /**
  * @author MORRISON.I
  */
-public class SampleCollectionManifest {
+public class SampleCollectionManifest implements Serializable {
 	
 	private VLSampleCollectionBatchManifest viralloadManifest;
 	

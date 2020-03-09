@@ -14,23 +14,23 @@ import org.openmrs.module.limsemrops.omodmodels.VLSampleInformation;
 import org.openmrs.module.limsemrops.utility.ConstantUtils;
 
 /**
- *
  * @author MORRISON.I
  */
 public class PatientDemographics {
-
-    private PatientIdentifier pepfarid, pidHospital, pidRecent;
-    private Patient patient;
-
-    public PatientDemographics(Patient p) {
-        this.patient = p;
-        this.pepfarid = this.patient.getPatientIdentifier(ConstantUtils.PEPFAR_IDENTIFIER_INDEX);
-        this.pidHospital = this.patient.getPatientIdentifier(ConstantUtils.HOSPITAL_IDENTIFIER_INDEX);
-        this.pidRecent = this.patient.getPatientIdentifier(ConstantUtils.RECENCY_INDENTIFIER_INDEX);
-        
-    }
-
-    public VLSampleInformation fillUpDemographics() {
+	
+	private PatientIdentifier pepfarid, pidHospital, pidRecent;
+	
+	private Patient patient;
+	
+	public PatientDemographics(Patient p) {
+		this.patient = p;
+		this.pepfarid = this.patient.getPatientIdentifier(ConstantUtils.PEPFAR_IDENTIFIER_INDEX);
+		this.pidHospital = this.patient.getPatientIdentifier(ConstantUtils.HOSPITAL_IDENTIFIER_INDEX);
+		this.pidRecent = this.patient.getPatientIdentifier(ConstantUtils.RECENCY_INDENTIFIER_INDEX);
+		
+	}
+	
+	public VLSampleInformation fillUpDemographics() {
 
         VLSampleInformation vLSampleInformation = new VLSampleInformation();
 
@@ -59,7 +59,7 @@ public class PatientDemographics {
         vLSampleInformation.setPatientID(patientIdList);
 
         vLSampleInformation.setAge(this.patient.getAge());
-        vLSampleInformation.setDob(this.patient.getBirthDateTime());
+        vLSampleInformation.setDob(this.patient.getPerson().getBirthdate());
         vLSampleInformation.setFirstname(this.patient.getGivenName());
         vLSampleInformation.setSex(this.patient.getGender());
         vLSampleInformation.setSurname(this.patient.getFamilyName());
@@ -67,5 +67,4 @@ public class PatientDemographics {
         return vLSampleInformation;
 
     }
-
 }

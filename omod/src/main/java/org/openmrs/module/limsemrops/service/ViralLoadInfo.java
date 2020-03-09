@@ -12,13 +12,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.openmrs.Cohort;
+import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformation;
+import org.openmrs.module.limsemrops.utility.ConstantUtils;
 import org.openmrs.module.limsemrops.utility.LabFormUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
 
@@ -66,116 +69,114 @@ public class ViralLoadInfo {
 	}
 	
 	public VLSampleCollectionBatchManifest getRecentSampleCollectedManifest() {
-		
-		Patient patient = null;
-                VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = 
-                        new VLSampleCollectionBatchManifest();
-                
-                List<VLSampleInformation> vLSampleInformations = new ArrayList<>();
-		
-		fillUpEncounters(encounterIDList);
-		
-		for (Encounter e : encounterList) {
-			
-			patient = e.getPatient();
-			Set<Obs> obsSet = e.getAllObs();
-			obsList.addAll(obsSet);
-			 VLSampleInformation vLSampleInformation = extractVLInfo(obsList, patient, e);
-                         vLSampleInformations.add(vLSampleInformation);
-                         
-		}
-                
+
+        Patient patient = null;
+        VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest
+                = new VLSampleCollectionBatchManifest();
+
+        List<VLSampleInformation> vLSampleInformations = new ArrayList<>();
+
+        fillUpEncounters(encounterIDList);
+
+        for (Encounter e : encounterList) {
+            System.out.println("Processing encounter "+e.getEncounterId());
+            
+            patient = e.getPatient();
+            Set<Obs> obsSet = e.getAllObs();
+            List<Obs> tempObs = new ArrayList<>();
+            tempObs.addAll(obsSet);
+            System.out.println("Temp obs contains elements "+tempObs.size());
+            
+            if (tempObs.stream().map(Obs::getConcept).map(Concept::getConceptId).
+                    collect(Collectors.toList())
+                    .contains(LabFormUtils.VIRAL_LOAD_REQUEST)) {
+                obsList.addAll(obsSet);
                
-                        vLSampleCollectionBatchManifest.setManifestId(UUID.randomUUID().toString());
-                        vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
-                        
-                        
-                        return vLSampleCollectionBatchManifest;
-		
-	}
+                System.out.println("Obs list contains VL Load request");
+                
+
+                VLSampleInformation vLSampleInformation = extractVLInfo(patient, e);
+                vLSampleInformations.add(vLSampleInformation);
+            }
+
+        }
+
+        String temString = UUID.randomUUID().toString();
+        vLSampleCollectionBatchManifest.setManifestId(temString.substring(1, 15).toUpperCase());
+        vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
+
+        return vLSampleCollectionBatchManifest;
+
+    }
 	
-	private VLSampleInformation extractVLInfo(List<Obs> sampleObs, Patient p, Encounter e) {
+	private VLSampleInformation extractVLInfo(Patient p, Encounter e) {
 		
 		VLSampleInformation vLSampleInformation = new VLSampleInformation();
-                PatientDemographics patientDemographics = new PatientDemographics(p);
-                vLSampleInformation = patientDemographics.fillUpDemographics();
+		PatientDemographics patientDemographics = new PatientDemographics(p);
+		vLSampleInformation = patientDemographics.fillUpDemographics();
 		
-		//sample ID
-		rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_TYPE, obsList);
-		if (rovingObs != null && rovingObs.getValueCoded() != null) {
-			vLSampleInformation.setSampleType(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
-		}
-		
-		// indication for VL
-		rovingObs = Utils.extractObs(LabFormUtils.INDICATION_FOR_VL, obsList);
-		if (rovingObs != null && rovingObs.getValueCoded() != null) {
-			vLSampleInformation.setIndicationVLTest(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
-		}
-		
-		//lab ID
-		vLSampleInformation.setLabID("LIMS-001-98");
-		
-		vLSampleInformation.setArtCommencementDate(new Date());
-		//  vLSampleInformation.setPregnantBreastfeadingStatus();
-		
-		//rovingObs = Utils.extractObs(LabFormUtils., obsList)
-		vLSampleInformation.setSampleCollectedBy(e.getEncounterProviders().stream().findFirst().get().getProvider()
-		        .getName());
-		
-		// sample collection date
-		rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_COLLECTION_DATE, obsList);
-		if (rovingObs != null) {
-			vLSampleInformation.setSampleCollectionDate(rovingObs.getValueDate());
-			vLSampleInformation.setSampleCollectionTime(rovingObs.getValueDatetime());
-		}
-		
-		// sample ID
-		rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_ID, obsList);
-		if (rovingObs != null) {
-			vLSampleInformation.setSampleID(rovingObs.getValueText());
-		}
-		
-		//order date
-		rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_ORDERED, obsList);
-		if (rovingObs != null) {
-			vLSampleInformation.setSampleOrderDate(rovingObs.getValueDate());
-		}
-		
-		//order by
-		rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, obsList);
-		if (rovingObs != null) {
-			vLSampleInformation.setSampleOrderedBy(rovingObs.getValueText());
-		}
-		
-		//date sample sent
-		rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_SENT_TO_PCR_LAB, obsList);
-		if (rovingObs != null) {
-			vLSampleInformation.setDateSampleSent(rovingObs.getValueDate());
+		if (!this.obsList.isEmpty()) {
+			//sample ID
+			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_TYPE, this.obsList);
+			if (rovingObs != null && rovingObs.getValueCoded() != null) {
+				vLSampleInformation.setSampleType(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
+			}
+			
+			// indication for VL
+			rovingObs = Utils.extractObs(LabFormUtils.INDICATION_FOR_VL, this.obsList);
+			if (rovingObs != null && rovingObs.getValueCoded() != null) {
+				vLSampleInformation.setIndicationVLTest(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
+			}
+			
+			//lab ID
+			vLSampleInformation.setLabID("LIMS-001-98");
+			
+			vLSampleInformation.setArtCommencementDate(new Date());
+			vLSampleInformation.setDrugRegimen("AZT-2T-DTC");
+			vLSampleInformation.setFacilityID(Utils.getFacilityDATIMId());
+			//  vLSampleInformation.setPregnantBreastfeadingStatus();
+			
+			//rovingObs = Utils.extractObs(LabFormUtils., obsList)
+			vLSampleInformation.setSampleCollectedBy(e.getEncounterProviders().stream().findFirst().get().getProvider()
+			        .getName());
+			
+			// sample collection date
+			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_COLLECTION_DATE, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleCollectionDate(rovingObs.getValueDate());
+				vLSampleInformation.setSampleCollectionTime(rovingObs.getValueDatetime());
+			}
+			
+			// sample ID
+			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_ID, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleID(rovingObs.getValueText());
+			}
+			
+			//order date
+			rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_ORDERED, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleOrderDate(rovingObs.getValueDate());
+			}
+			
+			//order by
+			rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleOrderedBy(rovingObs.getValueText());
+			}
+			
+			//date sample sent
+			rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_SENT_TO_PCR_LAB, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setDateSampleSent(rovingObs.getValueDate());
+			}
+			
 		}
 		
 		return vLSampleInformation;
 		
 	}
-        
-        
-        
-        
-        
 	
-	//    public List<Obs> getAllObs(List<Encounter> encounterList){
-	//    
-	//        List<Obs> responseObs = new ArrayList<>();
-	//        obsList.stream().forEach(a -> {
-	//            Obs eachObs = null;
-	//                  eachObs =  Context.getObsService().getObs(a);
-	//            if(eachObs != null){
-	//            responseObs.add(eachObs);
-	//            }
-	//        });
-	//        
-	//        return responseObs;
-	//        
-	//    }
 	private void fillUpEncounters(List<Integer> encs) {
 
         encounterList.clear();

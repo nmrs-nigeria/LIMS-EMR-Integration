@@ -5,15 +5,19 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
+
 /**
  * @author MORRISON.I
  */
-public class PatientID {
+public class PatientID implements Serializable {
 	
 	private String IDNumber;
 	
 	private String IDTypeCode;
 	
+	@JsonProperty("IDNumber")
 	public String getIDNumber() {
 		return IDNumber;
 	}
@@ -22,6 +26,7 @@ public class PatientID {
 		this.IDNumber = IDNumber;
 	}
 	
+	@JsonProperty("IDTypeCode")
 	public String getIDTypeCode() {
 		return IDTypeCode;
 	}

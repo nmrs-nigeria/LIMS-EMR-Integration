@@ -5,12 +5,13 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author MORRISON.I
  */
-public class EIDSampleCollectionBatchManifest {
+public class EIDSampleCollectionBatchManifest implements Serializable {
 	
 	private String manifestId;
 	

@@ -5,13 +5,15 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author MORRISON.I
  */
-public class VLSampleInformation {
+public class VLSampleInformation implements Serializable {
 	
 	private List<PatientID> patientID;
 	
@@ -53,12 +55,13 @@ public class VLSampleInformation {
 	
 	private Date dateSampleSent;
 	
+	@JsonProperty("patientId")
 	public List<PatientID> getPatientID() {
 		return patientID;
 	}
 	
-	public void setPatientID(List<PatientID> patientID) {
-		this.patientID = patientID;
+	public void setPatientID(List<PatientID> patientId) {
+		this.patientID = patientId;
 	}
 	
 	public String getFirstname() {
