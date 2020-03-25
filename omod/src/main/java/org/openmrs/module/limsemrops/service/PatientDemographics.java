@@ -39,30 +39,30 @@ public class PatientDemographics {
         PatientID patientID = new PatientID();
 
         if (this.pepfarid != null) {
-            patientID.setIDNumber(this.pepfarid.getIdentifier());
-            patientID.setIDTypeCode("CLIENTID");
+            patientID.setIdNumber(this.pepfarid.getIdentifier());
+            patientID.setIdTypeCode("CLIENTID");
             patientIdList.add(patientID);
         }
 
         if (this.pidHospital != null) {
-            patientID.setIDNumber(this.pidHospital.getIdentifier());
-            patientID.setIDTypeCode("HOSPITALNO");
+            patientID.setIdNumber(this.pidHospital.getIdentifier());
+            patientID.setIdTypeCode("HOSPITALNO");
             patientIdList.add(patientID);
         }
 
         if (this.pidRecent != null) {
-            patientID.setIDNumber(this.pidRecent.getIdentifier());
-            patientID.setIDTypeCode("RECENT");
+            patientID.setIdNumber(this.pidRecent.getIdentifier());
+            patientID.setIdTypeCode("RECENT");
             patientIdList.add(patientID);
         }
 
         vLSampleInformation.setPatientID(patientIdList);
 
         vLSampleInformation.setAge(this.patient.getAge());
-        vLSampleInformation.setDob(this.patient.getPerson().getBirthdate());
-        vLSampleInformation.setFirstname(this.patient.getGivenName());
+        vLSampleInformation.setDateOfBirth(this.patient.getPerson().getBirthdate());
+        vLSampleInformation.setFirstName(this.patient.getGivenName());
         vLSampleInformation.setSex(this.patient.getGender());
-        vLSampleInformation.setSurname(this.patient.getFamilyName());
+        vLSampleInformation.setSurName(this.patient.getFamilyName());
 
         return vLSampleInformation;
 

@@ -39,6 +39,7 @@ public class ViralLoadInfo {
 	private LabFormUtils labFormUtils;
 	
 	private Map<Integer, String> labMappings;
+        private Map<Integer,Integer> integerLabMappings;
 	
 	private Obs rovingObs;
 	
@@ -51,6 +52,7 @@ public class ViralLoadInfo {
         labFormUtils = new LabFormUtils();
 
         labMappings = new HashMap<>();
+        integerLabMappings = new HashMap<>();
 
         loadMappings();
         rovingObs = new Obs();
@@ -59,6 +61,7 @@ public class ViralLoadInfo {
 	
 	private void loadMappings() {
 		labMappings = labFormUtils.getConceptMappings();
+                integerLabMappings = labFormUtils.getIntegerConceptMappings();
 	}
 	
 	private String getMappedAnswerValue(int conceptID) {
@@ -66,6 +69,13 @@ public class ViralLoadInfo {
 			return labMappings.get(conceptID);
 		}
 		return "";
+	}
+        
+        private Integer getIntgerMappedAnswerValue(int conceptID) {
+		if (integerLabMappings.containsKey(conceptID)) {
+			return integerLabMappings.get(conceptID);
+		}
+		return null;
 	}
 	
 	public VLSampleCollectionBatchManifest getRecentSampleCollectedManifest() {
@@ -102,7 +112,12 @@ public class ViralLoadInfo {
         }
 
         String temString = UUID.randomUUID().toString();
-        vLSampleCollectionBatchManifest.setManifestId(temString.substring(1, 15).toUpperCase());
+        vLSampleCollectionBatchManifest.setManifestID(temString.substring(1, 15).toUpperCase());
+        vLSampleCollectionBatchManifest.setReceivingLabID("LIMS-001-98"); // todo
+        vLSampleCollectionBatchManifest.setReceivingLabName("Test Lab"); // todo
+        vLSampleCollectionBatchManifest.setSendingFacilityID(Utils.getFacilityDATIMId());
+        vLSampleCollectionBatchManifest.setSendingFacilityName(Utils.getFacilityName());
+        
         vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
 
         return vLSampleCollectionBatchManifest;
@@ -125,15 +140,14 @@ public class ViralLoadInfo {
 			// indication for VL
 			rovingObs = Utils.extractObs(LabFormUtils.INDICATION_FOR_VL, this.obsList);
 			if (rovingObs != null && rovingObs.getValueCoded() != null) {
-				vLSampleInformation.setIndicationVLTest(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
+				vLSampleInformation.setIndicationVLTest(getIntgerMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
 			}
 			
-			//lab ID
-			vLSampleInformation.setLabID("LIMS-001-98");
+			
 			
 			vLSampleInformation.setArtCommencementDate(new Date());
 			vLSampleInformation.setDrugRegimen("AZT-2T-DTC");
-			vLSampleInformation.setFacilityID(Utils.getFacilityDATIMId());
+			
 			//  vLSampleInformation.setPregnantBreastfeadingStatus();
 			
 			//rovingObs = Utils.extractObs(LabFormUtils., obsList)

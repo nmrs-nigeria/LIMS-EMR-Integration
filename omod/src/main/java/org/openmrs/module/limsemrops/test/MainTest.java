@@ -8,6 +8,7 @@ package org.openmrs.module.limsemrops.test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
 import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ViralLoadInfo;
@@ -35,8 +36,11 @@ public class MainTest {
     }
 	
 	public static void main(String args[]) {
-		MainTest mainTest = new MainTest();
-		mainTest.testVLLoad();
+		//MainTest mainTest = new MainTest();
+		//mainTest.testVLLoad();
+                
+             System.out.println(UUID.randomUUID().toString());   
+                
 	}
 	
 }

@@ -73,5 +73,10 @@ public class Utils {
 	public static String getFacilityDATIMId() {
 		return Context.getAdministrationService().getGlobalProperty("facility_datim_code");
 	}
+        
+        public static String getFacilityName() {
+		return Context.getAdministrationService().getGlobalProperty("Facility_Name");
+	}
+	
 	
 }

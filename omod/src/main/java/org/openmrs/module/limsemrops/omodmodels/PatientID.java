@@ -12,27 +12,28 @@ import java.io.Serializable;
  * @author MORRISON.I
  */
 public class PatientID implements Serializable {
-	
-	private String IDNumber;
-	
-	private String IDTypeCode;
-	
-	@JsonProperty("IDNumber")
-	public String getIDNumber() {
-		return IDNumber;
-	}
-	
-	public void setIDNumber(String IDNumber) {
-		this.IDNumber = IDNumber;
-	}
-	
-	@JsonProperty("IDTypeCode")
-	public String getIDTypeCode() {
-		return IDTypeCode;
-	}
-	
-	public void setIDTypeCode(String IDTypeCode) {
-		this.IDTypeCode = IDTypeCode;
-	}
-	
+
+    private String idNumber;
+
+    private String idTypeCode;
+
+    @JsonProperty("idNumber")
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    
+     @JsonProperty("idTypeCode")
+    public String getIdTypeCode() {
+        return idTypeCode;
+    }
+
+    public void setIdTypeCode(String idTypeCode) {
+        this.idTypeCode = idTypeCode;
+    }
+
 }
