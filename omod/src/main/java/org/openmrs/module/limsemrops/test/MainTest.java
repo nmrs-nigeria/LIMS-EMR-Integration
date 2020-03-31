@@ -38,9 +38,9 @@ public class MainTest {
 	public static void main(String args[]) {
 		//MainTest mainTest = new MainTest();
 		//mainTest.testVLLoad();
-                
-             System.out.println(UUID.randomUUID().toString());   
-                
+		
+		System.out.println(UUID.randomUUID().toString());
+		
 	}
 	
 }

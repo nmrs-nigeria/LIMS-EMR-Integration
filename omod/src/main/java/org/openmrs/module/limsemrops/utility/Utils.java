@@ -5,9 +5,16 @@
  */
 package org.openmrs.module.limsemrops.utility;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import org.openmrs.Encounter;
 import org.openmrs.Obs;
+import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.limsemrops.omodmodels.DBConnection;
 import org.openmrs.util.OpenmrsUtil;
@@ -73,10 +80,46 @@ public class Utils {
 	public static String getFacilityDATIMId() {
 		return Context.getAdministrationService().getGlobalProperty("facility_datim_code");
 	}
-        
-        public static String getFacilityName() {
+	
+	public static String getFacilityName() {
 		return Context.getAdministrationService().getGlobalProperty("Facility_Name");
 	}
 	
+	public static Date extractARTStartDate(Patient patient, List<Obs> allPatientsObsList) {
+		Date artStartDate = null;
+		Obs obs = null;
+		obs = Utils.extractObs(ConstantUtils.ART_START_DATE_CONCEPT, allPatientsObsList);
+		if (obs != null) {
+			artStartDate = obs.getValueDate();
+		} else {
+			obs = getFirstObsOfConceptByDate(allPatientsObsList, ConstantUtils.CURRENT_REGIMEN_LINE_CONCEPT);
+			if (obs != null) {
+				artStartDate = obs.getObsDatetime();
+			}
+		}
+		return artStartDate;
+	}
 	
+	public static Obs getFirstObsOfConceptByDate(List<Obs> obsList, int conceptID) {
+        Obs obs = null;
+        List<Obs> regimenLineObsList = new ArrayList<Obs>();
+        for (Obs ele : obsList) {
+            if (ele.getConcept().getConceptId() == conceptID) {
+                regimenLineObsList.add(ele);
+            }
+        }
+        if (!regimenLineObsList.isEmpty()) {
+            regimenLineObsList.sort(Comparator.comparing(Obs::getObsDatetime));
+            return regimenLineObsList.get(0);
+        }
+        return null;
+
+    }
+	
+	public static List<Obs> getObsbyEncounter(List<Encounter> encounters) {
+
+        return encounters.stream().flatMap(encounter -> encounter.getAllObs()
+                .stream()).collect(Collectors.toList());
+
+    }
 }

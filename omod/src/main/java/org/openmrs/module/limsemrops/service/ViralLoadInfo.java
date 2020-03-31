@@ -39,9 +39,12 @@ public class ViralLoadInfo {
 	private LabFormUtils labFormUtils;
 	
 	private Map<Integer, String> labMappings;
-        private Map<Integer,Integer> integerLabMappings;
+	
+	private Map<Integer, Integer> integerLabMappings;
 	
 	private Obs rovingObs;
+	
+	private DBUtility dBUtility;
 	
 	public ViralLoadInfo(List<Integer> encounterList) {
 
@@ -53,6 +56,7 @@ public class ViralLoadInfo {
 
         labMappings = new HashMap<>();
         integerLabMappings = new HashMap<>();
+        this.dBUtility = new DBUtility();
 
         loadMappings();
         rovingObs = new Obs();
@@ -61,7 +65,7 @@ public class ViralLoadInfo {
 	
 	private void loadMappings() {
 		labMappings = labFormUtils.getConceptMappings();
-                integerLabMappings = labFormUtils.getIntegerConceptMappings();
+		integerLabMappings = labFormUtils.getIntegerConceptMappings();
 	}
 	
 	private String getMappedAnswerValue(int conceptID) {
@@ -70,8 +74,8 @@ public class ViralLoadInfo {
 		}
 		return "";
 	}
-        
-        private Integer getIntgerMappedAnswerValue(int conceptID) {
+	
+	private Integer getIntgerMappedAnswerValue(int conceptID) {
 		if (integerLabMappings.containsKey(conceptID)) {
 			return integerLabMappings.get(conceptID);
 		}
@@ -140,12 +144,11 @@ public class ViralLoadInfo {
 			// indication for VL
 			rovingObs = Utils.extractObs(LabFormUtils.INDICATION_FOR_VL, this.obsList);
 			if (rovingObs != null && rovingObs.getValueCoded() != null) {
-				vLSampleInformation.setIndicationVLTest(getIntgerMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
+				vLSampleInformation
+				        .setIndicationVLTest(getIntgerMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
 			}
 			
-			
-			
-			vLSampleInformation.setArtCommencementDate(new Date());
+			vLSampleInformation.setArtCommencementDate(getPatientARTStartDate(p));
 			vLSampleInformation.setDrugRegimen("AZT-2T-DTC");
 			
 			//  vLSampleInformation.setPregnantBreastfeadingStatus();
@@ -207,4 +210,26 @@ public class ViralLoadInfo {
         });
 
     }
+	
+	private Date getPatientARTStartDate(Patient patient){
+           List<Integer> encounters = dBUtility.getEnrollmentAndPharmacy(patient);
+           List<Encounter> hivPharmEncounters = new ArrayList<>();
+           
+             encounters.stream().forEach(a -> {
+
+            Encounter each = null;
+            each = Context.getEncounterService().getEncounter(a);
+
+            if (each != null) {
+                hivPharmEncounters.add(each);
+            }
+
+        });
+             List<Obs> obsList = new ArrayList<>();
+             obsList = Utils.getObsbyEncounter(hivPharmEncounters);
+             
+             return Utils.extractARTStartDate(patient, obsList);
+              
+        }
+	
 }

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.openmrs.Patient;
 import org.openmrs.module.limsemrops.dbmanager.NdrDBManager;
 
 /**
@@ -34,4 +35,22 @@ public class DBUtility {
         return encounters;
         
     }
+	
+	public List<Integer> getEnrollmentAndPharmacy(Patient patient){
+          List<Integer> encounters = new ArrayList<>();
+
+        NdrDBManager ndrDBManager = new NdrDBManager();
+        try {
+            ndrDBManager.openConnection();
+            encounters = ndrDBManager.getEnrollmentAndPharmacyEncounter(patient);
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        } finally {
+            ndrDBManager.closeConnection();
+        }
+
+        return encounters;
+         
+     }
+	
 }
