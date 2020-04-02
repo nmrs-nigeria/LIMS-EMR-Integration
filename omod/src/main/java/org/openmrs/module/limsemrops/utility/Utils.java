@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 import org.openmrs.Encounter;
@@ -121,5 +123,45 @@ public class Utils {
         return encounters.stream().flatMap(encounter -> encounter.getAllObs()
                 .stream()).collect(Collectors.toList());
 
+    }
+	
+	public static Encounter getPatientLastEncounter(Patient p, Integer enconterType) {
+        Encounter theEncounter = Context.getEncounterService()
+                .getEncountersByPatient(p).stream().filter(a -> a.getEncounterType().getEncounterTypeId() == enconterType)
+                .sorted(Comparator.comparing(Encounter::getEncounterDatetime))
+                .collect(Collectors.toList()).get(0);
+
+        return theEncounter;
+    }
+	
+	public String getPatientLastRegimenByEncounter(Encounter lastPharmEncounter) {
+        //assuming encounter is pharmacy encounter
+
+        PharmFormUtils pharmFormUtils = new PharmFormUtils();
+        Map<Integer, String> regimenMap = pharmFormUtils.getRegimenMap();
+        Integer valueCoded;
+        String ndrCode = null;
+        List<Obs> allObs = new ArrayList<>();
+
+        if (lastPharmEncounter != null) {
+            allObs = new ArrayList<>(lastPharmEncounter.getAllObs());
+
+            Obs obs = extractObs(ConstantUtils.CURRENT_REGIMEN_LINE_CONCEPT, allObs); //PrescribedRegimenLineCode
+            if (obs != null && obs.getValueCoded() != null) {
+                valueCoded = obs.getValueCoded().getConceptId();
+                ndrCode = regimenMap.get(valueCoded); //regimen line code
+                // regimenType.setPrescribedRegimenLineCode(ndrCode);
+                //   regimenType.setPrescribedRegimenTypeCode(Utils.ART_CODE);
+                obs = Utils.extractObs(valueCoded, allObs); // PrescribedRegimen
+                if (obs != null) {
+
+                    return obs.getValueCoded().getName().getName();
+
+                }
+
+            }
+
+        }
+        return null;
     }
 }

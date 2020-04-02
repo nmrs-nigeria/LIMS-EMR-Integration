@@ -231,5 +231,4 @@ public class ViralLoadInfo {
              return Utils.extractARTStartDate(patient, obsList);
               
         }
-	
 }

@@ -52,5 +52,4 @@ public class DBUtility {
         return encounters;
          
      }
-	
 }

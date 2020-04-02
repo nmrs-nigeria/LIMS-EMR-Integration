@@ -13,27 +13,21 @@
         for a list of supported elements and attributes
     -->
  
- 	<!-- Uncomment the changeset below if you want to make the Item class persistable, see also Item and LimsemropsDaoTest -->
- 	<!--
-	<changeSet id="limsemrops-2016-08-02-12-21" author="raff">
-		<preConditions onFail="MARK_RAN">
-			<not><tableExists tableName="limsemrops_item"/></not>
-		</preConditions>
-		<comment>
-			Creating the limsemrops_item table
-		</comment>
-		<createTable tableName="limsemrops_item">
-			<column name="limsemrops_item_id" type="int" autoIncrement="true">
-				<constraints primaryKey="true" nullable="false"/>
-			</column>
-			<column name="uuid" type="char(38)">
-				<constraints nullable="false" unique="true"></constraints>
-			</column>
-			<column name="owner" type="int" />
-			<column name="description" type="varchar(255)" />
-		</createTable>
-        <addForeignKeyConstraint constraintName="limsemrops_item_owner_fk" baseTableName="limsemrops_item" baseColumnNames="owner"  referencedTableName="users"
-                                 referencedColumnNames="user_id" />
-    </changeSet> -->
+  <changeSet id="limsemr-v1.0-0" author="Morrison Idiasirue" >
+        <comment>
+          insert menu link for the app
+        </comment>
+    
+        <sql><![CDATA[			
+               INSERT INTO `appframework_user_app`
+(`app_id`,
+`json`)
+VALUES
+('EMR-LIMS-Exchange',
+'{\r\n    \"id\": \"LIMS-EMR\",\r\n    \"description\": \"LIMS-EMR Integration module\",\r\n    \"order\": 0,\r\n    \"extensions\": [\r\n        {\r\n            \"id\": \"demoapp.homepageLink\",\r\n            \"extensionPointId\": \"org.openmrs.referenceapplication.homepageLink\",\r\n            \"type\": \"link\",\r\n            \"label\": \"EMR-LIMS Exchange\",\r\n            \"url\": \"limsemrops/limsemr.page\",\r\n            \"icon\": \"icon-exchange\",\r\n            \"requiredPrivilege\": \"Replace with a privilege name, or else remove\"\r\n        }\r\n    ]\r\n}'
+);
+		]]></sql>
+                
+    </changeSet> 
  
 </databaseChangeLog>

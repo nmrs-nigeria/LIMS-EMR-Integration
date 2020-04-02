@@ -44,7 +44,7 @@ public class NdrDBManager {
         //select * from encounter where encounter_type = 14 and encounter_datetime > '2019-10-01 00:00:00' and encounter_datetime < '2019-12-01 00:00:00' and voided = 0
         pStatement = conn.prepareStatement("select * from encounter where encounter_type = 11 "
                 + "and encounter_datetime > '2020-03-01 00:00:00' "
-                + "and encounter_datetime < '2020-04-01 00:00:00' and voided = 0");
+                + "and encounter_datetime < '2020-05-01 00:00:00' and voided = 0");
 
 //        pStatement = conn.prepareStatement("select encounter_id from "+ConstantUtils.ENCOUNTER_TABLE+ " where encounter_type = 11 "
 //                + "and encounter_datetime >= ? "
@@ -66,7 +66,7 @@ public class NdrDBManager {
 	public List<Integer> getEnrollmentAndPharmacyEncounter(Patient p) throws SQLException {
 
         
-        pStatement = conn.prepareStatement("select * from encounter where encounter_type in (?,?} and patient_id = ?  and voided = 0");
+        pStatement = conn.prepareStatement("select * from encounter where encounter_type in (?,?) and patient_id = ?  and voided = 0");
         pStatement.setInt(1, ConstantUtils.HIV_Enrollment_Encounter_Type_Id);
         pStatement.setInt(2, ConstantUtils.Pharmacy_Encounter_Type_Id);
         pStatement.setInt(3, p.getPatientId());
