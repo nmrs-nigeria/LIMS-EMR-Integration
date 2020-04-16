@@ -127,12 +127,15 @@ public class Utils {
     }
 	
 	public static Encounter getPatientLastEncounter(Patient p, Integer enconterType) {
-        Encounter theEncounter = Context.getEncounterService()
+        List<Encounter> encounterList = Context.getEncounterService()
                 .getEncountersByPatient(p).stream().filter(a -> Objects.equals(a.getEncounterType().getEncounterTypeId(), enconterType))
                 .sorted(Comparator.comparing(Encounter::getEncounterDatetime))
-                .collect(Collectors.toList()).get(0);
+                .collect(Collectors.toList());
 
-        return theEncounter;
+        if (!encounterList.isEmpty()) {
+            return encounterList.get(0);
+        }
+        return null;
     }
 	
 	public static String getPatientLastRegimenByEncounter(Encounter lastPharmEncounter) {
@@ -150,15 +153,15 @@ public class Utils {
             Obs obs = extractObs(ConstantUtils.CURRENT_REGIMEN_LINE_CONCEPT, allObs); //PrescribedRegimenLineCode
             if (obs != null && obs.getValueCoded() != null) {
                 valueCoded = obs.getValueCoded().getConceptId();
-                ndrCodeMapping = regimenMap.get(valueCoded); //regimen line code
-                // regimenType.setPrescribedRegimenLineCode(ndrCode);
-                //   regimenType.setPrescribedRegimenTypeCode(Utils.ART_CODE);
-//                obs = Utils.extractObs(valueCoded, allObs); // PrescribedRegimen
-//                if (obs != null) {
-//
-//                    return obs.getValueCoded().getName().getName();
-//
-//                }
+                //   ndrCodeMapping = regimenMap.get(valueCoded); //regimen line code
+                //get 
+                obs = Utils.extractObs(valueCoded, allObs); // PrescribedRegimen
+                if (obs != null) {
+
+                    //   return obs.getValueCoded().getName().getName();
+                    ndrCodeMapping = regimenMap.get(obs.getValueCoded().getConceptId());
+
+                }
 
                 return ndrCodeMapping;
             }
