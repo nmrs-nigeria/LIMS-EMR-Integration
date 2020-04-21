@@ -20,10 +20,10 @@ public class ConstantUtils {
 	
 	public final static int Pharmacy_Encounter_Type_Id = 13;
 	
+	public final static int Care_card_Encounter_Type_Id = 12;
+	
 	// concepts
 	public final static int ART_START_DATE_CONCEPT = 159599;
-	
-	public final static int CURRENT_REGIMEN_LINE_CONCEPT = 165708; // From Pharmacy Form
 	
 	/* Identifier IDs */
 	public static final int PEPFAR_IDENTIFIER_INDEX = 4;

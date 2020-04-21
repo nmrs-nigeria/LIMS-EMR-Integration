@@ -6,7 +6,10 @@
 package org.openmrs.module.limsemrops.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.module.limsemrops.omodmodels.PatientID;
@@ -34,7 +37,7 @@ public class PatientDemographics {
 
         VLSampleInformation vLSampleInformation = new VLSampleInformation();
 
-        List<PatientID> patientIdList = new ArrayList<>();
+            Set<PatientID> patientIdList = new HashSet<>();
 
         PatientID patientID = new PatientID();
 
@@ -56,7 +59,8 @@ public class PatientDemographics {
             patientIdList.add(patientID);
         }
 
-        vLSampleInformation.setPatientID(patientIdList);
+        List<PatientID> f_patientIds = new ArrayList<PatientID>(patientIdList);
+        vLSampleInformation.setPatientID(f_patientIds);
 
         vLSampleInformation.setAge(this.patient.getAge());
         vLSampleInformation.setDateOfBirth(this.patient.getPerson().getBirthdate());

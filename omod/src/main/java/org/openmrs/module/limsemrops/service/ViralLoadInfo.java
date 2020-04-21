@@ -21,6 +21,7 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformation;
+import org.openmrs.module.limsemrops.utility.CareCardUtils;
 import org.openmrs.module.limsemrops.utility.ConstantUtils;
 import org.openmrs.module.limsemrops.utility.LabFormUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
@@ -101,6 +102,7 @@ public class ViralLoadInfo {
             tempObs.addAll(obsSet);
             System.out.println("Temp obs contains elements " + tempObs.size());
 
+            //check if this lab form if for VL
             if (tempObs.stream().map(Obs::getConcept).map(Concept::getConceptId).
                     collect(Collectors.toList())
                     .contains(LabFormUtils.VIRAL_LOAD_REQUEST)) {
@@ -149,12 +151,19 @@ public class ViralLoadInfo {
 			
 			vLSampleInformation.setArtCommencementDate(getPatientARTStartDate(p));
 			
-			String patientLastRegimen = getPatientLatestEncounter(p);
+			String patientLastRegimen = getPatientLatestRegimen(p);
 			if (patientLastRegimen != null) {
 				vLSampleInformation.setDrugRegimen(patientLastRegimen);
 			}
 			
-			//  vLSampleInformation.setPregnantBreastfeadingStatus();
+			if (p.getGender().equalsIgnoreCase("F")) {
+				Integer pregnancyStatus = getPatientPregnancyStatus(p);
+				
+				if (pregnancyStatus != null) {
+					vLSampleInformation.setPregnantBreastFeedingStatus(patientLastRegimen);
+				}
+			}
+			
 			//rovingObs = Utils.extractObs(LabFormUtils., obsList)
 			vLSampleInformation.setSampleCollectedBy(e.getEncounterProviders().stream().findFirst().get().getProvider()
 			        .getName());
@@ -234,7 +243,7 @@ public class ViralLoadInfo {
 
     }
 	
-	private String getPatientLatestEncounter(Patient p) {
+	private String getPatientLatestRegimen(Patient p) {
 		Encounter latestPharmEncounter = Utils.getPatientLastEncounter(p, ConstantUtils.Pharmacy_Encounter_Type_Id);
 		String regimenCode = null;
 		if (latestPharmEncounter != null) {
@@ -243,4 +252,28 @@ public class ViralLoadInfo {
 		
 		return regimenCode;
 	}
+	
+	private Integer getPatientPregnancyStatus(Patient p) {
+        Encounter latestCarecardEncounter = Utils.getPatientLastEncounter(p, ConstantUtils.Care_card_Encounter_Type_Id);
+        CareCardUtils cardUtils = new CareCardUtils();
+        List<Obs> careObs = new ArrayList<>();
+        Map<Integer, Integer> mappings = cardUtils.getIntegerConceptMappings();
+        Integer response = null;
+        if (latestCarecardEncounter != null) {
+
+            careObs = new ArrayList<>(latestCarecardEncounter.getAllObs());
+
+            Obs pregObs = Utils.extractObs(CareCardUtils.PREGNANCY_BREASTFEEDING_CONCEPT, careObs);
+
+            if (pregObs != null && pregObs.getValueCoded() != null) {
+
+                response = mappings.get(pregObs.getValueCoded().getConceptId());
+
+            }
+
+        }
+
+        return response;
+
+    }
 }

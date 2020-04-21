@@ -95,7 +95,7 @@ public class Utils {
 		if (obs != null) {
 			artStartDate = obs.getValueDate();
 		} else {
-			obs = getFirstObsOfConceptByDate(allPatientsObsList, ConstantUtils.CURRENT_REGIMEN_LINE_CONCEPT);
+			obs = getFirstObsOfConceptByDate(allPatientsObsList, PharmFormUtils.CURRENT_REGIMEN_LINE_CONCEPT);
 			if (obs != null) {
 				artStartDate = obs.getObsDatetime();
 			}
@@ -150,7 +150,7 @@ public class Utils {
         if (lastPharmEncounter != null) {
             allObs = new ArrayList<>(lastPharmEncounter.getAllObs());
 
-            Obs obs = extractObs(ConstantUtils.CURRENT_REGIMEN_LINE_CONCEPT, allObs); //PrescribedRegimenLineCode
+            Obs obs = extractObs(PharmFormUtils.CURRENT_REGIMEN_LINE_CONCEPT, allObs); //PrescribedRegimenLineCode
             if (obs != null && obs.getValueCoded() != null) {
                 valueCoded = obs.getValueCoded().getConceptId();
                 //   ndrCodeMapping = regimenMap.get(valueCoded); //regimen line code

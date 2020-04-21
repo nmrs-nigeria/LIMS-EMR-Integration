@@ -18,6 +18,8 @@ public class PharmFormUtils {
     private Map<Integer, String> regimenMap = new HashMap<>();
     
     
+    public final static int CURRENT_REGIMEN_LINE_CONCEPT = 165708; // From Pharmacy Form 
+    
     public PharmFormUtils(){
     this.fillUpRegimenCodeTextDescription();
     this.fillUpRegimenMap();
