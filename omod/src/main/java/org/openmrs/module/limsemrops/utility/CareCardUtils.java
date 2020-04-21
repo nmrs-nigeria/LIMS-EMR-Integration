@@ -26,13 +26,13 @@ public class CareCardUtils {
     }
 
     private void fillConceptMappings() {
-
+        conceptMappings.put(165048, "1");
+        conceptMappings.put(165049, "3");
+        conceptMappings.put(165047, "2");
     }
 
     private void fillIntegerConceptMappings() {
-        integerConceptMappings.put(165048, 1);
-        integerConceptMappings.put(165049, 3);
-        integerConceptMappings.put(165047, 2);
+        
     }
 
     public Map<Integer, String> getConceptMappings() {

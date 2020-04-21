@@ -157,10 +157,10 @@ public class ViralLoadInfo {
 			}
 			
 			if (p.getGender().equalsIgnoreCase("F")) {
-				Integer pregnancyStatus = getPatientPregnancyStatus(p);
+				String pregnancyStatus = getPatientPregnancyStatus(p);
 				
 				if (pregnancyStatus != null) {
-					vLSampleInformation.setPregnantBreastFeedingStatus(patientLastRegimen);
+					vLSampleInformation.setPregnantBreastFeedingStatus(pregnancyStatus);
 				}
 			}
 			
@@ -253,12 +253,12 @@ public class ViralLoadInfo {
 		return regimenCode;
 	}
 	
-	private Integer getPatientPregnancyStatus(Patient p) {
+	private String getPatientPregnancyStatus(Patient p) {
         Encounter latestCarecardEncounter = Utils.getPatientLastEncounter(p, ConstantUtils.Care_card_Encounter_Type_Id);
         CareCardUtils cardUtils = new CareCardUtils();
         List<Obs> careObs = new ArrayList<>();
-        Map<Integer, Integer> mappings = cardUtils.getIntegerConceptMappings();
-        Integer response = null;
+        Map<Integer, String> mappings = cardUtils.getConceptMappings();
+        String response = null;
         if (latestCarecardEncounter != null) {
 
             careObs = new ArrayList<>(latestCarecardEncounter.getAllObs());
