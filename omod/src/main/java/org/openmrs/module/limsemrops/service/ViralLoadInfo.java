@@ -106,6 +106,7 @@ public class ViralLoadInfo {
             if (tempObs.stream().map(Obs::getConcept).map(Concept::getConceptId).
                     collect(Collectors.toList())
                     .contains(LabFormUtils.VIRAL_LOAD_REQUEST)) {
+                obsList.clear();
                 obsList.addAll(obsSet);
 
                 System.out.println("Obs list contains VL Load request");
@@ -118,8 +119,8 @@ public class ViralLoadInfo {
 
         String temString = UUID.randomUUID().toString();
         vLSampleCollectionBatchManifest.setManifestID(temString.substring(1, 15).toUpperCase());
-        vLSampleCollectionBatchManifest.setReceivingLabID("LIMS-001-98"); // todo
-        vLSampleCollectionBatchManifest.setReceivingLabName("Test Lab"); // todo
+        vLSampleCollectionBatchManifest.setReceivingLabID("LIMS150003"); // todo
+        vLSampleCollectionBatchManifest.setReceivingLabName("Asokoro Laboratory and Training Center"); // todo
         vLSampleCollectionBatchManifest.setSendingFacilityID(Utils.getFacilityDATIMId());
         vLSampleCollectionBatchManifest.setSendingFacilityName(Utils.getFacilityName());
 
@@ -164,9 +165,12 @@ public class ViralLoadInfo {
 				}
 			}
 			
-			//rovingObs = Utils.extractObs(LabFormUtils., obsList)
-			vLSampleInformation.setSampleCollectedBy(e.getEncounterProviders().stream().findFirst().get().getProvider()
-			        .getName());
+			//order by and sample collected by
+			rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleOrderedBy(rovingObs.getValueText());
+				vLSampleInformation.setSampleCollectedBy(rovingObs.getValueText());
+			}
 			
 			// sample collection date
 			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_COLLECTION_DATE, this.obsList);
@@ -185,12 +189,6 @@ public class ViralLoadInfo {
 			rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_ORDERED, this.obsList);
 			if (rovingObs != null) {
 				vLSampleInformation.setSampleOrderDate(rovingObs.getValueDate());
-			}
-			
-			//order by
-			rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
-			if (rovingObs != null) {
-				vLSampleInformation.setSampleOrderedBy(rovingObs.getValueText());
 			}
 			
 			//date sample sent
