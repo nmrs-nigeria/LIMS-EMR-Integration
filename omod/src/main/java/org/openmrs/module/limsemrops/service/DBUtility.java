@@ -35,6 +35,25 @@ public class DBUtility {
         return encounters;
         
     }
+        
+     
+        public List<Integer> getTestLabEncountersByDate(Date startDate, Date endDate) {
+        List<Integer> encounters = new ArrayList<>();
+
+        NdrDBManager ndrDBManager = new NdrDBManager();
+        try {
+            ndrDBManager.openConnection();
+            encounters = ndrDBManager.getTestRecentLabEncounter(startDate, endDate);
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        } finally {
+            ndrDBManager.closeConnection();
+        }
+
+        return encounters;
+        
+    }
+        
 	
 	public List<Integer> getEnrollmentAndPharmacy(Patient patient){
           List<Integer> encounters = new ArrayList<>();

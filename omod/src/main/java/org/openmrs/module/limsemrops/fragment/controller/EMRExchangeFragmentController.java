@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import org.openmrs.module.limsemrops.omodmodels.SampleCollectionManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformation;
+import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ExchangeLayer;
 import org.openmrs.module.limsemrops.service.SampleInfo;
@@ -78,13 +79,13 @@ public class EMRExchangeFragmentController {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
+        List<VLSampleInformationFrontFacing> vlSampleInfo = new ArrayList<>();
         SampleInfo sampleInfo = new SampleInfo();
 
         try {
-            SampleCollectionManifest sampleCollectionManifest = sampleInfo.searchLabEncounters(startDate, endDate);
-            if (sampleCollectionManifest != null) {
-                response = mapper.writeValueAsString(sampleCollectionManifest.getViralloadManifest().getSampleInformation());
-            }
+            vlSampleInfo = sampleInfo.searchLabEncounters(startDate, endDate);
+
+            response = mapper.writeValueAsString(vlSampleInfo);
 
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
@@ -96,42 +97,35 @@ public class EMRExchangeFragmentController {
 
     public void performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
             @RequestParam(value = "labid", required = true) String labid, @RequestParam(value = "labName", required = true) String labName) {
-       
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        
-         String temString = UUID.randomUUID().toString();
-         VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
-        
-         
-         
+
+        String temString = UUID.randomUUID().toString();
+        VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
+
         vLSampleCollectionBatchManifest.setManifestID(temString.substring(1, 15).toUpperCase());
         vLSampleCollectionBatchManifest.setSendingFacilityID(Utils.getFacilityDATIMId());
         vLSampleCollectionBatchManifest.setSendingFacilityName(Utils.getFacilityName());
 
-       // vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
-        
-        try{
-            
-            List<VLSampleInformation> vLSampleInformations = mapper.readValue(vlsamples, new TypeReference<List<VLSampleInformation>>() {});
-           
+        // vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
+        try {
+
+            List<VLSampleInformation> vLSampleInformations = mapper.readValue(vlsamples, new TypeReference<List<VLSampleInformation>>() {
+            });
+
             vLSampleCollectionBatchManifest.setReceivingLabID(labid);
             vLSampleCollectionBatchManifest.setReceivingLabName(labName);
             vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
-            
+
             String manifestJsonString = mapper.writeValueAsString(vLSampleCollectionBatchManifest);
             this.exchangeLayer.sendSamplesOnline(manifestJsonString);
-            
-            
-        //List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
-        }catch(Exception ex){
+
+            //List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
-        
-        
-        //TODO: confirm with Mubarak what details will be return to frontend
-        
-        
 
+        //TODO: confirm with Mubarak what details will be return to frontend
     }
 }

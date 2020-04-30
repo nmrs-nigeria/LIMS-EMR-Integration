@@ -5,11 +5,16 @@
  */
 package org.openmrs.module.limsemrops.test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
+import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ViralLoadInfo;
 
@@ -39,7 +44,9 @@ public class MainTest {
 		//MainTest mainTest = new MainTest();
 		//mainTest.testVLLoad();
 		
-		System.out.println(UUID.randomUUID().toString());
+	//	System.out.println(UUID.randomUUID().toString());
+        
+            
 		
 	}
 	

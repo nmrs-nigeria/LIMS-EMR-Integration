@@ -14,6 +14,7 @@ import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.module.limsemrops.omodmodels.PatientID;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformation;
+import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 import org.openmrs.module.limsemrops.utility.ConstantUtils;
 
 /**
@@ -33,6 +34,8 @@ public class PatientDemographics {
 		
 	}
 	
+        
+        //TODO: Will delete this later
 	public VLSampleInformation fillUpDemographics() {
 
         VLSampleInformation vLSampleInformation = new VLSampleInformation();
@@ -71,4 +74,45 @@ public class PatientDemographics {
         return vLSampleInformation;
 
     }
+        
+            
+    public VLSampleInformationFrontFacing fillUpPatientDemographics() {
+
+        VLSampleInformationFrontFacing vLSampleInformation = new VLSampleInformationFrontFacing();
+
+            Set<PatientID> patientIdList = new HashSet<>();
+
+        PatientID patientID = new PatientID();
+
+        if (this.pepfarid != null) {
+            patientID.setIdNumber(this.pepfarid.getIdentifier());
+            patientID.setIdTypeCode("CLIENTID");
+            patientIdList.add(patientID);
+        }
+
+        if (this.pidHospital != null) {
+            patientID.setIdNumber(this.pidHospital.getIdentifier());
+            patientID.setIdTypeCode("HOSPITALNO");
+            patientIdList.add(patientID);
+        }
+
+        if (this.pidRecent != null) {
+            patientID.setIdNumber(this.pidRecent.getIdentifier());
+            patientID.setIdTypeCode("RECENT");
+            patientIdList.add(patientID);
+        }
+
+        List<PatientID> f_patientIds = new ArrayList<PatientID>(patientIdList);
+        vLSampleInformation.setPatientID(f_patientIds);
+
+        vLSampleInformation.setAge(this.patient.getAge());
+        vLSampleInformation.setDateOfBirth(this.patient.getPerson().getBirthdate());
+        vLSampleInformation.setFirstName(this.patient.getGivenName());
+        vLSampleInformation.setSex(this.patient.getGender());
+        vLSampleInformation.setSurName(this.patient.getFamilyName());
+
+        return vLSampleInformation;
+
+    }    
+        
 }
