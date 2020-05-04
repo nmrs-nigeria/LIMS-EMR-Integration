@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.Patient;
-import org.openmrs.module.limsemrops.dbmanager.NdrDBManager;
+import org.openmrs.module.limsemrops.dbmanager.DBManager;
 
 /**
  * @author MORRISON.I
@@ -22,7 +22,7 @@ public class DBUtility {
 	public List<Integer> getLabEncountersByDate(Date startDate, Date endDate) {
         List<Integer> encounters = new ArrayList<>();
 
-        NdrDBManager ndrDBManager = new NdrDBManager();
+        DBManager ndrDBManager = new DBManager();
         try {
             ndrDBManager.openConnection();
             encounters = ndrDBManager.getRecentLabEncounter(startDate, endDate);
@@ -35,12 +35,11 @@ public class DBUtility {
         return encounters;
         
     }
-        
-     
-        public List<Integer> getTestLabEncountersByDate(Date startDate, Date endDate) {
+	
+	public List<Integer> getTestLabEncountersByDate(Date startDate, Date endDate) {
         List<Integer> encounters = new ArrayList<>();
 
-        NdrDBManager ndrDBManager = new NdrDBManager();
+        DBManager ndrDBManager = new DBManager();
         try {
             ndrDBManager.openConnection();
             encounters = ndrDBManager.getTestRecentLabEncounter(startDate, endDate);
@@ -53,12 +52,11 @@ public class DBUtility {
         return encounters;
         
     }
-        
 	
 	public List<Integer> getEnrollmentAndPharmacy(Patient patient){
           List<Integer> encounters = new ArrayList<>();
 
-        NdrDBManager ndrDBManager = new NdrDBManager();
+        DBManager ndrDBManager = new DBManager();
         try {
             ndrDBManager.openConnection();
             encounters = ndrDBManager.getEnrollmentAndPharmacyEncounter(patient);

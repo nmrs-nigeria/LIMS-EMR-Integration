@@ -31,24 +31,24 @@ import org.openmrs.module.limsemrops.utility.Utils;
  * @author MORRISON.I
  */
 public class ViralLoadInfo {
-
-    private List<Integer> encounterIDList;
-
-    private List<Obs> obsList;
-
-    private List<Encounter> encounterList;
-
-    private LabFormUtils labFormUtils;
-
-    private Map<Integer, String> labMappings;
-
-    private Map<Integer, Integer> integerLabMappings;
-
-    private Obs rovingObs;
-
-    private DBUtility dBUtility;
-
-    public ViralLoadInfo(List<Integer> encounterList) {
+	
+	private List<Integer> encounterIDList;
+	
+	private List<Obs> obsList;
+	
+	private List<Encounter> encounterList;
+	
+	private LabFormUtils labFormUtils;
+	
+	private Map<Integer, String> labMappings;
+	
+	private Map<Integer, Integer> integerLabMappings;
+	
+	private Obs rovingObs;
+	
+	private DBUtility dBUtility;
+	
+	public ViralLoadInfo(List<Integer> encounterList) {
 
         this.encounterIDList = encounterList;
         this.obsList = new ArrayList<>();
@@ -64,27 +64,27 @@ public class ViralLoadInfo {
         rovingObs = new Obs();
 
     }
-
-    private void loadMappings() {
-        labMappings = labFormUtils.getConceptMappings();
-        integerLabMappings = labFormUtils.getIntegerConceptMappings();
-    }
-
-    private String getMappedAnswerValue(int conceptID) {
-        if (labMappings.containsKey(conceptID)) {
-            return labMappings.get(conceptID);
-        }
-        return "";
-    }
-
-    private Integer getIntgerMappedAnswerValue(int conceptID) {
-        if (integerLabMappings.containsKey(conceptID)) {
-            return integerLabMappings.get(conceptID);
-        }
-        return null;
-    }
-
-    public VLSampleCollectionBatchManifest getRecentSampleCollectedManifest() {
+	
+	private void loadMappings() {
+		labMappings = labFormUtils.getConceptMappings();
+		integerLabMappings = labFormUtils.getIntegerConceptMappings();
+	}
+	
+	private String getMappedAnswerValue(int conceptID) {
+		if (labMappings.containsKey(conceptID)) {
+			return labMappings.get(conceptID);
+		}
+		return "";
+	}
+	
+	private Integer getIntgerMappedAnswerValue(int conceptID) {
+		if (integerLabMappings.containsKey(conceptID)) {
+			return integerLabMappings.get(conceptID);
+		}
+		return null;
+	}
+	
+	public VLSampleCollectionBatchManifest getRecentSampleCollectedManifest() {
 
         Patient patient = null;
         VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest
@@ -130,8 +130,8 @@ public class ViralLoadInfo {
         return vLSampleCollectionBatchManifest;
 
     }
-
-    public List<VLSampleInformationFrontFacing> searchLabEncounter() {
+	
+	public List<VLSampleInformationFrontFacing> searchLabEncounter() {
 
         Patient patient = null;
      
@@ -166,158 +166,160 @@ public class ViralLoadInfo {
         return vLSampleInformations;
 
     }
-
-    // this is the right method that would be called from the UI
-    private VLSampleInformationFrontFacing extractVLInfoPerPatient(Patient p, Encounter e) {
-
-        VLSampleInformationFrontFacing vLSampleInformation = new VLSampleInformationFrontFacing();
-        PatientDemographics patientDemographics = new PatientDemographics(p);
-        vLSampleInformation = patientDemographics.fillUpPatientDemographics();
-
-        if (!this.obsList.isEmpty()) {
-            //sample ID
-            rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_TYPE, this.obsList);
-            if (rovingObs != null && rovingObs.getValueCoded() != null) {
-                vLSampleInformation.setSampleType(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
-            }
-
-            // indication for VL
-            rovingObs = Utils.extractObs(LabFormUtils.INDICATION_FOR_VL, this.obsList);
-            if (rovingObs != null && rovingObs.getValueCoded() != null) {
-                vLSampleInformation
-                        .setIndicationVLTest(getIntgerMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
-            }
-
-            vLSampleInformation.setArtCommencementDate(getPatientARTStartDate(p));
-
-            String patientLastRegimen = getPatientLatestRegimen(p);
-            if (patientLastRegimen != null) {
-                vLSampleInformation.setDrugRegimen(patientLastRegimen);
-            }
-
-            if (p.getGender().equalsIgnoreCase("F")) {
-                String pregnancyStatus = getPatientPregnancyStatus(p);
-
-                if (pregnancyStatus != null) {
-                    vLSampleInformation.setPregnantBreastFeedingStatus(pregnancyStatus);
-                }
-            }
-
-            //order by and sample collected by
-            rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setSampleOrderedBy(rovingObs.getValueText());
-                vLSampleInformation.setSampleCollectedBy(rovingObs.getValueText());
-            }
-
-            // sample collection date
-            rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_COLLECTION_DATE, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setSampleCollectionDate(rovingObs.getValueDate());
-                vLSampleInformation.setSampleCollectionTime(rovingObs.getValueDatetime());
-            }
-
-            // sample ID
-            rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_ID, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setSampleID(rovingObs.getValueText());
-            }
-
-            //order date
-            rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_ORDERED, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setSampleOrderDate(rovingObs.getValueDate());
-            }
-
-            //date sample sent
-            rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_SENT_TO_PCR_LAB, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setDateSampleSent(rovingObs.getValueDate());
-            }
-            
-            vLSampleInformation.setEncounterId(e.getEncounterId());
-
-        }
-
-        return vLSampleInformation;
-
-    }
-
-    //this is for testing purpose with TG
-    private VLSampleInformation extractVLInfo(Patient p, Encounter e) {
-
-        VLSampleInformation vLSampleInformation = new VLSampleInformation();
-        PatientDemographics patientDemographics = new PatientDemographics(p);
-        vLSampleInformation = patientDemographics.fillUpDemographics();
-
-        if (!this.obsList.isEmpty()) {
-            //sample ID
-            rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_TYPE, this.obsList);
-            if (rovingObs != null && rovingObs.getValueCoded() != null) {
-                vLSampleInformation.setSampleType(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
-            }
-
-            // indication for VL
-            rovingObs = Utils.extractObs(LabFormUtils.INDICATION_FOR_VL, this.obsList);
-            if (rovingObs != null && rovingObs.getValueCoded() != null) {
-                vLSampleInformation
-                        .setIndicationVLTest(getIntgerMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
-            }
-
-            vLSampleInformation.setArtCommencementDate(getPatientARTStartDate(p));
-
-            String patientLastRegimen = getPatientLatestRegimen(p);
-            if (patientLastRegimen != null) {
-                vLSampleInformation.setDrugRegimen(patientLastRegimen);
-            }
-
-            if (p.getGender().equalsIgnoreCase("F")) {
-                String pregnancyStatus = getPatientPregnancyStatus(p);
-
-                if (pregnancyStatus != null) {
-                    vLSampleInformation.setPregnantBreastFeedingStatus(pregnancyStatus);
-                }
-            }
-
-            //order by and sample collected by
-            rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setSampleOrderedBy(rovingObs.getValueText());
-                vLSampleInformation.setSampleCollectedBy(rovingObs.getValueText());
-            }
-
-            // sample collection date
-            rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_COLLECTION_DATE, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setSampleCollectionDate(rovingObs.getValueDate());
-                vLSampleInformation.setSampleCollectionTime(rovingObs.getValueDatetime());
-            }
-
-            // sample ID
-            rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_ID, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setSampleID(rovingObs.getValueText());
-            }
-
-            //order date
-            rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_ORDERED, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setSampleOrderDate(rovingObs.getValueDate());
-            }
-
-            //date sample sent
-            rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_SENT_TO_PCR_LAB, this.obsList);
-            if (rovingObs != null) {
-                vLSampleInformation.setDateSampleSent(rovingObs.getValueDate());
-            }
-
-        }
-
-        return vLSampleInformation;
-
-    }
-
-    private void fillUpEncounters(List<Integer> encs) {
+	
+	// this is the right method that would be called from the UI
+	private VLSampleInformationFrontFacing extractVLInfoPerPatient(Patient p, Encounter e) {
+		
+		VLSampleInformationFrontFacing vLSampleInformation = new VLSampleInformationFrontFacing();
+		PatientDemographics patientDemographics = new PatientDemographics(p);
+		vLSampleInformation = patientDemographics.fillUpPatientDemographics();
+		
+		if (!this.obsList.isEmpty()) {
+			//sample ID
+			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_TYPE, this.obsList);
+			if (rovingObs != null && rovingObs.getValueCoded() != null) {
+				vLSampleInformation.setSampleType(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
+			}
+			
+			// indication for VL
+			rovingObs = Utils.extractObs(LabFormUtils.INDICATION_FOR_VL, this.obsList);
+			if (rovingObs != null && rovingObs.getValueCoded() != null) {
+				vLSampleInformation
+				        .setIndicationVLTest(getIntgerMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
+			}
+			
+			vLSampleInformation.setArtCommencementDate(getPatientARTStartDate(p));
+			
+			String patientLastRegimen = getPatientLatestRegimen(p);
+			if (patientLastRegimen != null) {
+				vLSampleInformation.setDrugRegimen(patientLastRegimen);
+			}
+			
+			if (p.getGender().equalsIgnoreCase("F")) {
+				String pregnancyStatus = getPatientPregnancyStatus(p);
+				
+				if (pregnancyStatus != null) {
+					vLSampleInformation.setPregnantBreastFeedingStatus(pregnancyStatus);
+				}
+			}
+			
+			//order by and sample collected by
+			rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleOrderedBy(rovingObs.getValueText());
+				vLSampleInformation.setSampleCollectedBy(rovingObs.getValueText());
+			}
+			
+			// sample collection date
+			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_COLLECTION_DATE, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleCollectionDate(rovingObs.getValueDate());
+				vLSampleInformation.setSampleCollectionTime(rovingObs.getValueDatetime());
+			}
+			
+			// sample ID
+			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_ID, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleID(rovingObs.getValueText());
+			}
+			
+			//order date
+			rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_ORDERED, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleOrderDate(rovingObs.getValueDate());
+			}
+			
+			//date sample sent
+			rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_SENT_TO_PCR_LAB, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setDateSampleSent(rovingObs.getValueDate());
+			}
+			
+			vLSampleInformation.setEncounterId(e.getEncounterId());
+			
+		}
+		
+		return vLSampleInformation;
+		
+	}
+	
+	//this is for testing purpose with TG
+	private VLSampleInformation extractVLInfo(Patient p, Encounter e) {
+		
+		VLSampleInformation vLSampleInformation = new VLSampleInformation();
+		PatientDemographics patientDemographics = new PatientDemographics(p);
+		vLSampleInformation = patientDemographics.fillUpDemographics();
+		
+		if (!this.obsList.isEmpty()) {
+			//sample ID
+			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_TYPE, this.obsList);
+			if (rovingObs != null && rovingObs.getValueCoded() != null) {
+				vLSampleInformation.setSampleType(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
+			}
+			
+			// indication for VL
+			rovingObs = Utils.extractObs(LabFormUtils.INDICATION_FOR_VL, this.obsList);
+			if (rovingObs != null && rovingObs.getValueCoded() != null) {
+				vLSampleInformation
+				        .setIndicationVLTest(getIntgerMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
+			}
+			
+			vLSampleInformation.setArtCommencementDate(getPatientARTStartDate(p));
+			
+			String patientLastRegimen = getPatientLatestRegimen(p);
+			if (patientLastRegimen != null) {
+				vLSampleInformation.setDrugRegimen(patientLastRegimen);
+			}
+			
+			if (p.getGender().equalsIgnoreCase("F")) {
+				String pregnancyStatus = getPatientPregnancyStatus(p);
+				
+				if (pregnancyStatus != null) {
+					vLSampleInformation.setPregnantBreastFeedingStatus(pregnancyStatus);
+				}
+			}
+			
+			//order by and sample collected by
+			rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
+			if (rovingObs != null) {
+				String sampleCollectedBy = rovingObs.getValueText();
+				String splitCollectedBy = sampleCollectedBy.split(" - ")[1];
+				vLSampleInformation.setSampleOrderedBy(splitCollectedBy);
+				vLSampleInformation.setSampleCollectedBy(splitCollectedBy);
+			}
+			
+			// sample collection date
+			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_COLLECTION_DATE, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleCollectionDate(rovingObs.getValueDate());
+				vLSampleInformation.setSampleCollectionTime(rovingObs.getValueDatetime());
+			}
+			
+			// sample ID
+			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_ID, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleID(rovingObs.getValueText());
+			}
+			
+			//order date
+			rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_ORDERED, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setSampleOrderDate(rovingObs.getValueDate());
+			}
+			
+			//date sample sent
+			rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_SENT_TO_PCR_LAB, this.obsList);
+			if (rovingObs != null) {
+				vLSampleInformation.setDateSampleSent(rovingObs.getValueDate());
+			}
+			
+		}
+		
+		return vLSampleInformation;
+		
+	}
+	
+	private void fillUpEncounters(List<Integer> encs) {
 
         encounterList.clear();
 
@@ -333,8 +335,8 @@ public class ViralLoadInfo {
         });
 
     }
-
-    private Date getPatientARTStartDate(Patient patient) {
+	
+	private Date getPatientARTStartDate(Patient patient) {
         List<Integer> encounters = dBUtility.getEnrollmentAndPharmacy(patient);
         List<Encounter> hivPharmEncounters = new ArrayList<>();
 
@@ -354,18 +356,18 @@ public class ViralLoadInfo {
         return Utils.extractARTStartDate(patient, obsList);
 
     }
-
-    private String getPatientLatestRegimen(Patient p) {
-        Encounter latestPharmEncounter = Utils.getPatientLastEncounter(p, ConstantUtils.Pharmacy_Encounter_Type_Id);
-        String regimenCode = null;
-        if (latestPharmEncounter != null) {
-            regimenCode = Utils.getPatientLastRegimenByEncounter(latestPharmEncounter);
-        }
-
-        return regimenCode;
-    }
-
-    private String getPatientPregnancyStatus(Patient p) {
+	
+	private String getPatientLatestRegimen(Patient p) {
+		Encounter latestPharmEncounter = Utils.getPatientLastEncounter(p, ConstantUtils.Pharmacy_Encounter_Type_Id);
+		String regimenCode = null;
+		if (latestPharmEncounter != null) {
+			regimenCode = Utils.getPatientLastRegimenByEncounter(latestPharmEncounter);
+		}
+		
+		return regimenCode;
+	}
+	
+	private String getPatientPregnancyStatus(Patient p) {
         Encounter latestCarecardEncounter = Utils.getPatientLastEncounter(p, ConstantUtils.Care_card_Encounter_Type_Id);
         CareCardUtils cardUtils = new CareCardUtils();
         List<Obs> careObs = new ArrayList<>();
@@ -388,5 +390,4 @@ public class ViralLoadInfo {
         return response;
 
     }
-
 }

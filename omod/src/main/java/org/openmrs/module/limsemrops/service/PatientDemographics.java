@@ -34,8 +34,7 @@ public class PatientDemographics {
 		
 	}
 	
-        
-        //TODO: Will delete this later
+	//TODO: Will delete this later
 	public VLSampleInformation fillUpDemographics() {
 
         VLSampleInformation vLSampleInformation = new VLSampleInformation();
@@ -74,9 +73,8 @@ public class PatientDemographics {
         return vLSampleInformation;
 
     }
-        
-            
-    public VLSampleInformationFrontFacing fillUpPatientDemographics() {
+	
+	public VLSampleInformationFrontFacing fillUpPatientDemographics() {
 
         VLSampleInformationFrontFacing vLSampleInformation = new VLSampleInformationFrontFacing();
 
@@ -113,6 +111,4 @@ public class PatientDemographics {
 
         return vLSampleInformation;
 
-    }    
-        
-}
+    }}

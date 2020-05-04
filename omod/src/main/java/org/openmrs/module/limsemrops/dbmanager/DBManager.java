@@ -21,7 +21,7 @@ import org.openmrs.module.limsemrops.utility.Utils;
 /**
  * @author MORRISON.I
  */
-public class NdrDBManager {
+public class DBManager {
 	
 	Connection conn = null;
 	
@@ -29,7 +29,7 @@ public class NdrDBManager {
 	
 	private ResultSet resultSet = null;
 	
-	public NdrDBManager() {
+	public DBManager() {
 		
 	}
 	
@@ -59,14 +59,13 @@ public class NdrDBManager {
         return idlist;
 
     }
-        
-      
-        public List<Integer> getTestRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
+	
+	public List<Integer> getTestRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
 
         //select * from encounter where encounter_type = 14 and encounter_datetime > '2019-10-01 00:00:00' and encounter_datetime < '2019-12-01 00:00:00' and voided = 0
         pStatement = conn.prepareStatement("select * from encounter where encounter_type = 11 "
-                + "and encounter_datetime > '2020-04-20 00:00:00' "
-                + "and encounter_datetime < '2020-05-21 00:00:00' and voided = 0");
+                + "and encounter_datetime >= '2020-05-04 00:00:00' "
+                + "and encounter_datetime <= '2020-05-21 00:00:00' and voided = 0");
 
 //        pStatement = conn.prepareStatement("select encounter_id from "+ConstantUtils.ENCOUNTER_TABLE+ " where encounter_type = 11 "
 //                + "and encounter_datetime >= ? "
@@ -84,11 +83,6 @@ public class NdrDBManager {
         return idlist;
 
     }
-        
-        
-        
-        
-        
 	
 	public List<Integer> getEnrollmentAndPharmacyEncounter(Patient p) throws SQLException {
 

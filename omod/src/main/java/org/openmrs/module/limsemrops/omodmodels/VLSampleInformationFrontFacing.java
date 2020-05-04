@@ -5,23 +5,23 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
- *
  * @author MORRISON.I
  */
+
+@JsonIgnoreProperties(value = { "encounterId" })
 public class VLSampleInformationFrontFacing extends VLSampleInformation {
-    
-    private Integer encounterId;
-
-    public Integer getEncounterId() {
-        return encounterId;
-    }
-
-    public void setEncounterId(Integer encounterId) {
-        this.encounterId = encounterId;
-    }
-    
-    
-    
-    
+	
+	private Integer encounterId;
+	
+	public Integer getEncounterId() {
+		return encounterId;
+	}
+	
+	public void setEncounterId(Integer encounterId) {
+		this.encounterId = encounterId;
+	}
+	
 }
