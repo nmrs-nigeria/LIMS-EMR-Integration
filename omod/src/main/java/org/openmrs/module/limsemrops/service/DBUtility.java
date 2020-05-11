@@ -13,60 +13,99 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.Patient;
 import org.openmrs.module.limsemrops.dbmanager.DBManager;
+import org.openmrs.module.limsemrops.omodmodels.Manifest;
+import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 
 /**
  * @author MORRISON.I
  */
 public class DBUtility {
-	
-	public List<Integer> getLabEncountersByDate(Date startDate, Date endDate) {
+
+    private DBManager ndrDBManager;
+
+    public DBUtility() {
+        this.ndrDBManager = new DBManager();
+
+    }
+
+    public List<Integer> getLabEncountersByDate(Date startDate, Date endDate) {
         List<Integer> encounters = new ArrayList<>();
 
-        DBManager ndrDBManager = new DBManager();
         try {
-            ndrDBManager.openConnection();
-            encounters = ndrDBManager.getRecentLabEncounter(startDate, endDate);
+            this.ndrDBManager.openConnection();
+            encounters = this.ndrDBManager.getRecentLabEncounter(startDate, endDate);
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         } finally {
-            ndrDBManager.closeConnection();
+            this.ndrDBManager.closeConnection();
         }
 
         return encounters;
-        
+
     }
-	
-	public List<Integer> getTestLabEncountersByDate(Date startDate, Date endDate) {
+
+    public List<Integer> getTestLabEncountersByDate(Date startDate, Date endDate) {
         List<Integer> encounters = new ArrayList<>();
 
-        DBManager ndrDBManager = new DBManager();
         try {
-            ndrDBManager.openConnection();
-            encounters = ndrDBManager.getTestRecentLabEncounter(startDate, endDate);
+            this.ndrDBManager.openConnection();
+            encounters = this.ndrDBManager.getTestRecentLabEncounter(startDate, endDate);
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         } finally {
-            ndrDBManager.closeConnection();
+            this.ndrDBManager.closeConnection();
         }
 
         return encounters;
-        
+
     }
-	
-	public List<Integer> getEnrollmentAndPharmacy(Patient patient){
-          List<Integer> encounters = new ArrayList<>();
 
-        DBManager ndrDBManager = new DBManager();
+    public List<Integer> getEnrollmentAndPharmacy(Patient patient) {
+        List<Integer> encounters = new ArrayList<>();
+
         try {
-            ndrDBManager.openConnection();
-            encounters = ndrDBManager.getEnrollmentAndPharmacyEncounter(patient);
+            this.ndrDBManager.openConnection();
+            encounters = this.ndrDBManager.getEnrollmentAndPharmacyEncounter(patient);
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         } finally {
-            ndrDBManager.closeConnection();
+            this.ndrDBManager.closeConnection();
         }
 
         return encounters;
-         
-     }
+
+    }
+
+    public boolean insertManifestEntry(Manifest manifest) {
+
+        int response = 0;
+        try {
+            this.ndrDBManager.openConnection();
+            response = this.ndrDBManager.insertManifest(manifest);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        } finally {
+            this.ndrDBManager.closeConnection();
+        }
+
+        return response > 0;
+
+    }
+
+    public boolean insertManifestSaplesEntry(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings, String manifestId, String createdBy) {
+
+        int response = 0;
+        try {
+            this.ndrDBManager.openConnection();
+            response = this.ndrDBManager.insertManifestSamples(vLSampleInformationFrontFacings, manifestId, createdBy);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        } finally {
+            this.ndrDBManager.closeConnection();
+        }
+
+        return response == vLSampleInformationFrontFacings.size();
+
+    }
+
 }

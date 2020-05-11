@@ -40,9 +40,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class EMRExchangeFragmentController {
 	
 	private ExchangeLayer exchangeLayer;
+        private DBUtility dBUtility;
 	
 	public EMRExchangeFragmentController() {
 		this.exchangeLayer = new ExchangeLayer();
+                this.dBUtility = new DBUtility();
 	}
 	
 	public void testVLLoad() {
@@ -135,6 +137,8 @@ public class EMRExchangeFragmentController {
 			
 			if (response == true) {
 				updateDateSampleSentOnDB(vLSampleInformations, dateSampleSent);
+                                
+                                
 			}
 			
 			//List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
