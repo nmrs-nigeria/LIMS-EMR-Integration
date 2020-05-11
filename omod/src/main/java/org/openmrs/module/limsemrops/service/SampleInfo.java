@@ -31,8 +31,8 @@ public class SampleInfo {
 		
 		List<Integer> labEncounterIds = dBUtility.getLabEncountersByDate(startDate, endDate);
 		this.viralLoadInfo = new ViralLoadInfo(labEncounterIds);
-		VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
-		vLSampleCollectionBatchManifest = this.viralLoadInfo.getRecentSampleCollectedManifest();
+//		VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
+//		vLSampleCollectionBatchManifest = this.viralLoadInfo.getRecentSampleCollectedManifest();
 		List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings = this.viralLoadInfo.searchLabEncounter();
 		
 		return vLSampleInformationFrontFacings;

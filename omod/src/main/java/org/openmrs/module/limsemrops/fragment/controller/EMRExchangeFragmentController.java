@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.limsemrops.omodmodels.Manifest;
 import org.openmrs.module.limsemrops.omodmodels.SampleCollectionManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformation;
@@ -38,16 +39,16 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author MORRISON.I
  */
 public class EMRExchangeFragmentController {
-	
-	private ExchangeLayer exchangeLayer;
-        private DBUtility dBUtility;
-	
-	public EMRExchangeFragmentController() {
-		this.exchangeLayer = new ExchangeLayer();
-                this.dBUtility = new DBUtility();
-	}
-	
-	public void testVLLoad() {
+
+    private ExchangeLayer exchangeLayer;
+    private DBUtility dBUtility;
+
+    public EMRExchangeFragmentController() {
+        this.exchangeLayer = new ExchangeLayer();
+        this.dBUtility = new DBUtility();
+    }
+
+    public void testVLLoad() {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -79,8 +80,8 @@ public class EMRExchangeFragmentController {
         }
 
     }
-	
-	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate) {
+
+    public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate) {
 
         String response = null;
         ObjectMapper mapper = new ObjectMapper();
@@ -101,56 +102,65 @@ public class EMRExchangeFragmentController {
         return response;
 
     }
-	
-	public void performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
-	        @RequestParam(value = "labid", required = true) String labid,
-	        @RequestParam(value = "labName", required = true) String labName) {
-		
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		
-		Date dateSampleSent = new Date();
-		
-		String temString = UUID.randomUUID().toString();
-		String manifestID = temString.substring(1, 15).toUpperCase();
-		
-		VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
-		
-		vLSampleCollectionBatchManifest.setManifestID(manifestID);
-		vLSampleCollectionBatchManifest.setSendingFacilityID(Utils.getFacilityDATIMId());
-		vLSampleCollectionBatchManifest.setSendingFacilityName(Utils.getFacilityName());
-		
-		// vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
-		try {
-			
-			List<VLSampleInformationFrontFacing> vLSampleInformations = mapper.readValue(vlsamples,
-			    new TypeReference<List<VLSampleInformationFrontFacing>>() {});
-			
-			List<VLSampleInformation> convertedSamples = updateDateSampleSent(vLSampleInformations, dateSampleSent);
-			
-			vLSampleCollectionBatchManifest.setReceivingLabID(labid);
-			vLSampleCollectionBatchManifest.setReceivingLabName(labName);
-			vLSampleCollectionBatchManifest.setSampleInformation(convertedSamples);
-			
-			String manifestJsonString = mapper.writeValueAsString(vLSampleCollectionBatchManifest);
-			Boolean response = this.exchangeLayer.sendSamplesOnline(manifestJsonString);
-			
-			if (response == true) {
-				updateDateSampleSentOnDB(vLSampleInformations, dateSampleSent);
-                                
-                                
-			}
-			
-			//List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
-		}
-		catch (Exception ex) {
-			System.err.println(ex.getMessage());
-		}
-		
-		//TODO: confirm with Mubarak what details will be return to frontend
-	}
-	
-	private List<VLSampleInformation> updateDateSampleSent(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {
+
+    public void performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
+            @RequestParam(value = "labid", required = true) String labid,
+            @RequestParam(value = "labName", required = true) String labName) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        Date dateSampleSent = new Date();
+
+        String temString = UUID.randomUUID().toString();
+        String manifestID = temString.substring(1, 15).toUpperCase();
+
+        VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
+
+        vLSampleCollectionBatchManifest.setManifestID(manifestID);
+        vLSampleCollectionBatchManifest.setSendingFacilityID(Utils.getFacilityDATIMId());
+        vLSampleCollectionBatchManifest.setSendingFacilityName(Utils.getFacilityName());
+
+        // vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
+        try {
+
+            List<VLSampleInformationFrontFacing> vLSampleInformations = mapper.readValue(vlsamples,
+                    new TypeReference<List<VLSampleInformationFrontFacing>>() {
+            });
+
+            List<VLSampleInformation> convertedSamples = updateDateSampleSent(vLSampleInformations, dateSampleSent);
+
+            vLSampleCollectionBatchManifest.setReceivingLabID(labid);
+            vLSampleCollectionBatchManifest.setReceivingLabName(labName);
+            vLSampleCollectionBatchManifest.setSampleInformation(convertedSamples);
+
+            String manifestJsonString = mapper.writeValueAsString(vLSampleCollectionBatchManifest);
+            Boolean response = this.exchangeLayer.sendSamplesOnline(manifestJsonString);
+
+            if (response == true) {
+                updateDateSampleSentOnDB(vLSampleInformations, dateSampleSent);
+                Manifest manifest = new Manifest();
+                manifest.setCreatedBy(Context.getAuthenticatedUser().toString());
+                manifest.setManifestID(manifestID);
+                manifest.setResultStatus("pending");
+                manifest.setSampleSpace("VL");
+
+                boolean insertManifestResult = this.dBUtility.insertManifestEntry(manifest);
+                if (insertManifestResult) {
+                    boolean insertSamplesResult = this.dBUtility.insertManifestSaplesEntry(vLSampleInformations, manifestID, Context.getAuthenticatedUser().toString());
+                }
+
+            }
+
+            //List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        //TODO: confirm with Mubarak what details will be return to frontend
+    }
+
+    private List<VLSampleInformation> updateDateSampleSent(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {
 
         List<VLSampleInformation> allConvertedSamples = new ArrayList<>();
 
@@ -171,8 +181,8 @@ public class EMRExchangeFragmentController {
 
         return allConvertedSamples;
     }
-	
-	private void updateDateSampleSentOnDB(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {
+
+    private void updateDateSampleSentOnDB(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {
 
         allVLSamplefromUI.stream().forEach(a -> {
             Encounter labEncounter = Context.getEncounterService().getEncounter(a.getEncounterId());
