@@ -112,12 +112,27 @@ public class DBManager {
     }
 	
 	public int insertManifest(Manifest manifest) throws SQLException {
-		pStatement = conn.prepareStatement("insert into " + ConstantUtils.MANIFEST_TABLE
-		        + "(manifest_id,sample_space,result_status,created_by) values(?,?,?,?)");
+		pStatement = conn
+		        .prepareStatement("insert into "
+		                + ConstantUtils.MANIFEST_TABLE
+		                + "(manifest_id,sample_space,result_status,created_by,test_type,referring_lab_state,referring_lab_lga,"
+		                + "date_schedule_for_pickup,sample_pick_up_on_time,rider_total_samples_picked,rider_temp_at_pick_up,rider_name,"
+		                + "rider_phone_number,pcr_lab_name,pcr_lab_code) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		pStatement.setString(1, manifest.getManifestID());
 		pStatement.setString(2, manifest.getSampleSpace());
 		pStatement.setString(3, manifest.getResultStatus());
 		pStatement.setString(4, manifest.getCreatedBy());
+		pStatement.setString(5, manifest.getTestType());
+		pStatement.setString(6, manifest.getReferringLabState());
+		pStatement.setString(7, manifest.getReferringLabLga());
+		pStatement.setDate(8, new java.sql.Date(manifest.getDateScheduleForPickup().getTime()));
+		pStatement.setString(9, manifest.getSamplePickUpOnTime());
+		pStatement.setInt(10, manifest.getRiderTotalSamplesPicked());
+		pStatement.setString(11, manifest.getRiderTempAtPickUp());
+		pStatement.setString(12, manifest.getRiderName());
+		pStatement.setString(13, manifest.getRiderPhoneNumber());
+		pStatement.setString(14, manifest.getPcrLabName());
+		pStatement.setString(15, manifest.getPcrLabCode());
 		
 		int response = pStatement.executeUpdate();
 		

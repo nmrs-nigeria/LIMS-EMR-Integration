@@ -55,7 +55,7 @@ public class EMRExchangeFragmentController {
 	
 	public void testVLLoad() {
 		
-            // just for testing
+		// just for testing
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		LocalDate stDate = LocalDate.of(2020, Month.MAY, 04);
 		LocalDate endDate = LocalDate.of(2020, Month.MAY, 24);
@@ -65,7 +65,7 @@ public class EMRExchangeFragmentController {
 		
 		System.out.println(result);
 		
-	//	performVLRequisition(result, "LIMS150003", "Asokoro Laboratory and Training Center");
+		//	performVLRequisition(result, "LIMS150003", "Asokoro Laboratory and Training Center");
 		
 		//        ObjectMapper mapper = new ObjectMapper();
 		//        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -119,9 +119,9 @@ public class EMRExchangeFragmentController {
 
     }
 	
+        //vlsamples is a list of VLSampleInformationFrontFacing and is a json string of Manifest object
 	public void performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
-	        @RequestParam(value = "labid", required = true) String labid,
-	        @RequestParam(value = "labName", required = true) String labName) {
+	        @RequestParam(value = "manifest", required = true) String manifestDraft) {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -143,13 +143,15 @@ public class EMRExchangeFragmentController {
 			List<VLSampleInformationFrontFacing> vLSampleInformations = mapper.readValue(vlsamples,
 			    new TypeReference<List<VLSampleInformationFrontFacing>>() {});
 			
+			Manifest convertManifest = mapper.readValue(manifestDraft, Manifest.class);
+			
 			System.out.println("about to update date sample sent");
 			
 			List<VLSampleInformation> convertedSamples = updateDateSampleSent(vLSampleInformations, dateSampleSent);
 			System.out.println("finished updating date sample sent");
 			
-			vLSampleCollectionBatchManifest.setReceivingLabID(labid);
-			vLSampleCollectionBatchManifest.setReceivingLabName(labName);
+			vLSampleCollectionBatchManifest.setReceivingLabID(convertManifest.getPcrLabCode());
+			vLSampleCollectionBatchManifest.setReceivingLabName(convertManifest.getPcrLabName());
 			vLSampleCollectionBatchManifest.setSampleInformation(convertedSamples);
 			
 			String manifestJsonString = mapper.writeValueAsString(vLSampleCollectionBatchManifest);
