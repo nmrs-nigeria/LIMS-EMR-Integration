@@ -28,29 +28,32 @@ import org.openmrs.module.limsemrops.utility.Utils;
  * @author MORRISON.I
  */
 public class DBManager {
+	
+	Connection conn = null;
+	
+	PreparedStatement pStatement = null;
+	
+	private ResultSet resultSet = null;
+	
+	public DBManager() {
+		
+	}
+	
+	public void openConnection() throws SQLException {
+		DBConnection openmrsConn = Utils.getNmrsConnectionDetails();
+		
+		conn = DriverManager.getConnection(openmrsConn.getUrl(), openmrsConn.getUsername(), openmrsConn.getPassword());
+	}
+	
+	public List<Integer> getRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
 
-    Connection conn = null;
-
-    PreparedStatement pStatement = null;
-
-    private ResultSet resultSet = null;
-
-    public DBManager() {
-
-    }
-
-    public void openConnection() throws SQLException {
-        DBConnection openmrsConn = Utils.getNmrsConnectionDetails();
-
-        conn = DriverManager.getConnection(openmrsConn.getUrl(), openmrsConn.getUsername(), openmrsConn.getPassword());
-    }
-
-    public List<Integer> getRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
-
-        pStatement = conn.prepareStatement("select encounter_id from " + ConstantUtils.ENCOUNTER_TABLE + " where encounter_type = "
+        String sqlStr = "select encounter_id from " + ConstantUtils.ENCOUNTER_TABLE + " where encounter_type = "
                 + ConstantUtils.Laboratory_Encounter_Type_Id
-                + "and encounter_datetime >= ? "
-                + "and encounter_datetime <= ? and voided = 0");
+                + " and encounter_datetime >= ? "
+                + "and encounter_datetime <= ? and `voided` = 0 ";
+        
+        pStatement = conn.prepareStatement(sqlStr);
+        
         pStatement.setDate(1, new java.sql.Date(startDate.getTime()));
         pStatement.setDate(2, new java.sql.Date(endDate.getTime()));
         resultSet = pStatement.executeQuery();
@@ -64,12 +67,12 @@ public class DBManager {
         return idlist;
 
     }
-
-    public List<Integer> getTestRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
+	
+	public List<Integer> getTestRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
 
         //select * from encounter where encounter_type = 14 and encounter_datetime > '2019-10-01 00:00:00' and encounter_datetime < '2019-12-01 00:00:00' and voided = 0
         pStatement = conn.prepareStatement("select * from encounter where encounter_type = 11 "
-                + "and encounter_datetime >= '2020-05-04 00:00:00' "
+                + " and encounter_datetime >= '2020-05-04 00:00:00' "
                 + "and encounter_datetime <= '2020-05-21 00:00:00' and voided = 0");
 
 //        pStatement = conn.prepareStatement("select encounter_id from "+ConstantUtils.ENCOUNTER_TABLE+ " where encounter_type = 11 "
@@ -88,8 +91,8 @@ public class DBManager {
         return idlist;
 
     }
-
-    public List<Integer> getEnrollmentAndPharmacyEncounter(Patient p) throws SQLException {
+	
+	public List<Integer> getEnrollmentAndPharmacyEncounter(Patient p) throws SQLException {
 
         pStatement = conn.prepareStatement("select * from encounter where encounter_type in (?,?) and patient_id = ?  and voided = 0");
         pStatement.setInt(1, ConstantUtils.HIV_Enrollment_Encounter_Type_Id);
@@ -107,21 +110,22 @@ public class DBManager {
         return idlist;
 
     }
-
-    public int insertManifest(Manifest manifest) throws SQLException {
-        pStatement = conn.prepareStatement("insert into " + ConstantUtils.MANIFEST_TABLE + "(manifest_id,sample_space,result_status,created_by) values(?,?,?,?)");
-        pStatement.setString(1, manifest.getManifestID());
-        pStatement.setString(2, manifest.getSampleSpace());
-        pStatement.setString(3, manifest.getResultStatus());
-        pStatement.setString(4, manifest.getCreatedBy());
-
-        int response = pStatement.executeUpdate();
-
-        return response;
-
-    }
-
-    public int insertManifestSamples(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings, String manifestID, String createdBy) throws SQLException {
+	
+	public int insertManifest(Manifest manifest) throws SQLException {
+		pStatement = conn.prepareStatement("insert into " + ConstantUtils.MANIFEST_TABLE
+		        + "(manifest_id,sample_space,result_status,created_by) values(?,?,?,?)");
+		pStatement.setString(1, manifest.getManifestID());
+		pStatement.setString(2, manifest.getSampleSpace());
+		pStatement.setString(3, manifest.getResultStatus());
+		pStatement.setString(4, manifest.getCreatedBy());
+		
+		int response = pStatement.executeUpdate();
+		
+		return response;
+		
+	}
+	
+	public int insertManifestSamples(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings, String manifestID, String createdBy) throws SQLException {
 
         ObjectMapper mapper = new ObjectMapper();
         AtomicInteger response = new AtomicInteger(0);
@@ -167,18 +171,19 @@ public class DBManager {
         return response.intValue();
 
     }
-
-    public void closeConnection() {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-            if (pStatement != null) {
-                pStatement.close();
-            }
-        } catch (Exception ex) {
-
-        }
-    }
-
+	
+	public void closeConnection() {
+		try {
+			if (conn != null) {
+				conn.close();
+			}
+			if (pStatement != null) {
+				pStatement.close();
+			}
+		}
+		catch (Exception ex) {
+			
+		}
+	}
+	
 }
