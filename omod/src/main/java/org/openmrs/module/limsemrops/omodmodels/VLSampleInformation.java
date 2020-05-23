@@ -9,10 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * @author MORRISON.I
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VLSampleInformation implements Serializable {
 	
 	private List<PatientID> patientID;

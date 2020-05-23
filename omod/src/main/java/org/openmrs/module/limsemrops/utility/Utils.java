@@ -61,25 +61,6 @@ public class Utils {
 		
 	}
 	
-	public static DBConnection getHACKNmrsConnectionDetails() {
-		
-		DBConnection result = new DBConnection();
-		
-		try {
-			
-			result.setUsername("root");
-			result.setPassword("faster129");
-			result.setUrl("jdbc\\:mysql\\://localhost\\:3306/nmrs-boot?autoReconnect\\=true&sessionVariables\\=default_storage_engine%3DInnoDB&useUnicode\\=true&characterEncoding\\=UTF-8");
-			
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		
-		return result;
-		
-	}
-	
 	public static String getFacilityDATIMId() {
 		return Context.getAdministrationService().getGlobalProperty("facility_datim_code");
 	}

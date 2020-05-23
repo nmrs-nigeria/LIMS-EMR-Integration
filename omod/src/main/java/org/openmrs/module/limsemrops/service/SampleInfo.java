@@ -11,32 +11,32 @@ import org.openmrs.Encounter;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.limsemrops.omodmodels.SampleCollectionManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
+import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 
 /**
  * @author MORRISON.I
  */
 public class SampleInfo {
-
-    private DBUtility dBUtility;
-    private ViralLoadInfo viralLoadInfo;
-
-    public SampleInfo() {
-        this.dBUtility = new DBUtility();
-
-    }
-
-    public SampleCollectionManifest searchLabEncounters(Date startDate, Date endDate) {
-
-        List<Integer> labEncounterIds = dBUtility.getLabEncountersByDate(startDate, endDate);
-        this.viralLoadInfo = new ViralLoadInfo(labEncounterIds);
-        VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
-        vLSampleCollectionBatchManifest = this.viralLoadInfo.getRecentSampleCollectedManifest();
-        SampleCollectionManifest sampleCollectionManifest = new SampleCollectionManifest();
-        sampleCollectionManifest.setViralloadManifest(vLSampleCollectionBatchManifest);
-        
-        return sampleCollectionManifest;
-        
-
-    }
-
+	
+	private DBUtility dBUtility;
+	
+	private ViralLoadInfo viralLoadInfo;
+	
+	public SampleInfo() {
+		this.dBUtility = new DBUtility();
+		
+	}
+	
+	public List<VLSampleInformationFrontFacing> searchLabEncounters(Date startDate, Date endDate) {
+		
+		List<Integer> labEncounterIds = dBUtility.getLabEncountersByDate(startDate, endDate);
+		this.viralLoadInfo = new ViralLoadInfo(labEncounterIds);
+		//		VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
+		//		vLSampleCollectionBatchManifest = this.viralLoadInfo.getRecentSampleCollectedManifest();
+		List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings = this.viralLoadInfo.searchLabEncounter();
+		
+		return vLSampleInformationFrontFacings;
+		
+	}
+	
 }

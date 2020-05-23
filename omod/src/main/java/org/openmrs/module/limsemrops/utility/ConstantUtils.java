@@ -13,6 +13,10 @@ public class ConstantUtils {
 	//tables Names
 	public final static String ENCOUNTER_TABLE = "encounter";
 	
+	public final static String MANIFEST_TABLE = "lims_manifest";
+	
+	public final static String MANIFEST_SAMPLES_TABLE = "lims_manifest_samples";
+	
 	//forms
 	public final static int Laboratory_Encounter_Type_Id = 11;
 	

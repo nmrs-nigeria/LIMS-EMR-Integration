@@ -4,23 +4,112 @@
     <list default="true" id="dc8c0e46-cb7c-4068-822b-2c09282ec7b3" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/omod/src/main/webapp/pages/manifest.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/app_query/lims_table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/app_query/lims_table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/DBManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/omodmodels/Manifest.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/omodmodels/Manifest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/omodmodels/VLSampleInformationFrontFacing.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/omodmodels/VLSampleInformationFrontFacing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/DBUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/DBUtility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/SampleInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/SampleInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/test/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/test/MainTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/ConstantUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/ConstantUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java" afterDir="false" />
+>>>>>>> master
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
+=======
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5559">
+              <caret line="351" selection-start-line="351" selection-end-line="351" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="81" column="4" lean-forward="true" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1207">
+              <caret line="107" column="13" selection-start-line="107" selection-start-column="13" selection-end-line="107" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/DBManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="49" selection-start-line="49" selection-end-line="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/DBUtility.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="42" selection-start-line="42" selection-end-line="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/SampleInfo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+>>>>>>> master
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
         <option name="importAutomatically" value="true" />
       </MavenImportingSettings>
+=======
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/NdrDBManager.java" />
+        <option value="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/ConstantUtils.java" />
+        <option value="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java" />
+        <option value="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java" />
+        <option value="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/DBManager.java" />
+        <option value="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java" />
+      </list>
+>>>>>>> master
     </option>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
@@ -204,11 +293,39 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="ProjectId" id="1cAfKd88IFZw8EzKl4tEJDLFix2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
+=======
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="1944" />
+    <option name="height" value="1044" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="LIMS-EMR-Interoperatability" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LIMS-EMR-Interoperatability" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+>>>>>>> master
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -299,13 +416,70 @@
       <workItem from="1587034917188" duration="8001000" />
       <workItem from="1587245034627" duration="1211000" />
       <workItem from="1587477333623" duration="1859000" />
-      <workItem from="1587542302379" duration="5367000" />
+      <workItem from="1587542302379" duration="5371000" />
+      <workItem from="1587986610955" duration="1248000" />
+      <workItem from="1588242351594" duration="5904000" />
+      <workItem from="1588578896806" duration="6114000" />
+      <workItem from="1588678911199" duration="21000" />
+      <workItem from="1588763627297" duration="1947000" />
+      <workItem from="1589463176170" duration="5194000" />
+      <workItem from="1589528781828" duration="4472000" />
+      <workItem from="1589893769089" duration="1199000" />
+      <workItem from="1589895224032" duration="2124000" />
+      <workItem from="1589968901000" duration="2055000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28364000" />
+    <option name="totallyTimeSpent" value="58646000" />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+<<<<<<< HEAD
+=======
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30607286" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.5079929" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3285968" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.45612136" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
+    </layout>
+  </component>
+>>>>>>> master
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
@@ -314,47 +488,175 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java</url>
+<<<<<<< HEAD
           <line>49</line>
+=======
+          <line>55</line>
+          <properties />
+>>>>>>> master
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
           <line>111</line>
+=======
+          <line>112</line>
+          <properties />
+>>>>>>> master
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
           <line>127</line>
+=======
+          <line>128</line>
+          <properties />
+>>>>>>> master
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
           <line>212</line>
+=======
+          <line>328</line>
+          <properties />
+>>>>>>> master
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
           <line>230</line>
+=======
+          <line>346</line>
+          <properties />
+>>>>>>> master
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java</url>
+<<<<<<< HEAD
           <line>106</line>
+=======
+          <line>87</line>
+          <properties />
+>>>>>>> master
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
           <line>235</line>
+=======
+          <line>351</line>
+          <properties />
+>>>>>>> master
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java</url>
+<<<<<<< HEAD
           <line>129</line>
+=======
+          <line>110</line>
+          <properties />
+>>>>>>> master
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/DBManager.java</url>
+          <line>49</line>
+          <properties />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java</url>
+          <line>118</line>
+          <properties />
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/NdrDBManager.java" />
+    <entry file="jar://$MAVEN_REPOSITORY$/org/openmrs/module/uiframework-api/3.13.0/uiframework-api-3.13.0.jar!/org/openmrs/ui/framework/fragment/FragmentFactory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6987">
+          <caret line="457" selection-start-line="457" selection-end-line="457" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/LabFormUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/ConstantUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/jre/lib/rt.jar!/sun/reflect/NativeMethodAccessorImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5559">
+          <caret line="351" selection-start-line="351" selection-end-line="351" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1207">
+          <caret line="107" column="13" selection-start-line="107" selection-start-column="13" selection-end-line="107" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/DBManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/DBUtility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/SampleInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="81" column="4" lean-forward="true" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+>>>>>>> master
   <component name="masterDetails">
     <states>
       <state key="ProjectJDKs.UI">
