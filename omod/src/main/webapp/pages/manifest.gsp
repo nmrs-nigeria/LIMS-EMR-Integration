@@ -127,17 +127,10 @@
 
 <form>
 <div class="form-left-decoration"></div>
-      <div class="form-right-decoration"></div>
-      <div class="circle"></div>
-      <div class="form-inner">
-        <h1>Contact us</h1>
-        <input type="text" placeholder="Username">
-        <input type="email" placeholder="Email">
-        <textarea placeholder="Message..." rows="5"></textarea>
-        <button type="submit" href="/">Submit</button>
+      
       </div>
 
 <div class="col">
-<button type="button" style="font: bold 14px Arial;">Download the book </button><br />
+<button type="button" style="font: bold 14px Arial;">Generate Manifest</button><br />
 </div>
 </form>>
