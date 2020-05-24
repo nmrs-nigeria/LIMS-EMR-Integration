@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc8c0e46-cb7c-4068-822b-2c09282ec7b3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/omod/src/main/webapp/pages/manifest.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
       <change beforePath="$PROJECT_DIR$/app_query/lims_table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/app_query/lims_table.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/DBManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java" afterDir="false" />
@@ -13,17 +16,17 @@
       <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/test/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/test/MainTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/ConstantUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/ConstantUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java" afterDir="false" />
+>>>>>>> master
     </list>
-    <ignored path="$PROJECT_DIR$/classes/" />
-    <ignored path="$PROJECT_DIR$/api/target/" />
-    <ignored path="$PROJECT_DIR$/omod/target/" />
-    <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+=======
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
@@ -84,10 +87,18 @@
         </entry>
       </file>
     </leaf>
+>>>>>>> master
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+=======
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -98,7 +109,11 @@
         <option value="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/DBManager.java" />
         <option value="$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java" />
       </list>
+>>>>>>> master
     </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
   </component>
   <component name="ProjectConfigurationFiles">
     <option name="files">
@@ -278,6 +293,13 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
+  <component name="ProjectId" id="1cAfKd88IFZw8EzKl4tEJDLFix2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+=======
   <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-12" />
     <option name="y" value="-12" />
@@ -303,6 +325,7 @@
       </pane>
       <pane id="PackagesPane" />
     </panes>
+>>>>>>> master
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -317,18 +340,6 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager">
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
@@ -431,6 +442,8 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
+<<<<<<< HEAD
+=======
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
@@ -466,6 +479,7 @@
       <window_info anchor="right" id="Bean Validation" order="9" />
     </layout>
   </component>
+>>>>>>> master
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
@@ -474,50 +488,82 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/fragment/controller/EMRExchangeFragmentController.java</url>
+<<<<<<< HEAD
+          <line>49</line>
+=======
           <line>55</line>
           <properties />
+>>>>>>> master
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
+          <line>111</line>
+=======
           <line>112</line>
           <properties />
+>>>>>>> master
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
+          <line>127</line>
+=======
           <line>128</line>
           <properties />
+>>>>>>> master
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
+          <line>212</line>
+=======
           <line>328</line>
           <properties />
+>>>>>>> master
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
+          <line>230</line>
+=======
           <line>346</line>
           <properties />
+>>>>>>> master
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java</url>
+<<<<<<< HEAD
+          <line>106</line>
+=======
           <line>87</line>
           <properties />
+>>>>>>> master
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/service/ViralLoadInfo.java</url>
+<<<<<<< HEAD
+          <line>235</line>
+=======
           <line>351</line>
           <properties />
+>>>>>>> master
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java</url>
+<<<<<<< HEAD
+          <line>129</line>
+=======
           <line>110</line>
           <properties />
+>>>>>>> master
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -535,6 +581,8 @@
       </breakpoints>
     </breakpoint-manager>
   </component>
+<<<<<<< HEAD
+=======
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/dbmanager/NdrDBManager.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/openmrs/module/uiframework-api/3.13.0/uiframework-api-3.13.0.jar!/org/openmrs/ui/framework/fragment/FragmentFactory.class">
@@ -608,6 +656,7 @@
       </provider>
     </entry>
   </component>
+>>>>>>> master
   <component name="masterDetails">
     <states>
       <state key="ProjectJDKs.UI">
