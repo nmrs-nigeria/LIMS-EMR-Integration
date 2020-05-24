@@ -2,8 +2,9 @@
 
 <%= ui.resourceLinks() %>
 <script type="text/javascript" src="/openmrs/ms/uiframework/resource/uicommons/scripts/datetimepicker/bootstrap-datetimepicker.min.js?cache=1525344062488"></script>
-<link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488" type="text/css" />
 
+<link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488" type="text/css" />
+<link rel="stylesheet" type="text/css" href="materials/style.css" />
 * {
       box-sizing: border-box;
       }
@@ -125,19 +126,45 @@
       }
     </style>
 
-<form>
-<div class="form-left-decoration"></div>
-      <div class="form-right-decoration"></div>
-      <div class="circle"></div>
-      <div class="form-inner">
-        <h1>Contact us</h1>
-        <input type="text" placeholder="Username">
-        <input type="email" placeholder="Email">
-        <textarea placeholder="Message..." rows="5"></textarea>
-        <button type="submit" href="/">Submit</button>
-      </div>
+<div class="container">
 
-<div class="col">
-<button type="button" style="font: bold 14px Arial;">Generate Manifest </button><br />
+<br>
+<br>
+
+                    <p class="lead">Generate Manifest</p>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <p id="schedule_range">&nbsp;</p>
+                                    <input type="text" id="manifest_schedule" class="form-control form-control-sm"/>
+                                </div>
+                                <div class="col-md-7" id="gist-6"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
 </div>
-</form>>
+
+<script src="/docs/moment.js"></script>
+<script src="/lightpick.js"></script>
+<script>
+    //var picker = new Lightpick({ field: document.getElementById('datepicker') });
+
+
+var picker = new Lightpick({
+    field: document.getElementById('manifest_schedule'),
+    singleDate: false,
+    minDate: moment().startOf('month').subtract(30, 'day'),
+    maxDate: moment().endOf('month'),
+    onSelect: function(start, end){
+        var str = '';
+        str += start ? start.format('DD MMMM YYYY') + ' to ' : '';
+        str += end ? end.format('DD MMMM YYYY') : '...';
+        document.getElementById('schedule_range').innerHTML = str;
+    }
+});
+
+</script>
+        

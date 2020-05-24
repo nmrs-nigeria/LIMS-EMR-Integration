@@ -1,0 +1,142 @@
+/**
+*Author: Mubarak Dada
+*Date: 13 May 2020
+*Update: 
+ * Table of Contents
+ * -----------------
+ * 1. General
+ * 2. Main
+ * 3. Meta
+ * 4. Calendar
+ * 5. Calendar: Head
+ * 6. Calendar: Body
+ */
+
+
+/**
+ * 1. General
+ */
+body {
+    font-family: Helvetica, Arial, sans-serif;
+}
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/**
+ * 2. Main
+ */
+table {
+    cursor: default;
+}
+
+
+/**
+ * 3. Meta
+ */
+.meta-cell {
+    vertical-align: top;
+}
+.meta-head {
+    padding-top: 15px;
+}
+.meta-body {
+    font-size: 8em;
+    letter-spacing: -2px;
+    padding: 0 16px;
+    width: 150px;
+}
+
+
+/**
+ * 4. Calendar
+ */
+.calendar-cell th,
+.calendar-cell td {
+    font-weight: normal;
+    padding: 0.2em 0.8em;
+}
+
+
+/**
+ * 5. Calendar: Head
+ */
+.calendar-header th {
+    padding: 0.5em 0;
+}
+.calendar-header .arrow {
+    color: #777;
+    cursor: pointer;
+    font-weight: lighter;
+}
+.calendar-header .arrow:hover {
+    background: #eee;
+    color: #111;
+}
+.calendar-header .header-month-year {
+    color: #111;
+    font-family: "Helvetica Neue", HelveticaNeue;
+    letter-spacing: 1.5px;
+}
+.calendar-header .header-month,
+.calendar-header .header-year {
+    background: none;
+    border: 1px solid transparent;
+    font-size: 1em;
+    margin: 0 1px;
+    outline: none;
+    padding: 4px;
+}
+.calendar-header .header-month:hover,
+.calendar-header .header-year:hover {
+    border: 1px solid #ccc;
+}
+.calendar-header .header-year:hover {
+    border-radius: 5px;
+}
+.calendar-header .header-month {
+    -webkit-appearance: none;
+    -khtml-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+}
+.calendar-header .header-year {
+    text-align: right;
+    width: 45px;
+}
+.calendar-cell .header-day-names {
+    color: #d75d5d;
+    font-size: 0.9em;
+}
+
+
+/**
+ * 6. Calendar: Body
+ */
+.calendar-cell tbody tr {
+    height: 20px;
+}
+.calendar-cell tbody td {
+    color: #888;
+    font-size: 0.9em;
+}
+.calendar-cell  tbody td:not(:empty):hover {
+    background: #eee;
+    color: #000;
+    cursor: pointer;
+}
+.calendar-cell tbody .active {
+    background: #f55;
+    color: #fff;
+}
+.calendar-cell tbody .active:hover,
+.calendar-cell tbody .active[data-date]:hover {
+    background: #f33;
+    color: #fff;
+}
