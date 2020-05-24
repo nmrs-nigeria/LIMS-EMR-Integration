@@ -4,7 +4,7 @@
 <script type="text/javascript" src="/openmrs/ms/uiframework/resource/uicommons/scripts/datetimepicker/bootstrap-datetimepicker.min.js?cache=1525344062488"></script>
 
 <link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488" type="text/css" />
-<link rel="stylesheet" type="text/css" href="materials/style.css" />
+<link rel="stylesheet" type="text/css" href="/materials/css/lightpick.css">
 * {
       box-sizing: border-box;
       }
@@ -147,8 +147,8 @@
                     <br>
 </div>
 
-<script src="/docs/moment.js"></script>
-<script src="/lightpick.js"></script>
+<script src="/materials/docs/moment.js"></script>
+<script src="/materials/docs/lightpick.js"></script>
 <script>
     //var picker = new Lightpick({ field: document.getElementById('datepicker') });
 
