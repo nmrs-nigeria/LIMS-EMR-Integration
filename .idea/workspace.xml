@@ -42,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="84">
-              <caret line="81" column="4" lean-forward="true" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
+              <caret line="81" column="4" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -289,7 +289,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -302,6 +301,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -416,11 +416,12 @@
       <workItem from="1589893769089" duration="1199000" />
       <workItem from="1589895224032" duration="2124000" />
       <workItem from="1589968901000" duration="2055000" />
+      <workItem from="1590052220551" duration="805000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58646000" />
+    <option name="totallyTimeSpent" value="59451000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -432,9 +433,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30607286" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3117409" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -603,7 +604,7 @@
     <entry file="file://$PROJECT_DIR$/omod/src/main/java/org/openmrs/module/limsemrops/utility/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
-          <caret line="81" column="4" lean-forward="true" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
+          <caret line="81" column="4" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
         </state>
       </provider>
     </entry>
