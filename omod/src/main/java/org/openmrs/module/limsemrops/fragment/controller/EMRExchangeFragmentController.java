@@ -119,7 +119,7 @@ public class EMRExchangeFragmentController {
 
     }
 	
-        //vlsamples is a list of VLSampleInformationFrontFacing and is a json string of Manifest object
+	//vlsamples is a list of VLSampleInformationFrontFacing and is a json string of Manifest object
 	public void performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
 	        @RequestParam(value = "manifest", required = true) String manifestDraft) {
 		

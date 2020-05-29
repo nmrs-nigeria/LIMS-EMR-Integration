@@ -30,16 +30,24 @@ def id = config.id
 
 </script>
 
-<!--<a id="${ id }_button"  class="button app big" style="font-size:12px;min-height: 10px;">
-    <i class="icon-download"></i>
-    <br/>
-    <p>Generate NDR</p>
-</a>-->
+
 
 <a id="${ id }_button_manifest"  class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>
     <br/>
     <p>Generate & Send Manifest Files</p>
+</a>
+
+<a id="${ id }_button_manifest"  class="button app big" style="font-size:12px;min-height: 10px;">
+    <i class="icon-refresh"></i>
+    <br/>
+    <p>Schedule Manifest</p>
+</a>
+
+<a id="${ id }_button_manifest"  class="button app big" style="font-size:12px;min-height: 10px;">
+    <i class="icon-refresh"></i>
+    <br/>
+    <p>Notification</p>
 </a>
 
 
