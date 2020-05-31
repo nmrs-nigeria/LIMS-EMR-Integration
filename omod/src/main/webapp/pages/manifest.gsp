@@ -130,291 +130,340 @@
     </style>
 
 <form>
-</br>
+   </br>
 
 
     <div>
-      <div>
+        <div>
 
-        <div class="col-md-4">
-          <center>
-            <form>
-              <div class="form-group">
-                <label class="control-label">State of Origin</label>
-                <select
-                  onchange="toggleLGA(this);"
-                  name="state"
-                  id="state"
-                  class="form-control"
-                >
-                  <option value="" selected="selected">- Select -</option>
-                  <option value="Abia">Abia</option>
-                  <option value="Adamawa">Adamawa</option>
-                  <option value="AkwaIbom">AkwaIbom</option>
-                  <option value="Anambra">Anambra</option>
-                  <option value="Bauchi">Bauchi</option>
-                  <option value="Bayelsa">Bayelsa</option>
-                  <option value="Benue">Benue</option>
-                  <option value="Borno">Borno</option>
-                  <option value="Cross River">Cross River</option>
-                  <option value="Delta">Delta</option>
-                  <option value="Ebonyi">Ebonyi</option>
-                  <option value="Edo">Edo</option>
-                  <option value="Ekiti">Ekiti</option>
-                  <option value="Enugu">Enugu</option>
-                  <option value="FCT">FCT</option>
-                  <option value="Gombe">Gombe</option>
-                  <option value="Imo">Imo</option>
-                  <option value="Jigawa">Jigawa</option>
-                  <option value="Kaduna">Kaduna</option>
-                  <option value="Kano">Kano</option>
-                  <option value="Katsina">Katsina</option>
-                  <option value="Kebbi">Kebbi</option>
-                  <option value="Kogi">Kogi</option>
-                  <option value="Kwara">Kwara</option>
-                  <option value="Lagos">Lagos</option>
-                  <option value="Nasarawa">Nasarawa</option>
-                  <option value="Niger">Niger</option>
-                  <option value="Ogun">Ogun</option>
-                  <option value="Ondo">Ondo</option>
-                  <option value="Osun">Osun</option>
-                  <option value="Oyo">Oyo</option>
-                  <option value="Plateau">Plateau</option>
-                  <option value="Rivers">Rivers</option>
-                  <option value="Sokoto">Sokoto</option>
-                  <option value="Taraba">Taraba</option>
-                  <option value="Yobe">Yobe</option>
-                  <option value="Zamfara">Zamafara</option>
-                </select>
-              </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>State</label>
+                    <select onchange="togglePCR(this);" name="_state" id="_state" class="form-control">
+                        <option value="" selected="selected">- Select -</option>
+                        <option value="Abia">Abia</option>
+                        <option value="Adamawa">Adamawa</option>
+                        <option value="AkwaIbom">AkwaIbom</option>
+                        <option value="Anambra">Anambra</option>
+                        <option value="Bauchi">Bauchi</option>
+                        <option value="Bayelsa">Bayelsa</option>
+                        <option value="Benue">Benue</option>
+                        <option value="Borno">Borno</option>
+                        <option value="Cross River">Cross River</option>
+                        <option value="Delta">Delta</option>
+                        <option value="Ebonyi">Ebonyi</option>
+                        <option value="Edo">Edo</option>
+                        <option value="Ekiti">Ekiti</option>
+                        <option value="Enugu">Enugu</option>
+                        <option value="FCT">FCT</option>
+                        <option value="Gombe">Gombe</option>
+                        <option value="Imo">Imo</option>
+                        <option value="Jigawa">Jigawa</option>
+                        <option value="Kaduna">Kaduna</option>
+                        <option value="Kano">Kano</option>
+                        <option value="Katsina">Katsina</option>
+                        <option value="Kebbi">Kebbi</option>
+                        <option value="Kogi">Kogi</option>
+                        <option value="Kwara">Kwara</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Nasarawa">Nasarawa</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Ogun">Ogun</option>
+                        <option value="Ondo">Ondo</option>
+                        <option value="Osun">Osun</option>
+                        <option value="Oyo">Oyo</option>
+                        <option value="Plateau">Plateau</option>
+                        <option value="Rivers">Rivers</option>
+                        <option value="Sokoto">Sokoto</option>
+                        <option value="Taraba">Taraba</option>
+                        <option value="Yobe">Yobe</option>
+                        <option value="Zamfara">Zamafara</option>
 
-              <div class="form-group">
-                <label class="control-label">LGA of Origin</label>
-                <select
-                  name="lga"
-                  id="lga"
-                  class="form-control select-lga"
-                  required
-                >
-                </select>
-              </div>
-            </form>
-          </center>
+                    </select>
+                    <div class="form-group">
+                        <label class="control-label">PCR Lab</label>
+                        <select name="pcr" id="pcr" class="form-control select-pcr" required>
+                        </select>
+                    </div>
+                    <!-- <label class="control-label">State of Origin</label>
+                        <select onchange="toggleLGA(this);" name="state" id="state" class="form-control">
+                            <option value="" selected="selected">- Select -</option>
+                            <option value="Abia">Abia</option>
+                            <option value="Adamawa">Adamawa</option>
+                            <option value="AkwaIbom">AkwaIbom</option>
+                            <option value="Anambra">Anambra</option>
+                            <option value="Bauchi">Bauchi</option>
+                            <option value="Bayelsa">Bayelsa</option>
+                            <option value="Benue">Benue</option>
+                            <option value="Borno">Borno</option>
+                            <option value="Cross River">Cross River</option>
+                            <option value="Delta">Delta</option>
+                            <option value="Ebonyi">Ebonyi</option>
+                            <option value="Edo">Edo</option>
+                            <option value="Ekiti">Ekiti</option>
+                            <option value="Enugu">Enugu</option>
+                            <option value="FCT">FCT</option>
+                            <option value="Gombe">Gombe</option>
+                            <option value="Imo">Imo</option>
+                            <option value="Jigawa">Jigawa</option>
+                            <option value="Kaduna">Kaduna</option>
+                            <option value="Kano">Kano</option>
+                            <option value="Katsina">Katsina</option>
+                            <option value="Kebbi">Kebbi</option>
+                            <option value="Kogi">Kogi</option>
+                            <option value="Kwara">Kwara</option>
+                            <option value="Lagos">Lagos</option>
+                            <option value="Nasarawa">Nasarawa</option>
+                            <option value="Niger">Niger</option>
+                            <option value="Ogun">Ogun</option>
+                            <option value="Ondo">Ondo</option>
+                            <option value="Osun">Osun</option>
+                            <option value="Oyo">Oyo</option>
+                            <option value="Plateau">Plateau</option>
+                            <option value="Rivers">Rivers</option>
+                            <option value="Sokoto">Sokoto</option>
+                            <option value="Taraba">Taraba</option>
+                            <option value="Yobe">Yobe</option>
+                            <option value="Zamfara">Zamafara</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">LGA of Origin</label>
+                        <select name="lga" id="lga" class="form-control select-lga" required>
+                        </select>
+                    </div> -->
+
+                    <label class="control-label">Timely Pickup</label>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optradio">Yes
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optradio">No
+                        </label>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3"></div>
         </div>
-        <div class="col-md-4"></div>
-      </div>
-    </div>
-</br>
+        </br>
 
 
 
-<table id="example" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>S/N</th>
-                <th>Sample ID</th>
-                <th>Viral Load</th>
-                <th>CD4</th>
-                <th>Hepatitis</th>
-                <th>Others</th>
-                <th>Comments</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>GHN98765123</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>GHN98765123</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$170,750</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Ashton Cox</td>
-                <td>GHN98765123</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009/01/12</td>
-                <td>$86,000</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Cedric Kelly</td>
-                <td>GHN98765123</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2012/03/29</td>
-                <td>$433,060</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Airi Satou</td>
-                <td>GHN98765123</td>
-                <td>Tokyo</td>
-                <td>33</td>
-                <td>2008/11/28</td>
-                <td>$162,700</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Brielle Williamson</td>
-                <td>GHN98765123</td>
-                <td>New York</td>
-                <td>61</td>
-                <td>2012/12/02</td>
-                <td>$372,000</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Herrod Chandler</td>
-                <td>GHN98765123</td>
-                <td>San Francisco</td>
-                <td>59</td>
-                <td>2012/08/06</td>
-                <td>$137,500</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Rhona Davidson</td>
-                <td>GHN98765123</td>
-                <td>Tokyo</td>
-                <td>55</td>
-                <td>2010/10/14</td>
-                <td>$327,900</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Colleen Hurst</td>
-                <td>GHN98765123</td>
-                <td>San Francisco</td>
-                <td>39</td>
-                <td>2009/09/15</td>
-                <td>$205,500</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Sonya Frost</td>
-                <td>GHN98765123</td>
-                <td>Edinburgh</td>
-                <td>23</td>
-                <td>2008/12/13</td>
-                <td>$103,600</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Jena Gaines</td>
-                <td>GHN98765123</td>
-                <td>London</td>
-                <td>30</td>
-                <td>2008/12/19</td>
-                <td>$90,560</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Quinn Flynn</td>
-                <td>GHN98765123</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2013/03/03</td>
-                <td>$342,000</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Charde Marshall</td>
-                <td>GHN98765123</td>
-                <td>San Francisco</td>
-                <td>36</td>
-                <td>2008/10/16</td>
-                <td>$470,600</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Haley Kennedy</td>
-                <td>GHN98765123</td>
-                <td>London</td>
-                <td>43</td>
-                <td>2012/12/18</td>
-                <td>$313,500</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Tatyana Fitzpatrick</td>
-                <td>GHN98765123</td>
-                <td>London</td>
-                <td>19</td>
-                <td>2010/03/17</td>
-                <td>$385,750</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Michael Silva</td>
-                <td>GHN98765123</td>
-                <td>London</td>
-                <td>66</td>
-                <td>2012/11/27</td>
-                <td>$198,500</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Paul Byrd</td>
-                <td>GHN98765123</td>
-                <td>New York</td>
-                <td>64</td>
-                <td>2010/06/09</td>
-                <td>$725,000</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Gloria Little</td>
-                <td>GHN98765123</td>
-                <td>New York</td>
-                <td>59</td>
-                <td>2009/04/10</td>
-                <td>$237,500</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Bradley Greer</td>
-                <td>GHN98765123</td>
-                <td>London</td>
-                <td>41</td>
-                <td>2012/10/13</td>
-                <td>$132,000</td>
-                <td>Fragile</td>
-            </tr>
-            <tr>
-                <td>Dai Rios</td>
-                <td>GHN98765123</td>
-                <td>Edinburgh</td>
-                <td>35</td>
-                <td>2012/09/26</td>
-                <td>$217,500</td>
-                <td>Fragile</td>
-            </tr>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Sample ID</th>
+                    <th>Viral Load</th>
+                    <th>CD4</th>
+                    <th>Hepatitis</th>
+                    <th>Others</th>
+                    <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tiger Nixon</td>
+                    <td>GHN98765123</td>
+                    <td>Edinburgh</td>
+                    <td>61</td>
+                    <td>2011/04/25</td>
+                    <td>$320,800</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Garrett Winters</td>
+                    <td>GHN98765123</td>
+                    <td>Tokyo</td>
+                    <td>63</td>
+                    <td>2011/07/25</td>
+                    <td>$170,750</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Ashton Cox</td>
+                    <td>GHN98765123</td>
+                    <td>San Francisco</td>
+                    <td>66</td>
+                    <td>2009/01/12</td>
+                    <td>$86,000</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Cedric Kelly</td>
+                    <td>GHN98765123</td>
+                    <td>Edinburgh</td>
+                    <td>22</td>
+                    <td>2012/03/29</td>
+                    <td>$433,060</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Airi Satou</td>
+                    <td>GHN98765123</td>
+                    <td>Tokyo</td>
+                    <td>33</td>
+                    <td>2008/11/28</td>
+                    <td>$162,700</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Brielle Williamson</td>
+                    <td>GHN98765123</td>
+                    <td>New York</td>
+                    <td>61</td>
+                    <td>2012/12/02</td>
+                    <td>$372,000</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Herrod Chandler</td>
+                    <td>GHN98765123</td>
+                    <td>San Francisco</td>
+                    <td>59</td>
+                    <td>2012/08/06</td>
+                    <td>$137,500</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Rhona Davidson</td>
+                    <td>GHN98765123</td>
+                    <td>Tokyo</td>
+                    <td>55</td>
+                    <td>2010/10/14</td>
+                    <td>$327,900</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Colleen Hurst</td>
+                    <td>GHN98765123</td>
+                    <td>San Francisco</td>
+                    <td>39</td>
+                    <td>2009/09/15</td>
+                    <td>$205,500</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Sonya Frost</td>
+                    <td>GHN98765123</td>
+                    <td>Edinburgh</td>
+                    <td>23</td>
+                    <td>2008/12/13</td>
+                    <td>$103,600</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Jena Gaines</td>
+                    <td>GHN98765123</td>
+                    <td>London</td>
+                    <td>30</td>
+                    <td>2008/12/19</td>
+                    <td>$90,560</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Quinn Flynn</td>
+                    <td>GHN98765123</td>
+                    <td>Edinburgh</td>
+                    <td>22</td>
+                    <td>2013/03/03</td>
+                    <td>$342,000</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Charde Marshall</td>
+                    <td>GHN98765123</td>
+                    <td>San Francisco</td>
+                    <td>36</td>
+                    <td>2008/10/16</td>
+                    <td>$470,600</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Haley Kennedy</td>
+                    <td>GHN98765123</td>
+                    <td>London</td>
+                    <td>43</td>
+                    <td>2012/12/18</td>
+                    <td>$313,500</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Tatyana Fitzpatrick</td>
+                    <td>GHN98765123</td>
+                    <td>London</td>
+                    <td>19</td>
+                    <td>2010/03/17</td>
+                    <td>$385,750</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Michael Silva</td>
+                    <td>GHN98765123</td>
+                    <td>London</td>
+                    <td>66</td>
+                    <td>2012/11/27</td>
+                    <td>$198,500</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Paul Byrd</td>
+                    <td>GHN98765123</td>
+                    <td>New York</td>
+                    <td>64</td>
+                    <td>2010/06/09</td>
+                    <td>$725,000</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Gloria Little</td>
+                    <td>GHN98765123</td>
+                    <td>New York</td>
+                    <td>59</td>
+                    <td>2009/04/10</td>
+                    <td>$237,500</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Bradley Greer</td>
+                    <td>GHN98765123</td>
+                    <td>London</td>
+                    <td>41</td>
+                    <td>2012/10/13</td>
+                    <td>$132,000</td>
+                    <td>Fragile</td>
+                </tr>
+                <tr>
+                    <td>Dai Rios</td>
+                    <td>GHN98765123</td>
+                    <td>Edinburgh</td>
+                    <td>35</td>
+                    <td>2012/09/26</td>
+                    <td>$217,500</td>
+                    <td>Fragile</td>
+                </tr>
 
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>S/N</th>
-                <th>Sample ID</th>
-                <th>Viral Load</th>
-                <th>CD4</th>
-                <th>Hepatitis</th>
-                <th>Others</th>
-                <th>Comments</th>
-            </tr>
-        </tfoot>
-    </table>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>S/N</th>
+                    <th>Sample ID</th>
+                    <th>Viral Load</th>
+                    <th>CD4</th>
+                    <th>Hepatitis</th>
+                    <th>Others</th>
+                    <th>Comments</th>
+                </tr>
+            </tfoot>
+        </table>
+        </br>
 </br>
 <button id="button" type="submit">Save Manifest</button>
 </form>>
@@ -427,6 +476,7 @@
 
 <script src="docs/state_lga_js/js/bootstrap.min.js"></script>
 <script src="docs/state_lga_js/js/lga.min.js"></script>
+<script src="docs/state_lga_js/js/PCRlabs.min.js"></script>
 <script>
 $(document).ready(function() {
     var table = $('#example').DataTable({"pagingType": "full", stateSave: true});
