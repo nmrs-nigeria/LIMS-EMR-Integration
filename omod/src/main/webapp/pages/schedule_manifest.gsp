@@ -139,6 +139,13 @@
                                     <p id="schedule_range">&nbsp;</p>
                                     <input type="text" id="manifest_schedule" class="form-control form-control-sm"/>
                                 </div>
+                                <div>
+                                </br>
+                                <form action="https://www.google.com/" method="get" target="_blank">
+                                <button type="submit" onclick="window.location.href = 'https://google.com';">Create Manifest</button>
+                                <hr />
+                                </form>
+                                </div>
                                 <div class="col-md-7" id="gist-6"></div>
                             </div>
                         </div>
@@ -146,6 +153,7 @@
 
                     <br>
 </div>
+
 
 <script src="/materials/docs/moment.js"></script>
 <script src="/materials/docs/lightpick.js"></script>

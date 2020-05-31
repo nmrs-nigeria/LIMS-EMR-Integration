@@ -27,18 +27,21 @@ def id = config.id
     });
 
 
-
 </script>
 
-
-
-<a id="${ id }_button_manifest"  class="button app big" style="font-size:12px;min-height: 10px;">
+<a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>
     <br/>
-    <p>Generate & Send Manifest Files</p>
+    <p>Generate</p>
 </a>
 
-<a id="${ id }_button_manifest"  class="button app big" style="font-size:12px;min-height: 10px;">
+<a href="src/main/webapp/pages/manifest.gsp" class="button app big" style="font-size:12px;min-height: 10px;">
+    <i class="icon-refresh"></i>
+    <br/>
+    <p>Generate Manifest</p>
+</a>
+
+<a href="src/main/webapp/pages/schedule_manifest.gsp"  class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>
     <br/>
     <p>Schedule Manifest</p>
@@ -49,5 +52,4 @@ def id = config.id
     <br/>
     <p>Notification</p>
 </a>
-
 
