@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/materials/docs/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="/materials/docs/DataTables-1.10.21//css/jquery.dataTables.min.css"/>
 <link rel="stylesheet" typr="text/css" href="/materials/docs/state_lga_js/css/bootsrap.min.css"/>
-
+<style>
 * {
       box-sizing: border-box;
       }
@@ -275,7 +275,7 @@
                     <td>Edinburgh</td>
                     <td>61</td>
                     <td>2011/04/25</td>
-                    <td>$320,800</td>
+                    <td>\$320,800</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -284,7 +284,7 @@
                     <td>Tokyo</td>
                     <td>63</td>
                     <td>2011/07/25</td>
-                    <td>$170,750</td>
+                    <td>\$170,750</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -293,7 +293,7 @@
                     <td>San Francisco</td>
                     <td>66</td>
                     <td>2009/01/12</td>
-                    <td>$86,000</td>
+                    <td>\$86,000</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -302,7 +302,7 @@
                     <td>Edinburgh</td>
                     <td>22</td>
                     <td>2012/03/29</td>
-                    <td>$433,060</td>
+                    <td>\$433,060</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -311,7 +311,7 @@
                     <td>Tokyo</td>
                     <td>33</td>
                     <td>2008/11/28</td>
-                    <td>$162,700</td>
+                    <td>\$162,700</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -320,7 +320,7 @@
                     <td>New York</td>
                     <td>61</td>
                     <td>2012/12/02</td>
-                    <td>$372,000</td>
+                    <td>\$372,000</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -329,7 +329,7 @@
                     <td>San Francisco</td>
                     <td>59</td>
                     <td>2012/08/06</td>
-                    <td>$137,500</td>
+                    <td>\$137,500</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -338,7 +338,7 @@
                     <td>Tokyo</td>
                     <td>55</td>
                     <td>2010/10/14</td>
-                    <td>$327,900</td>
+                    <td>\$327,900</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -347,7 +347,7 @@
                     <td>San Francisco</td>
                     <td>39</td>
                     <td>2009/09/15</td>
-                    <td>$205,500</td>
+                    <td>\$205,500</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -356,7 +356,7 @@
                     <td>Edinburgh</td>
                     <td>23</td>
                     <td>2008/12/13</td>
-                    <td>$103,600</td>
+                    <td>\$103,600</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -365,7 +365,7 @@
                     <td>London</td>
                     <td>30</td>
                     <td>2008/12/19</td>
-                    <td>$90,560</td>
+                    <td>\$90,560</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -374,7 +374,7 @@
                     <td>Edinburgh</td>
                     <td>22</td>
                     <td>2013/03/03</td>
-                    <td>$342,000</td>
+                    <td>\$342,000</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -383,7 +383,7 @@
                     <td>San Francisco</td>
                     <td>36</td>
                     <td>2008/10/16</td>
-                    <td>$470,600</td>
+                    <td>\$470,600</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -392,7 +392,7 @@
                     <td>London</td>
                     <td>43</td>
                     <td>2012/12/18</td>
-                    <td>$313,500</td>
+                    <td>\$313,500</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -401,7 +401,7 @@
                     <td>London</td>
                     <td>19</td>
                     <td>2010/03/17</td>
-                    <td>$385,750</td>
+                    <td>\$385,750</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -410,7 +410,7 @@
                     <td>London</td>
                     <td>66</td>
                     <td>2012/11/27</td>
-                    <td>$198,500</td>
+                    <td>\$198,500</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -419,7 +419,7 @@
                     <td>New York</td>
                     <td>64</td>
                     <td>2010/06/09</td>
-                    <td>$725,000</td>
+                    <td>\$725,000</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -428,7 +428,7 @@
                     <td>New York</td>
                     <td>59</td>
                     <td>2009/04/10</td>
-                    <td>$237,500</td>
+                    <td>\$237,500</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -437,7 +437,7 @@
                     <td>London</td>
                     <td>41</td>
                     <td>2012/10/13</td>
-                    <td>$132,000</td>
+                    <td>\$132,000</td>
                     <td>Fragile</td>
                 </tr>
                 <tr>
@@ -446,7 +446,7 @@
                     <td>Edinburgh</td>
                     <td>35</td>
                     <td>2012/09/26</td>
-                    <td>$217,500</td>
+                    <td>\$217,500</td>
                     <td>Fragile</td>
                 </tr>
 
@@ -466,7 +466,7 @@
         </br>
 </br>
 <button id="button" type="submit">Save Manifest</button>
-</form>>
+</form>
 
 <script type="text/javascript" src="/materials/docs/datatables.min.js"></script>
 <script type="text/javascript" src="/materials/docs/jquery-3.5.1.js"></script>
@@ -478,21 +478,19 @@
 <script src="docs/state_lga_js/js/lga.min.js"></script>
 <script src="docs/state_lga_js/js/PCRlabs.min.js"></script>
 <script>
-$(document).ready(function() {
-    var table = $('#example').DataTable({"pagingType": "full", stateSave: true});
+jQuery(document).ready(function() {
+    var table = jQuery('#example').DataTable({"pagingType": "full", stateSave: true});
     //"pagingType": "full_numbers"
 
-    $('#example tbody').on( 'click', 'tr', function () {
-        $(this).toggleClass('selected');
+    jQuery('#example tbody').on( 'click', 'tr', function () {
+        jQuery(this).toggleClass('selected');
     } );
 
-    $('#button').click( function () {
+    jQuery('#button').click( function () {
         alert( table.rows('.selected').data().length +' row(s) selected' );
     } );
 
-    //$('#button').click( function () {
-    //    table.row('.selected').remove().draw( false );
-    //} );
+    
 
 
 } );
