@@ -26,7 +26,6 @@ def id = config.id
     });
     });
 
-
 </script>
 
 <a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">

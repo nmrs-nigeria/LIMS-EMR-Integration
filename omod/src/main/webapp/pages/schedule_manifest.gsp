@@ -4,7 +4,8 @@
 <script type="text/javascript" src="/openmrs/ms/uiframework/resource/uicommons/scripts/datetimepicker/bootstrap-datetimepicker.min.js?cache=1525344062488"></script>
 
 <link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488" type="text/css" />
-<link rel="stylesheet" type="text/css" href="/materials/css/lightpick.css">
+<% ui.includeCss("limsemrops", "lightpick.css") %>
+<style>
 * {
       box-sizing: border-box;
       }
@@ -127,10 +128,6 @@
     </style>
 
 <div class="container">
-
-<br>
-<br>
-
                     <p class="lead">Generate Manifest</p>
                     <div class="card">
                         <div class="card-body">
@@ -150,16 +147,13 @@
                             </div>
                         </div>
                     </div>
-
-                    <br>
 </div>
 
+<% ui.includeJavascript("limsemrops", "moment.js") %>
+<% ui.includeJavascript("limsemrops", "lightpick.js") %>
 
-<script src="/materials/docs/moment.js"></script>
-<script src="/materials/docs/lightpick.js"></script>
 <script>
     //var picker = new Lightpick({ field: document.getElementById('datepicker') });
-
 
 var picker = new Lightpick({
     field: document.getElementById('manifest_schedule'),
@@ -173,6 +167,5 @@ var picker = new Lightpick({
         document.getElementById('schedule_range').innerHTML = str;
     }
 });
-
 </script>
         
