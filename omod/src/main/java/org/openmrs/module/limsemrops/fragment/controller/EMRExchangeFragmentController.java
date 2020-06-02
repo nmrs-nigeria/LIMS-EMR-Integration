@@ -66,7 +66,6 @@ public class EMRExchangeFragmentController {
 		System.out.println(result);
 		
 		//	performVLRequisition(result, "LIMS150003", "Asokoro Laboratory and Training Center");
-		
 		//        ObjectMapper mapper = new ObjectMapper();
 		//        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		//
@@ -185,6 +184,35 @@ public class EMRExchangeFragmentController {
 		}
 		
 		//TODO: confirm with Mubarak what details will be return to frontend
+	}
+	
+	public String getAllSavedManifest() {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		List<Manifest> manifests = dBUtility.getManifests();
+		String response = null;
+		try {
+			response = mapper.writeValueAsString(manifests);
+		}
+		catch (JsonProcessingException ex) {
+			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		return response;
+	}
+	
+	public String getManifestSamples(@RequestParam(value = "manifestId") String manifestId) {
+		ObjectMapper mapper = new ObjectMapper();
+		List<VLSampleInformationFrontFacing> manifestSamples = dBUtility.getSamplesByManifestId(manifestId);
+		String response = null;
+		try {
+			response = mapper.writeValueAsString(manifestSamples);
+		}
+		catch (JsonProcessingException ex) {
+			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		return response;
 	}
 	
 	private List<VLSampleInformation> updateDateSampleSent(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {

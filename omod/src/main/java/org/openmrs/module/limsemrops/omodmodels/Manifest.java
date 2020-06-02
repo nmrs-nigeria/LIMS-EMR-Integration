@@ -46,6 +46,16 @@ public class Manifest {
 	
 	private String modifiedBy;
 	
+	private Date dateCreated;
+	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	
 	public String getManifestID() {
 		return manifestID;
 	}

@@ -113,4 +113,35 @@ public class DBUtility {
 		
 	}
 	
+	public List<Manifest> getManifests() {
+        List<Manifest> manifests = new ArrayList<>();
+
+        try {
+            this.ndrDBManager.openConnection();
+            manifests = ndrDBManager.getAllManifest();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        } finally {
+            this.ndrDBManager.closeConnection();
+        }
+
+        return manifests;
+    }
+	
+	public List<VLSampleInformationFrontFacing> getSamplesByManifestId(String manifestId) {
+
+        List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings = new ArrayList<>();
+
+        try {
+            this.ndrDBManager.openConnection();
+            vLSampleInformationFrontFacings = ndrDBManager.getManifestSamples(manifestId);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        } finally {
+            this.ndrDBManager.closeConnection();
+        }
+
+        return vLSampleInformationFrontFacings;
+
+    }
 }
