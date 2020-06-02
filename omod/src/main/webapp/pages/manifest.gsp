@@ -1,135 +1,13 @@
 <% ui.decorateWith("appui", "standardEmrPage") %>
 
 <%= ui.resourceLinks() %>
-<% ui.includeCss("patientindextracing", "bootstrap.min.css") %>
 <script type="text/javascript" src="/openmrs/ms/uiframework/resource/uicommons/scripts/datetimepicker/bootstrap-datetimepicker.min.js?cache=1525344062488"></script>
 <link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488" type="text/css" />
 
 <% ui.includeCss("limsemrops", "bootstrap.min.css") %>
 <% ui.includeCss("limsemrops", "datatables.min.css") %>
-<% ui.includeCss("limsemrops", "jquery.bootstrap.min.css") %>
+<% ui.includeCss("limsemrops", "docs/DataTables-1.10.21/css/jquery.bootstrap.min.css") %>
 
-<style>
-* {
-      box-sizing: border-box;
-      }
-      html, body {
-      min-height: 100vh;
-      padding: 0;
-      margin: 0;
-      font-family: Roboto, Arial, sans-serif;
-      font-size: 14px; 
-      color: #666;
-      }
-      input, textarea { 
-      outline: none;
-      }
-      body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      background: #5a7233;
-      }
-      h1 {
-      margin-top: 0;
-      font-weight: 500;
-      }
-      form {
-      position: relative;
-      width: 80%;
-      border-radius: 30px;
-      background: #fff;
-      }
-      .form-left-decoration,
-      .form-right-decoration {
-      content: "";
-      position: absolute;
-      width: 50px;
-      height: 20px;
-      border-radius: 20px;
-      background: #5a7233;
-      }
-      .form-left-decoration {
-      bottom: 60px;
-      left: -30px;
-      }
-      .form-right-decoration {
-      top: 60px;
-      right: -30px;
-      }
-      .form-left-decoration:before,
-      .form-left-decoration:after,
-      .form-right-decoration:before,
-      .form-right-decoration:after {
-      content: "";
-      position: absolute;
-      width: 50px;
-      height: 20px;
-      border-radius: 30px;
-      background: #fff;
-      }
-      .form-left-decoration:before {
-      top: -20px;
-      }
-      .form-left-decoration:after {
-      top: 20px;
-      left: 10px;
-      }
-      .form-right-decoration:before {
-      top: -20px;
-      right: 0;
-      }
-      .form-right-decoration:after {
-      top: 20px;
-      right: 10px;
-      }
-      .circle {
-      position: absolute;
-      bottom: 80px;
-      left: -55px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #fff;
-      }
-      .form-inner {
-      padding: 40px;
-      }
-      .form-inner input,
-      .form-inner textarea {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 10px;
-      border: none;
-      border-radius: 20px;
-      background: #d0dfe8;
-      }
-      .form-inner textarea {
-      resize: none;
-      }
-      button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 20px;
-      border-radius: 20px;
-      border: none;
-      border-bottom: 4px solid #3e4f24;
-      background: #5a7233; 
-      font-size: 16px;
-      font-weight: 400;
-      color: #fff;
-      }
-      button:hover {
-      background: #3e4f24;
-      } 
-      @media (min-width: 568px) {
-      form {
-      width: 60%;
-      }
-      }
-    </style>
 
 <form>
    </br>
@@ -272,21 +150,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Tiger Nixon</td>
-                    <td>GHN98765123</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td>\$320,800</td>
-                    <td>Fragile</td>
-                </tr>
-                <tr>
-                    <td>Garrett Winters</td>
-                    <td>GHN98765123</td>
-                    <td>Tokyo</td>
-                    <td>63</td>
-                    <td>2011/07/25</td>
-                    <td>\$170,750</td>
                     <td>Fragile</td>
                 </tr>
 
@@ -309,10 +178,10 @@
 </form>
 
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
-<% ui.includeJavascript("limsemrops", "datatables.min.js") %>
-<% ui.includeJavascript("limsemrops", "jquery-3.5.1.js") %>
-<% ui.includeJavascript("limsemrops", "jquery.dataTables.min.js") %>
-<% ui.includeJavascript("limsemrops", "pdfmake.min.js") %>
+<% ui.includeJavascript("limsemrops", "doc/datatables.min.js") %>
+<% ui.includeJavascript("limsemrops", "doc/jquery-3.5.1.js") %>
+<% ui.includeJavascript("limsemrops", "DataTables-1.10.21/js/jquery.dataTables.min.js") %>
+<% ui.includeJavascript("limsemrops", "pdfmake-0.1.36/pdfmake.min.js") %>
 <% ui.includeJavascript("limsemrops", "vfs_fonts.js") %>
 <% ui.includeJavascript("limsemrops", "lga.min.js") %>
 <% ui.includeJavascript("limsemrops", "PCRlabs.min.js") %>
@@ -332,3 +201,6 @@ jQuery(document).ready(function() {
 
 } );
 </script>
+
+
+<!-- \$320,800 --!>
