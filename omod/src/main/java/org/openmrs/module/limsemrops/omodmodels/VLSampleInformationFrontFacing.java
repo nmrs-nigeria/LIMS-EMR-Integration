@@ -17,6 +17,26 @@ public class VLSampleInformationFrontFacing extends VLSampleInformation {
 	
 	private String sampleSource;
 	
+	private String sampleStatus;
+	
+	private String rejectionReason;
+	
+	public String getSampleStatus() {
+		return sampleStatus;
+	}
+	
+	public void setSampleStatus(String sampleStatus) {
+		this.sampleStatus = sampleStatus;
+	}
+	
+	public String getRejectionReason() {
+		return rejectionReason;
+	}
+	
+	public void setRejectionReason(String rejectionReason) {
+		this.rejectionReason = rejectionReason;
+	}
+	
 	public Integer getEncounterId() {
 		return encounterId;
 	}
