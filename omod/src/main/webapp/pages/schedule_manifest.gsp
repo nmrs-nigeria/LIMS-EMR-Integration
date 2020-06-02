@@ -27,6 +27,14 @@
                         </div>
                     </div>
 </div>
+</br>
+</br>
+
+<form action="manifest_list.page" method="post" target="_blank">
+                                <button type="submit" onclick="window.location.href = 'manifest_list.page';">Show Manifest</button>
+                                <hr />
+                                </form>
+
 
 <% ui.includeJavascript("limsemrops", "moment.js") %>
 <% ui.includeJavascript("limsemrops", "lightpick.js") %>
