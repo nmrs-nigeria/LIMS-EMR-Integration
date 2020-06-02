@@ -25,7 +25,6 @@ def id = config.id
     })
     });
     });
-
 </script>
 
 <a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">
@@ -40,15 +39,9 @@ def id = config.id
     <p>Generate Manifest</p>
 </a>
 
-<a href="schedule_manifest.page"  class="button app big" style="font-size:12px;min-height: 10px;">
-    <i class="icon-refresh"></i>
-    <br/>
-    <p>Schedule Manifest</p>
-</a>
-
 <a id="${ id }_button_manifest"  class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>
     <br/>
-    <p>Notification</p>
+    <p>Request Result</p>
 </a>
 
