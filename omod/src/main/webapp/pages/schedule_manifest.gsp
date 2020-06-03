@@ -12,9 +12,8 @@
         url: "${ ui.actionLink("limsemrops", "EMRExchangeFragmentController", "searchVLSamples") }",
         dataType: "json",
         data: {
-            'Date_Range': manifest_schedule
-
-            document.write(Date_Range);
+            'startDate':document.getElementById("Date_Rage_1").value,
+            'endDate': document.getElementById("Date_Rage_2").value
         }
     }).success(function (data) {
 
@@ -24,7 +23,6 @@
         });
 
 </script>
-
 
 <div class="container">
                     <p class="lead">Generate Manifest</p>
@@ -42,11 +40,11 @@
                                                                 </div>
                                 <div>
                                 </br>
-                                <form action="manifest.page" method="post" target="_blank">
-                                <button type="submit" onclick="window.location.href = 'manifest.page';">Create Manifest</button>
-                                <hr />
-                                </form>
+
                                 </div>
+                                   <button id="showDate" type="submit" onclick="window.location.href = 'manifest.page';">Create Manifest</button>
+                                                                <!--<button type="submit" onclick="window.location.href = 'manifest.page';">Create Manifest</button>-->
+                                                                <hr/>
                                 <div class="col-md-7" id="gist-6"></div>
                             </div>
                         </div>
