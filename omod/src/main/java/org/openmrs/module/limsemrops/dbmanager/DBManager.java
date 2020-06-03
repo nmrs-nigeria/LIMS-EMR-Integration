@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.Patient;
+import org.openmrs.module.limsemrops.omodmodels.Auth;
 import org.openmrs.module.limsemrops.omodmodels.DBConnection;
 import org.openmrs.module.limsemrops.omodmodels.Manifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
@@ -279,33 +280,35 @@ public class DBManager {
         return vLSampleInformationFrontFacings;
         
     }
-    
-    public List<String> getAuthModuleUserNamePassword() throws SQLException {
+	
+	public List<Auth> getAuthModuleUserNamePassword() throws SQLException {
 
         pStatement = conn.prepareStatement("select * from " + ConstantUtils.AUTHMODULE_TABLE + " where id = 1");
         resultSet = pStatement.executeQuery();
 
-        List<String> _list = new ArrayList<>();
+        List<Auth> _list = new ArrayList<>();
 
         while (resultSet.next()) {
-            _list.add(resultSet.getString("username"));
-            _list.add(resultSet.getString("password"));
-            break;
+            Auth a = new Auth();
+            a.setUsername(resultSet.getString("username"));
+            a.setPassword(resultSet.getString("password"));
+            
+            _list.add(a);
         }
 
         return _list;
     }
-
-    public int setAuthModuleUserNamePassword(String newUserName, String newPassword) throws SQLException {
-
-        pStatement = conn.prepareStatement("update " + ConstantUtils.AUTHMODULE_TABLE + " SET username = ?, password = ? where id = 1;");
-        pStatement.setString(1, newUserName);
-        pStatement.setString(2, newPassword);
-        int response = pStatement.executeUpdate();
-        return response;
-    }
-
-
+	
+	public int setAuthModuleUserNamePassword(Auth auth) throws SQLException {
+		
+		pStatement = conn.prepareStatement("update " + ConstantUtils.AUTHMODULE_TABLE
+		        + " SET username = ?, password = ? where id = 1;");
+		pStatement.setString(1, auth.getUsername());
+		pStatement.setString(2, auth.getPassword());
+		int response = pStatement.executeUpdate();
+		return response;
+	}
+	
 	public void closeConnection() {
 		try {
 			if (conn != null) {

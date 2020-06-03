@@ -17,6 +17,8 @@ public class ConstantUtils {
 	
 	public final static String MANIFEST_SAMPLES_TABLE = "lims_manifest_samples";
 	
+	public final static String AUTHMODULE_TABLE = "lims_auth_module";
+	
 	//forms
 	public final static int Laboratory_Encounter_Type_Id = 11;
 	
