@@ -279,7 +279,33 @@ public class DBManager {
         return vLSampleInformationFrontFacings;
         
     }
-	
+    
+    public List<String> getAuthModuleUserNamePassword() throws SQLException {
+
+        pStatement = conn.prepareStatement("select * from " + ConstantUtils.AUTHMODULE_TABLE + " where id = 1");
+        resultSet = pStatement.executeQuery();
+
+        List<String> _list = new ArrayList<>();
+
+        while (resultSet.next()) {
+            _list.add(resultSet.getString("username"));
+            _list.add(resultSet.getString("password"));
+            break;
+        }
+
+        return _list;
+    }
+
+    public int setAuthModuleUserNamePassword(String newUserName, String newPassword) throws SQLException {
+
+        pStatement = conn.prepareStatement("update " + ConstantUtils.AUTHMODULE_TABLE + " SET username = ?, password = ? where id = 1;");
+        pStatement.setString(1, newUserName);
+        pStatement.setString(2, newPassword);
+        int response = pStatement.executeUpdate();
+        return response;
+    }
+
+
 	public void closeConnection() {
 		try {
 			if (conn != null) {
