@@ -176,7 +176,7 @@ public class DBManager {
                 pStatement.setInt(19, a.getEncounterId());
                 pStatement.setString(20, createdBy);
                 pStatement.setDate(21, new java.sql.Date(a.getSampleCollectionTime().getTime()));
-                pStatement.setString(22, a.getSampleStatus());
+                pStatement.setString(22, "pending"); //sample status
                 
                 pStatement.executeUpdate();
                 
