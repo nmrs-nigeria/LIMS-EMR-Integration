@@ -12,7 +12,7 @@ body {margin: 30px;}
 
 <div class="container">
                     <p class="lead">Generate Manifest</p>
-                    <form id="form1" onsubmit="getFormvalue()"">
+
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -29,11 +29,11 @@ body {margin: 30px;}
                                 </br>
                                 </br>
                                 </div>
-                                   <input type="submit" value="Submit">
+                                   <input type="button" value="Submit" onclick="getFormvalue()">
                             </div>
                         </div>
                     </div>
-                    </form>
+
 </div>
 </br>
 </br>
@@ -47,8 +47,10 @@ function getFormvalue()
   var startDate = document.getElementById("Date_Rage_1").value;
   var endDate = document.getElementById("Date_Rage_2").value;
 
+  jq = jQuery;
+
  jq.ajax({
-        url: "${ ui.actionLink("limsemrops", "EMRExchangeFragmentController", "searchVLSamples") }",
+        url: "${ ui.actionLink("limsemrops", "EMRExchange", "searchVLSamples") }",
         dataType: "json",
         data: {
             'startDate':startDate,
