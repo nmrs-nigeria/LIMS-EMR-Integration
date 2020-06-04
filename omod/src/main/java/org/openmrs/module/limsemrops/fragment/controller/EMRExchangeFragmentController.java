@@ -59,7 +59,7 @@ public class EMRExchangeFragmentController {
 		LocalDate endDate = LocalDate.of(2020, Month.MAY, 24);
 		
 		String result = searchVLSamples(Date.from(stDate.atStartOfDay(defaultZoneId).toInstant()),
-		    Date.from(endDate.atStartOfDay(defaultZoneId).toInstant()));
+		    Date.from(endDate.atStartOfDay(defaultZoneId).toInstant()), "VL");
 		
 		System.out.println(result);
 		
@@ -94,22 +94,27 @@ public class EMRExchangeFragmentController {
 		//        }
 	}
 	
-	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate) {
+	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate, 
+            @RequestParam(value = "sampleSpace") String sampleSpace) {
 
         String response = null;
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-        List<VLSampleInformationFrontFacing> vlSampleInfo = new ArrayList<>();
-        SampleInfo sampleInfo = new SampleInfo();
+        if (sampleSpace.equalsIgnoreCase("VL")) {
+            List<VLSampleInformationFrontFacing> vlSampleInfo = new ArrayList<>();
+            SampleInfo sampleInfo = new SampleInfo();
 
-        try {
-            vlSampleInfo = sampleInfo.searchLabEncounters(startDate, endDate);
+            try {
+                vlSampleInfo = sampleInfo.searchLabEncounters(startDate, endDate);
 
-            response = mapper.writeValueAsString(vlSampleInfo);
+                response = mapper.writeValueAsString(vlSampleInfo);
 
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+        }else if(sampleSpace.equalsIgnoreCase("Recency")){
+            
         }
 
         return response;
@@ -118,7 +123,8 @@ public class EMRExchangeFragmentController {
 	
 	//vlsamples is a list of VLSampleInformationFrontFacing and is a json string of Manifest object
 	public void performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
-	        @RequestParam(value = "manifest", required = true) String manifestDraft) {
+	        @RequestParam(value = "manifest", required = true) String manifestDraft,
+	        @RequestParam(value = "sampleSpace", required = true) String sampleSpace) {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -163,7 +169,7 @@ public class EMRExchangeFragmentController {
 				manifest.setCreatedBy(Context.getAuthenticatedUser().toString());
 				manifest.setManifestID(manifestID);
 				manifest.setResultStatus("pending");
-				manifest.setSampleSpace("VL");
+				manifest.setSampleSpace(sampleSpace); //either VL, RECENCY OR EID
 				
 				boolean insertManifestResult = this.dBUtility.insertManifestEntry(manifest);
 				if (insertManifestResult) {
