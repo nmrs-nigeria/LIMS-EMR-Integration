@@ -155,8 +155,8 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>\$320,800</td>
-                    <td>Fragile</td>
+                    <td></td>
+                    <td></td>
                 </tr>
 
             </tbody>
