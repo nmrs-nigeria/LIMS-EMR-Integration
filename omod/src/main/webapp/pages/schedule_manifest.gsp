@@ -6,76 +6,65 @@
 <link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488" type="text/css" />
 <% ui.includeCss("limsemrops", "bootstrap.min.css") %>
 
-<script>
-    jq = jQuery;
-    jq.ajax({
-        url: "${ ui.actionLink("limsemrops", "EMRExchangeFragmentController", "searchVLSamples") }",
-        dataType: "json",
-        data: {
-            'startDate':document.getElementById("Date_Rage_1").value,
-            'endDate': document.getElementById("Date_Rage_2").value
-        }
-    }).success(function (data) {
-
-    })
-        .error(function (xhr, status, err) {
-            j
-        });
-
-</script>
+<style>
+body {margin: 30px;}
+</style>
 
 <div class="container">
                     <p class="lead">Generate Manifest</p>
+                    <form id="form1" onsubmit="getFormvalue()"">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
                                 <div class="md-form md-outline input-with-post-icon datepicker">
                                   <input placeholder="Select date" type="date" id="Date_Rage_1" class="form-control">
-                                  <label for="example">Start Date</label>
+                                  <label>Start Date</label>
                                 </div>
 
                                 <div class="md-form md-outline input-with-post-icon datepicker">
-                                                                  <input placeholder="Select date" type="date" id="Date_Rage_2" class="form-control">
-                                                                  <label for="example">End Date</label>
+                                  <input placeholder="Select date" type="date" id="Date_Rage_2" class="form-control">
+                                  <label for="example">End Date</label>
                                                                 </div>
                                 <div>
                                 </br>
-
+                                </br>
                                 </div>
-                                   <button id="showDate" type="submit" onclick="window.location.href = 'manifest.page';">Create Manifest</button>
-                                                                <!--<button type="submit" onclick="window.location.href = 'manifest.page';">Create Manifest</button>-->
-                                                                <hr/>
-                                <div class="col-md-7" id="gist-6"></div>
+                                   <input type="submit" value="Submit">
                             </div>
                         </div>
                     </div>
+                    </form>
 </div>
 </br>
 </br>
-
-<form action="manifest_list.page" method="post" target="_blank">
-                                <button type="submit" onclick="window.location.href = 'manifest_list.page';">Show Manifest</button>
+                  <button type="submit" id="pass_message" onclick="document.write("HTML DOM is working")">Show Manifest</button>
                                 <hr />
-                                </form>
+<script>
+function getFormvalue()
+{
+  var x=document.getElementById("form1");
 
+  var startDate = document.getElementById("Date_Rage_1").value;
+  var endDate = document.getElementById("Date_Rage_2").value;
+
+ jq.ajax({
+        url: "${ ui.actionLink("limsemrops", "EMRExchangeFragmentController", "searchVLSamples") }",
+        dataType: "json",
+        data: {
+            'startDate':startDate,
+            'endDate': endDate
+        }
+    }).success(function (data) {
+console.log(data);
+    })
+            .error(function (xhr, status, err) {
+console.log('error occurred');
+            });
+
+
+   }
+</script>
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
 <% ui.includeJavascript("limsemrops", "moment.js") %>
-<!--<% ui.includeJavascript("limsemrops", "lightpick.js")%>-->
 
-<script>
-    //var picker = new Lightpick({ field: document.getElementById('datepicker') });
-
-var picker = new Lightpick({
-    field: document.getElementById('manifest_schedule'),
-    singleDate: false,
-    minDate: moment().startOf('month').subtract(30, 'day'),
-    maxDate: moment().endOf('month'),
-    onSelect: function(start, end){
-        var str = '';
-        str += start ? start.format('DD MMMM YYYY') + ' to ' : '';
-        str += end ? end.format('DD MMMM YYYY') : '...';
-        document.getElementById('schedule_range').innerHTML = str;
-    }
-});
-</script>
         
