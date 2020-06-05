@@ -28,6 +28,13 @@ body {margin: 30px;}
                                 <div>
                                 </br>
                                 </br>
+                                <select id="Test_Type" class="form-control">
+                                    <option value="" selected="selected">- Select -</option>
+                                    <option value="viral_load">Viral Load</option>
+                                    <option value="eid">EID</option>
+                                    <option value="recency">Recency</option>
+                                </select>
+                                </br>
                                 </div>
                                    <input type="button" value="Submit" onclick="getFormvalue()">
                             </div>
@@ -37,13 +44,14 @@ body {margin: 30px;}
 </div>
 </br>
 </br>
-                  <button type="submit" id="pass_message" onclick="document.write("HTML DOM is working")">Show Manifest</button>
+                  <button type="submit" onclick="document.write("HTML DOM is working")">Show Manifest</button>
                                 <hr />
 <script>
 function getFormvalue()
 {
   var x=document.getElementById("form1");
 
+  var sampleSpace = document.getElementById("Test_Type")
   var startDate = document.getElementById("Date_Rage_1").value;
   var endDate = document.getElementById("Date_Rage_2").value;
 
@@ -53,8 +61,9 @@ function getFormvalue()
         url: "${ ui.actionLink("limsemrops", "EMRExchange", "searchVLSamples") }",
         dataType: "json",
         data: {
+            'sampleSpace':sampleSpace,
             'startDate':startDate,
-            'endDate': endDate
+            'endDate':endDate
         }
     }).success(function (data) {
 console.log(data);
