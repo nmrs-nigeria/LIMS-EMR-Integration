@@ -45,35 +45,32 @@ body {margin: 30px;}
 </br>
 </br>
                   <button type="submit" onclick="document.write("HTML DOM is working")">Show Manifest</button>
-                                <hr />
+                                <hr/>
 <script>
-function getFormvalue()
-{
-  var x=document.getElementById("form1");
+    function getFormvalue() {
+        //var x=document.getElementById("form1");
 
-  var sampleSpace = document.getElementById("Test_Type")
-  var startDate = document.getElementById("Date_Rage_1").value;
-  var endDate = document.getElementById("Date_Rage_2").value;
+        var sampleSpace = document.getElementById("Test_Type").value;
+        var startDate = document.getElementById("Date_Rage_1").value;
+        var endDate = document.getElementById("Date_Rage_2").value;
 
-  jq = jQuery;
+        jq = jQuery;
 
- jq.ajax({
-        url: "${ ui.actionLink("limsemrops", "EMRExchange", "searchVLSamples") }",
-        dataType: "json",
-        data: {
-            'sampleSpace':sampleSpace,
-            'startDate':startDate,
-            'endDate':endDate
-        }
-    }).success(function (data) {
-console.log(data);
-    })
+        jq.ajax({
+            url: "${ ui.actionLink("limsemrops", "EMRExchange", "searchVLSamples") }",
+            dataType: "json",
+            data: {
+                'sampleSpace': sampleSpace,
+                'startDate': startDate,
+                'endDate': endDate
+            }
+        }).success(function (data) {
+            console.log(data);
+        })
             .error(function (xhr, status, err) {
-console.log('error occurred');
+                console.log('error occurred');
             });
-
-
-   }
+    }
 </script>
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
 <% ui.includeJavascript("limsemrops", "moment.js") %>
