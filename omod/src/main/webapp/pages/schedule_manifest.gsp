@@ -30,7 +30,7 @@ body {margin: 30px;}
                                 </br>
                                 <select id="Test_Type" class="form-control">
                                     <option value="" selected="selected">- Select -</option>
-                                    <option value="viral_load">Viral Load</option>
+                                    <option value="VL">Viral Load</option>
                                     <option value="eid">EID</option>
                                     <option value="recency">Recency</option>
                                 </select>
@@ -65,7 +65,10 @@ body {margin: 30px;}
                 'endDate': endDate
             }
         }).success(function (data) {
-            console.log(data);
+
+            //console.log(data);
+            localStorage.setItem("sample_data", JSON.stringify(data));
+            //console.log(localStorage);
         })
             .error(function (xhr, status, err) {
                 console.log('error occurred');
