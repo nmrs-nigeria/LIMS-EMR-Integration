@@ -281,30 +281,39 @@ public class DBManager {
         
     }
 	
-	public List<Auth> getAuthModuleUserNamePassword() throws SQLException {
+	public Auth getAuthModuleUserNamePassword() throws SQLException {
 
         pStatement = conn.prepareStatement("select * from " + ConstantUtils.AUTHMODULE_TABLE + " where id = 1");
         resultSet = pStatement.executeQuery();
 
-        List<Auth> _list = new ArrayList<>();
-
+        Auth a = new Auth();
         while (resultSet.next()) {
-            Auth a = new Auth();
             a.setUsername(resultSet.getString("username"));
             a.setPassword(resultSet.getString("password"));
-            
-            _list.add(a);
+            break;
         }
 
-        return _list;
+        return a;
     }
-	
-	public int setAuthModuleUserNamePassword(Auth auth) throws SQLException {
-		
-		pStatement = conn.prepareStatement("update " + ConstantUtils.AUTHMODULE_TABLE
-		        + " SET username = ?, password = ? where id = 1;");
+
+    public int initializeAuthModuleUserNamePassword(Auth auth) throws SQLException {
+		//used to set the very first username and password pair for the authmodule
+		pStatement = conn.prepareStatement("insert into " + ConstantUtils.AUTHMODULE_TABLE
+		        + " (username, password) values (?,?);");
 		pStatement.setString(1, auth.getUsername());
 		pStatement.setString(2, auth.getPassword());
+		int response = pStatement.executeUpdate();
+		return response;
+	}
+	
+	public int setAuthModuleUserNamePassword(Auth auth) throws SQLException {
+		//used when UPDATING the username and password pair for the authmodule
+		pStatement = conn.prepareStatement("update " + ConstantUtils.AUTHMODULE_TABLE
+		        + " SET username = ?, password = ? where username = ?;");
+        pStatement.setString(1, auth.getUsername());
+        pStatement.setString(2, auth.getPassword());
+        pStatement.setString(3, auth.getUsername());
+		
 		int response = pStatement.executeUpdate();
 		return response;
 	}
