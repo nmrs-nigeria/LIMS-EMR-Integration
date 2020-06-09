@@ -67,8 +67,8 @@ body {margin: 30px;}
         }).success(function (data) {
 
             //console.log(data);
-            localStorage.setItem("sample_data", JSON.stringify(data));
-            //console.log(localStorage);
+            var sample_data = localStorage.setItem("sample_data", JSON.stringify(data));
+            console.log(sample_data);
         })
             .error(function (xhr, status, err) {
                 console.log('error occurred');

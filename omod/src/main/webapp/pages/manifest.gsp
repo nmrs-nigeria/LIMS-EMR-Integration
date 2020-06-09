@@ -3,6 +3,8 @@
 <%= ui.resourceLinks() %>
 <script type="text/javascript" src="/openmrs/ms/uiframework/resource/uicommons/scripts/datetimepicker/bootstrap-datetimepicker.min.js?cache=1525344062488"></script>
 <link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <% ui.includeCss("limsemrops", "bootstrap.min.css") %>
 
@@ -137,36 +139,23 @@
         <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
-                    <th>S/N</th>
                     <th>Sample ID</th>
-                    <th>Viral Load</th>
-                    <th>CD4</th>
-                    <th>Hepatitis</th>
-                    <th>Others</th>
-                    <th>Comments</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date Sample Collected</th>
+                    <th>Order Type</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+            <tbody id="manifest_table">
 
             </tbody>
             <tfoot>
                 <tr>
-                    <th>S/N</th>
                     <th>Sample ID</th>
-                    <th>Viral Load</th>
-                    <th>CD4</th>
-                    <th>Hepatitis</th>
-                    <th>Others</th>
-                    <th>Comments</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date Sample Collected</th>
+                    <th>Order Type</th>
                 </tr>
             </tfoot>
         </table>
@@ -178,8 +167,24 @@
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
 
 <script>
-var sample_data_user = JSON.parse(localStorage.getItem('sample_data'));
+var sample_data_user = JSON.parse(localStorage.getItem(sample_data));
 console.log(sample_data_user)
+buildTable('sample_data_user')
+function buildTable(data){
+		var table = document.getElementById('manifest_table')
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+				<td>${data[i].sampleID}</td>
+				<td>${data[i].firstName}</td>
+				<td>${data[i].surName}</td>
+				<td>${data[i].sampleCollectionDate}</td>
+				td>${data[i].sampleType}</td>
+			</tr>`
+			table.innerHTML += row
+		}
+	}
+
 </script>
 
 
