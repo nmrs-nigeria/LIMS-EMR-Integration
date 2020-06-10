@@ -49,7 +49,7 @@ body {margin: 30px;}
 <script>
     function getFormvalue() {
         //var x=document.getElementById("form1");
-
+        localStorage.clear();
         var sampleSpace = document.getElementById("Test_Type").value;
         var startDate = document.getElementById("Date_Rage_1").value;
         var endDate = document.getElementById("Date_Rage_2").value;
@@ -67,8 +67,12 @@ body {margin: 30px;}
         }).success(function (data) {
 
             //console.log(data);
-            var sample_data = localStorage.setItem("sample_data", JSON.stringify(data));
-            console.log(sample_data);
+            const sample_data = localStorage.setItem("sample_data", JSON.stringify(data));
+            //const sample_data = JSON.stringify(data);
+            //localStorage.setItem("sample_data_set", sample_data);
+            const sample_data_set = JSON.parse(localStorage.getItem("sample_data"));
+            console.log(sample_data_set)
+
         })
             .error(function (xhr, status, err) {
                 console.log('error occurred');
@@ -77,5 +81,3 @@ body {margin: 30px;}
 </script>
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
 <% ui.includeJavascript("limsemrops", "moment.js") %>
-
-        

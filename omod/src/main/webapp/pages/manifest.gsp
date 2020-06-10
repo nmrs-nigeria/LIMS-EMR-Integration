@@ -167,11 +167,11 @@
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
 
 <script>
-var sample_data_user = JSON.parse(localStorage.getItem(sample_data));
+const sample_data_user = JSON.parse(localStorage.getItem("sample_data"));
 console.log(sample_data_user)
-buildTable('sample_data_user')
+buildTable(sample_data_user)
 function buildTable(data){
-		var table = document.getElementById('manifest_table')
+		var table = document.getElementById(manifest_table)
 
 		for (var i = 0; i < data.length; i++){
 			var row = `<tr>
@@ -184,7 +184,6 @@ function buildTable(data){
 			table.innerHTML += row
 		}
 	}
-
 </script>
 
 
