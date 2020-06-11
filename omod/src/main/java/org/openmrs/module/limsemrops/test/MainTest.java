@@ -5,22 +5,14 @@
  */
 package org.openmrs.module.limsemrops.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
-import org.openmrs.module.limsemrops.omodmodels.VLSampleInformation;
-import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ViralLoadInfo;
+import org.openmrs.module.limsemrops.utility.ConstantUtils.SampleSpace;
 
 /**
  * @author MORRISON.I
@@ -32,9 +24,9 @@ public class MainTest {
         List<Integer> idList = new ArrayList<>();
 
         DBUtility dBUtility = new DBUtility();
-        idList = dBUtility.getLabEncountersByDate(new Date(), new Date());
+        idList = dBUtility.getLabEncountersByDate(new Date(), new Date(),SampleSpace.VL);
         if (!idList.isEmpty()) {
-            ViralLoadInfo viralLoadInfo = new ViralLoadInfo(idList);
+            ViralLoadInfo viralLoadInfo = new ViralLoadInfo(idList,SampleSpace.VL);
             VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
             vLSampleCollectionBatchManifest = viralLoadInfo.getRecentSampleCollectedManifest();
 

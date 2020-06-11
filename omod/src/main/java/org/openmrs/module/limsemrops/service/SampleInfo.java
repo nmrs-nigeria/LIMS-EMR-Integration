@@ -12,6 +12,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.limsemrops.omodmodels.SampleCollectionManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
+import org.openmrs.module.limsemrops.utility.ConstantUtils;
 
 /**
  * @author MORRISON.I
@@ -27,10 +28,12 @@ public class SampleInfo {
 		
 	}
 	
-	public List<VLSampleInformationFrontFacing> searchLabEncounters(Date startDate, Date endDate) {
+	public List<VLSampleInformationFrontFacing> searchLabEncounters(Date startDate, Date endDate,
+	        ConstantUtils.SampleSpace sampleSpace) {
 		
-		List<Integer> labEncounterIds = dBUtility.getLabEncountersByDate(startDate, endDate);
-		this.viralLoadInfo = new ViralLoadInfo(labEncounterIds);
+		List<Integer> labEncounterIds = dBUtility.getLabEncountersByDate(startDate, endDate, sampleSpace);
+		this.viralLoadInfo = new ViralLoadInfo(labEncounterIds, sampleSpace);
+		
 		//		VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
 		//		vLSampleCollectionBatchManifest = this.viralLoadInfo.getRecentSampleCollectedManifest();
 		List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings = this.viralLoadInfo.searchLabEncounter();

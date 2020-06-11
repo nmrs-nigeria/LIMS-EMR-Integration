@@ -23,6 +23,7 @@ public class LabFormUtils {
         this.fillIntegerConceptMappings();
     }
 
+    public static final Integer VIRAL_LOAD_REQUEST_RECENCY = 166244;
     public static final Integer VIRAL_LOAD_REQUEST = 165765;
     public static final Integer SAMPLE_ID = 165715;
     public static final Integer SAMPLE_TYPE = 162476;

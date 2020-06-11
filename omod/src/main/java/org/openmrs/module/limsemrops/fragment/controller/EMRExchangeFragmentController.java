@@ -31,6 +31,8 @@ import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ExchangeLayer;
 import org.openmrs.module.limsemrops.service.SampleInfo;
+import org.openmrs.module.limsemrops.utility.ConstantUtils;
+import org.openmrs.module.limsemrops.utility.ConstantUtils.SampleSpace;
 import org.openmrs.module.limsemrops.utility.LabFormUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,27 +96,27 @@ public class EMRExchangeFragmentController {
 		//        }
 	}
 	
-	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate, 
+	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate,
             @RequestParam(value = "sampleSpace") String sampleSpace) {
 
         String response = null;
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-        if (sampleSpace.equalsIgnoreCase("VL")) {
-            List<VLSampleInformationFrontFacing> vlSampleInfo = new ArrayList<>();
-            SampleInfo sampleInfo = new SampleInfo();
+        List<VLSampleInformationFrontFacing> vlSampleInfo = new ArrayList<>();
+        SampleInfo sampleInfo = new SampleInfo();
 
-            try {
-                vlSampleInfo = sampleInfo.searchLabEncounters(startDate, endDate);
-
-                response = mapper.writeValueAsString(vlSampleInfo);
-
-            } catch (Exception ex) {
-                System.err.println(ex.getMessage());
+        try {
+            if (sampleSpace.equalsIgnoreCase("VL")) {
+                vlSampleInfo = sampleInfo.searchLabEncounters(startDate, endDate, SampleSpace.VL);
+            } else if (sampleSpace.equalsIgnoreCase("Recency")) {
+                vlSampleInfo = sampleInfo.searchLabEncounters(startDate, endDate, SampleSpace.RECENCY);
             }
-        }else if(sampleSpace.equalsIgnoreCase("Recency")){
-            
+
+            response = mapper.writeValueAsString(vlSampleInfo);
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
 
         return response;

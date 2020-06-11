@@ -28,6 +28,8 @@ public class ConstantUtils {
 	
 	public final static int Care_card_Encounter_Type_Id = 12;
 	
+	public final static int Client_Intake_Form_Encounter_Type_Id = 20;
+	
 	// concepts
 	public final static int ART_START_DATE_CONCEPT = 159599;
 	
@@ -52,5 +54,10 @@ public class ConstantUtils {
 	public static final String BASE_URL = "https://www.lims.ng/api";
 	
 	public static final String POST_SAMPLES = "/samples/create.php";
+	
+	//public enums
+	public enum SampleSpace {
+		VL, RECENCY, EID, COVID
+	}
 	
 }

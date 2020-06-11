@@ -71,6 +71,29 @@ public class DBManager {
         
     }
 	
+	public List<Integer> getRecentRecencyClientEncounter(Date startDate, Date endDate) throws SQLException {
+        
+        String sqlStr = "select encounter_id from " + ConstantUtils.ENCOUNTER_TABLE + " where encounter_type = "
+                + ConstantUtils.Laboratory_Encounter_Type_Id
+                + " and encounter_datetime >= ? "
+                + "and encounter_datetime <= ? and `voided` = 0 ";
+        
+        pStatement = conn.prepareStatement(sqlStr);
+        
+        pStatement.setDate(1, new java.sql.Date(startDate.getTime()));
+        pStatement.setDate(2, new java.sql.Date(endDate.getTime()));
+        resultSet = pStatement.executeQuery();
+        
+        List<Integer> idlist = new ArrayList<>();
+        
+        while (resultSet.next()) {
+            idlist.add(resultSet.getInt("encounter_id"));
+        }
+        
+        return idlist;
+        
+    }
+	
 	public List<Integer> getTestRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
 
         //select * from encounter where encounter_type = 14 and encounter_datetime > '2019-10-01 00:00:00' and encounter_datetime < '2019-12-01 00:00:00' and voided = 0

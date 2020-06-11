@@ -48,7 +48,9 @@ public class ViralLoadInfo {
 	
 	private DBUtility dBUtility;
 	
-	public ViralLoadInfo(List<Integer> encounterList) {
+	private ConstantUtils.SampleSpace sampleSpace;
+	
+	public ViralLoadInfo(List<Integer> encounterList, ConstantUtils.SampleSpace _sampleSpace) {
 
         this.encounterIDList = encounterList;
         this.obsList = new ArrayList<>();
@@ -59,6 +61,7 @@ public class ViralLoadInfo {
         labMappings = new HashMap<>();
         integerLabMappings = new HashMap<>();
         this.dBUtility = new DBUtility();
+        this.sampleSpace = _sampleSpace;
 
         loadMappings();
         rovingObs = new Obs();
@@ -134,10 +137,18 @@ public class ViralLoadInfo {
 	public List<VLSampleInformationFrontFacing> searchLabEncounter() {
 
         Patient patient = null;
-     
+
         List<VLSampleInformationFrontFacing> vLSampleInformations = new ArrayList<>();
 
         fillUpEncounters(encounterIDList);
+
+        //quick check sample space
+        Integer tempVLRequestCheck = 0;
+        if (sampleSpace.equals(ConstantUtils.SampleSpace.VL)) {
+            tempVLRequestCheck = LabFormUtils.VIRAL_LOAD_REQUEST;
+        } else if (sampleSpace.equals(ConstantUtils.SampleSpace.RECENCY)) {
+            tempVLRequestCheck = LabFormUtils.VIRAL_LOAD_REQUEST_RECENCY;
+        }
 
         for (Encounter e : encounterList) {
             System.out.println("Processing encounter " + e.getEncounterId());
@@ -148,10 +159,10 @@ public class ViralLoadInfo {
             tempObs.addAll(obsSet);
             System.out.println("Temp obs contains elements " + tempObs.size());
 
-            //check if this lab form if for VL
+            //check if this lab form or recency form has VL          
             if (tempObs.stream().map(Obs::getConcept).map(Concept::getConceptId).
                     collect(Collectors.toList())
-                    .contains(LabFormUtils.VIRAL_LOAD_REQUEST)) {
+                    .contains(tempVLRequestCheck)) {
                 obsList.clear();
                 obsList.addAll(obsSet);
 
@@ -162,7 +173,7 @@ public class ViralLoadInfo {
             }
 
         }
-        
+
         return vLSampleInformations;
 
     }
@@ -181,7 +192,7 @@ public class ViralLoadInfo {
 				vLSampleInformation.setSampleType(getMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
 			}
 			
-			// indication for VL
+			// indication for VL  //TODO: NOT IMPLEMENTED FOR RECENCY
 			rovingObs = Utils.extractObs(LabFormUtils.INDICATION_FOR_VL, this.obsList);
 			if (rovingObs != null && rovingObs.getValueCoded() != null) {
 				vLSampleInformation
@@ -203,11 +214,13 @@ public class ViralLoadInfo {
 				}
 			}
 			
-			//order by and sample collected by
+			//order by and sample collected by //TODO: NOT IMPLEMENTED FOR RECENCY //Plan B use the provider as value
 			rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
 			if (rovingObs != null) {
-				vLSampleInformation.setSampleOrderedBy(rovingObs.getValueText());
-				vLSampleInformation.setSampleCollectedBy(rovingObs.getValueText());
+				String sampleCollectedBy = rovingObs.getValueText();
+				String splitCollectedBy = sampleCollectedBy.split(" - ")[1];
+				vLSampleInformation.setSampleOrderedBy(splitCollectedBy);
+				vLSampleInformation.setSampleCollectedBy(splitCollectedBy);
 			}
 			
 			// sample collection date
@@ -223,7 +236,7 @@ public class ViralLoadInfo {
 				vLSampleInformation.setSampleID(rovingObs.getValueText());
 			}
 			
-			//order date
+			//order date //TODO: NOT IMPLEMENTED FOR RECENCY  //Plan B use Date form filled
 			rovingObs = Utils.extractObs(LabFormUtils.DATE_SAMPLE_ORDERED, this.obsList);
 			if (rovingObs != null) {
 				vLSampleInformation.setSampleOrderDate(rovingObs.getValueDate());
