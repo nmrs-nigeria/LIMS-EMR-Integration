@@ -34,9 +34,9 @@ public class DBUtility {
 
         try {
             this.ndrDBManager.openConnection();
-            if (sampleSpace.equals(ConstantUtils.SampleSpace.VL.name())) {
+            if (sampleSpace.equals(ConstantUtils.SampleSpace.VL)) {
                 encounters = this.ndrDBManager.getRecentLabEncounter(startDate, endDate);
-            } else if (sampleSpace.equals(ConstantUtils.SampleSpace.RECENCY.name())) {
+            } else if (sampleSpace.equals(ConstantUtils.SampleSpace.RECENCY)) {
                 encounters = this.ndrDBManager.getRecentRecencyClientEncounter(startDate, endDate);
             }
 
