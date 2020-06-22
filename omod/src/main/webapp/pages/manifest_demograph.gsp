@@ -13,8 +13,9 @@
 <% ui.includeJavascript("limsemrops", "lga.min.js") %>
 <% ui.includeCss("limsemrops", "bootstrap.css") %>
 <% ui.includeJavascript("limsemrops", "jquery-3.5.1.js") %>
-<div class="container col" id="ui">
-<form>
+
+<div class="container card" id="ui">
+
         <div class="form-row">
             <div class="col-lg-2">
                 <label class="control-label">State of Origin</label>
@@ -69,43 +70,44 @@
             </div>
             </select>
         </div>
-    </form>
+
+    </br>
     <br>
-    <form>
+
         <div class="form-row">
             <div class="col-lg-2">
                 <label>Facility Name</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Enter Full Faciltity Name">
+                <input type="text" class="form-control" id="facility_name" placeholder="Enter Full Faciltity Name">
             </div>
             <div class="col-lg-2">
                 <label>Facility Code</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Provide Facility Code">
+                <input type="text" class="form-control" id="facility_code" placeholder="Provide Facility Code">
             </div>
         </div>
-    </form>
+
     </br>
-    <form>
+
         <div class="form-row">
             <div class="col-lg-2">
                 <label>Sender's Name</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Full Name">
+                <input type="text" class="form-control" id="sender_full_name" placeholder="Full Name">
             </div>
             <div class="col-lg-2">
                 <label>Sender's Mobile</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Phone Number">
+                <input type="text" class="form-control" id="sender_phone" placeholder="Phone Number">
             </div>
         </div>
-    </form>
+
     </br>
-    <form>
+
         <div class="form-row">
             <div class="col-lg-2">
                 <label>Date of Pick up</label>
@@ -117,101 +119,194 @@
                 <label>Pick up Time</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Time format in hh:mm:ss">
+                <input type="text" class="form-control" id="pick_time" placeholder="Time format in hh:mm:ss">
             </div>
         </div>
-    </form>
+
     </br>
-    <form>
+
         <div class="form-row">
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>Pick Up Schedule</label>
             </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Test Type">
+            <div class="col-lg-4 md-form md-outline input-with-post-icon datepicker">
+               <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
             </div>
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>Sign</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Last name">
+                <input type="text" class="form-control" id="signature" placeholder="Signature">
             </div>
         </div>
-    </form>
+
+    <br>
+    <label><h3>3PL Details</h3></label>
     </br>
-    <form>
+
         <div class="form-row">
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>Total Number of Samples</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Test Type">
+                <input type="text" class="form-control" id="number_samples" placeholder="Enter Total Samples to be Shipped">
             </div>
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>Temp at Pickup</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Last name">
+                <input type="text" class="form-control" id="temperature" placeholder="Enter temperature in Celsius">
             </div>
         </div>
-    </form>
+
     </br>
-    <form>
+
         <div class="form-row">
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>3PL Name</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Test Type">
+                <input type="text" class="form-control" id="pl_name" placeholder="Full Name of 3PL">
             </div>
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>Phone Number</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Last name">
+                <input type="text" class="form-control" id="phone_3pl placeholder="Enter 3PL Phone Number">
             </div>
         </div>
-    </form>
+
     </br>
-    <form>
+
         <div class="form-row">
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>PCR Laboratory Name</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Test Type">
+                <input type="text" class="form-control" id="pcr_lab_name" placeholder="Enter name of PCR Lab">
             </div>
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>PCR Lab Code</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Last name">
+                <input type="text" class="form-control" id="pcr_lab_code" placeholder="Enter PCR Lab Code">
             </div>
         </div>
-    </form>
+
     </br>
-    <form>
+
         <div class="form-row">
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>Manifest ID</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Test Type">
+                <input type="text" class="form-control" id="manifest_id" placeholder="Enter MAnifest ID">
             </div>
             <div class="col-lg-2">
-                <label>Test Type</label>
+                <label>Comment</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Last name">
+                <input type="text" class="form-control" id="comment" placeholder="Enter Comment on Manifest">
             </div>
         </div>
-    </form>
+
+        </br>
+        <div class="form-row">
+                    <div class="col-lg-2">
+                        <label>Created By</label>
+                    </div>
+                    <div class="col-lg-4 md-form md-outline input-with-post-icon datepicker">
+                       <input placeholder="Select date" type="date" id="createdBy" class="form-control">
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Date Created</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control" id="dateCreated" placeholder="Signature">
+                    </div>
+                </div>
+                        </br>
+                        <div class="form-row">
+                    <div class="col-lg-2">
+                        <label>Pick Up Schedule</label>
+                    </div>
+                    <div class="col-lg-4 md-form md-outline input-with-post-icon datepicker">
+                       <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Sign</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control" id="signature" placeholder="Signature">
+                    </div>
+                </div>
+
     <br>
 <br>
-    <button type="submit" onclick="fetchItems">Save Manifest</button>
-    </div>
+</div>
+    <button type="submit" onclick="fetchItems" onclick="getFormvalue_geo()">Save Manifest</button>
 
 
-    <script>
+<script>
+    function getFormvalue_geo() {
+        var referringLabState = document.getElementById("state").value;
+        var referringLabLga = document.getElementById("lga").value;
+        var facility_name = document.getElementById("facility_name").value;
+        var facility_code = document.getElementById("facility_code").value;
+        var sender_full_name = document.getElementById("sender_full_name").value;
+        var sender_phone = document.getElementById("sender_phone").value;
+        var DateofPickUp = document.getElementById("DateofPickUp").value;
+        var pick_time = document.getElementById("pick_time").value;
+        var dateScheduleForPickup = document.getElementById("schedule_DateofPickUp").value;
+        var signature = document.getElementById("signature").value;
+        var riderTotalSamplesPicked = document.getElementById("number_samples").value;
+        var riderTempAtPickUp = document.getElementById("temperature").value;
+        var riderName = document.getElementById("pl_name").value;
+        var riderPhoneNumber = document.getElementById("phone_3pl").value;
+        var pcrLabName = document.getElementById("pcr_lab_name").value;
+        var pcrLabCode = document.getElementById("pcr_lab_code").value;
+        var manifestID = document.getElementById("manifest_id").value;
+        //var comment = document.getElementById("comment").value;
+        //var  = document.getElementById("").value;
+        var resultStatus = document.getElementById("result_status").value;
+        var createdBy = document.getElementById("sender_full_name").value;
+        var dateModified = document.getElementById("schedule_DateofPickUp").value;
+        var dateCreated = document.getElementById("date_created").value;
+        jq = jQuery;
 
-    </script>
+        jq.ajax({
+            url: "${ ui.actionLink("limsemrops", "EMRExchange", "performVLRequisition") }",
+            dataType: "json",
+            data: {
+                'referringLabState': referringLabState,
+                'referringLabLga': referringLabLga,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+                'endDate': endDate,
+
+            }
+        }).success(function (data) {
+
+            //console.log(data);
+            const sampleSpace_data = localStorage.setItem("sampleSpace_data", JSON.stringify(sampleSpace));
+            const sample_data = localStorage.setItem("sample_data", JSON.stringify(data));
+            const sampleSpace_set = JSON.parse(localStorage.getItem("sampleSpace_data"));
+            const sample_data_set = JSON.parse(localStorage.getItem("sample_data"));
+            console.log(sampleSpace_set)
+            console.log(sample_data_set)
+        })
+            .error(function (xhr, status, err) {
+                console.log('error occurred');
+            });
+    }
+</script>

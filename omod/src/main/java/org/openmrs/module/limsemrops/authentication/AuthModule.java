@@ -51,30 +51,30 @@ public class AuthModule {
 		}
 		
 		String requestBody = "{\"email\": \"USER\",\"password\": \"PASS\"}".replace("USER", u).replace("PASS", p);
-		HttpResponse<String> response = Unirest.post(this.endPoint).header("content-type","application/json").body(requestBody).asString();
+		HttpResponse<String> response = Unirest.post(this.endPoint).header("content-type", "application/json")
+		        .body(requestBody).asString();
 		String responseBody = response.getBody();
 		int statusCode = response.getStatus();
 		//now, if its an initial request, we should strip out the new password and use the correct method
 		if (isInitialRequest) {
-				if (statusCode == 200) {
-					// find the new password and extract it from the JWT, then request a new,
-					// sanitized JWT
-					String actualJWT = AuthModuleUtils.extractJWT(responseBody);
-					// base64decode the JWT so we can see what's in it.
-					String decodedJWT = new String(Base64.getMimeDecoder().decode(actualJWT));
-					// somewhere in there, we should have a key called password. Take it out.
-					String newPassword = AuthModuleUtils.extractKey("password", decodedJWT);
-					// then, persist the new password to the DB
-					Auth details = new Auth();
-					details.setUsername(Utils.getFacilityDATIMId());
-					details.setPassword(newPassword);
-					dbManager.initializeAuthModuleUserNamePassword(details); // initial setting
-					return requestToken(); // redo it, using the now-saved password
-				}
-				else {
-					//we didn't get a 200 back, so something is wrong. Would be nice to log it.
-					return null;
-				}
+			if (statusCode == 200) {
+				// find the new password and extract it from the JWT, then request a new,
+				// sanitized JWT
+				String actualJWT = AuthModuleUtils.extractJWT(responseBody);
+				// base64decode the JWT so we can see what's in it.
+				String decodedJWT = new String(Base64.getMimeDecoder().decode(actualJWT));
+				// somewhere in there, we should have a key called password. Take it out.
+				String newPassword = AuthModuleUtils.extractKey("password", decodedJWT);
+				// then, persist the new password to the DB
+				Auth details = new Auth();
+				details.setUsername(Utils.getFacilityDATIMId());
+				details.setPassword(newPassword);
+				dbManager.initializeAuthModuleUserNamePassword(details); // initial setting
+				return requestToken(); // redo it, using the now-saved password
+			} else {
+				//we didn't get a 200 back, so something is wrong. Would be nice to log it.
+				return null;
+			}
 		} else {
 			if (statusCode == 409) {
 				//this is a conflict , so we should invalidate our current token and redo
@@ -84,12 +84,10 @@ public class AuthModule {
 				dbManager.setAuthModuleUserNamePassword(newAuth);
 				//ideally, redo password generation here
 				return this.requestToken(); //hopefully this one should complete.
-			} 
-			else if (statusCode == 200) {
+			} else if (statusCode == 200) {
 				//business as usual
 				return AuthModuleUtils.extractJWT(responseBody);
-			}
-			else {
+			} else {
 				return null; //something suspicious happened.
 			}
 		}
