@@ -105,6 +105,7 @@
 
             //Display selected Row data in Alert Box.
             alert(message);
+            window.location.assign("manifest_demograph.page");
         }
 
     var local_sample_data = localStorage.getItem("sample_data");
@@ -118,5 +119,7 @@
         } else {
             console.log('local storage is empty');
         }
+        //window.location.assign("manifest_demograph.page");
+
     }
 </script>

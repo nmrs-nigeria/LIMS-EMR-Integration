@@ -41,6 +41,7 @@
                     </br>
                 </div>
                 <input type="button" value="Submit" onclick="getFormvalue()">
+
             </div>
         </div>
     </div>
@@ -77,10 +78,12 @@
             const sample_data_set = JSON.parse(localStorage.getItem("sample_data"));
             console.log(sampleSpace_set)
             console.log(sample_data_set)
+            window.location.assign("manifest.page");
         })
             .error(function (xhr, status, err) {
                 console.log('error occurred');
             });
+            //window.location.assign("manifest.page");
     }
 </script>
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>

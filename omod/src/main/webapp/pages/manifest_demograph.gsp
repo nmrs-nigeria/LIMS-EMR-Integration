@@ -172,7 +172,7 @@
                 <label>Phone Number</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" id="phone_3pl placeholder="Enter 3PL Phone Number">
+                <input type="text" class="form-control" id="phone_3pl" placeholder="Enter 3PL Phone Number">
             </div>
         </div>
 
@@ -203,26 +203,26 @@
                 <input type="text" class="form-control" id="manifest_id" placeholder="Enter MAnifest ID">
             </div>
             <div class="col-lg-2">
-                <label>Comment</label>
+                <label>Result Status</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" id="comment" placeholder="Enter Comment on Manifest">
+                <input type="text" class="form-control" id="result_status" placeholder="Enter Result status">
             </div>
         </div>
 
         </br>
         <div class="form-row">
                     <div class="col-lg-2">
-                        <label>Created By</label>
+                        <label>Date Created By</label>
                     </div>
                     <div class="col-lg-4 md-form md-outline input-with-post-icon datepicker">
-                       <input placeholder="Select date" type="date" id="createdBy" class="form-control">
+                       <input placeholder="Select date" type="date" id="date_created" class="form-control">
                     </div>
                     <div class="col-lg-2">
-                        <label>Date Created</label>
+                        <label>Created By</label>
                     </div>
                     <div class="col-lg-4">
-                        <input type="text" class="form-control" id="dateCreated" placeholder="Signature">
+                        <input type="text" class="form-control" id="createdBy" placeholder="Signature">
                     </div>
                 </div>
                         </br>
@@ -244,7 +244,7 @@
     <br>
 <br>
 </div>
-    <button type="submit" onclick="fetchItems" onclick="getFormvalue_geo()">Save Manifest</button>
+    <button type="submit" onclick="getFormvalue_geo()">Save Manifest</button>
 
 
 <script>
@@ -298,18 +298,12 @@
                 'resultStatus': resultStatus,
                 'createdBy': createdBy,
                 'dateModified': dateModified,
-                'dateCreated': dateCreated,
+                'dateCreated': dateCreated
 
             }
         }).success(function (data) {
 
-            //console.log(data);
-            const sampleSpace_data = localStorage.setItem("sampleSpace_data", JSON.stringify(sampleSpace));
-            const sample_data = localStorage.setItem("sample_data", JSON.stringify(data));
-            const sampleSpace_set = JSON.parse(localStorage.getItem("sampleSpace_data"));
-            const sample_data_set = JSON.parse(localStorage.getItem("sample_data"));
-            console.log(sampleSpace_set)
-            console.log(sample_data_set)
+            console.log(data);
         })
             .error(function (xhr, status, err) {
                 console.log('error occurred');
