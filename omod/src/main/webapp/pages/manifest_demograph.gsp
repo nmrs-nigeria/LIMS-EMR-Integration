@@ -16,236 +16,144 @@
 
 <div class="container card" id="ui">
 
-        <div class="form-row">
-            <div class="col-lg-2">
-                <label class="control-label">State of Origin</label>
-            </div>
-            <div class="col-lg-4">
-                <select onchange="toggleLGA(this);" name="state" id="state" class="form-control">
-                    <option value="" selected="selected">- Select -</option>
-                    <option value="Abia">Abia</option>
-                    <option value="Adamawa">Adamawa</option>
-                    <option value="AkwaIbom">AkwaIbom</option>
-                    <option value="Anambra">Anambra</option>
-                    <option value="Bauchi">Bauchi</option>
-                    <option value="Bayelsa">Bayelsa</option>
-                    <option value="Benue">Benue</option>
-                    <option value="Borno">Borno</option>
-                    <option value="Cross River">Cross River</option>
-                    <option value="Delta">Delta</option>
-                    <option value="Ebonyi">Ebonyi</option>
-                    <option value="Edo">Edo</option>
-                    <option value="Ekiti">Ekiti</option>
-                    <option value="Enugu">Enugu</option>
-                    <option value="FCT">FCT</option>
-                    <option value="Gombe">Gombe</option>
-                    <option value="Imo">Imo</option>
-                    <option value="Jigawa">Jigawa</option>
-                    <option value="Kaduna">Kaduna</option>
-                    <option value="Kano">Kano</option>
-                    <option value="Katsina">Katsina</option>
-                    <option value="Kebbi">Kebbi</option>
-                    <option value="Kogi">Kogi</option>
-                    <option value="Kwara">Kwara</option>
-                    <option value="Lagos">Lagos</option>
-                    <option value="Nasarawa">Nasarawa</option>
-                    <option value="Niger">Niger</option>
-                    <option value="Ogun">Ogun</option>
-                    <option value="Ondo">Ondo</option>
-                    <option value="Osun">Osun</option>
-                    <option value="Oyo">Oyo</option>
-                    <option value="Plateau">Plateau</option>
-                    <option value="Rivers">Rivers</option>
-                    <option value="Sokoto">Sokoto</option>
-                    <option value="Taraba">Taraba</option>
-                    <option value="Yobe">Yobe</option>
-                    <option value="Zamfara">Zamafara</option>
-                </select>
-            </div>
-            <div class="col-lg-2">
-                <label class="control-label">LGA of Origin</label>
-            </div>
-            <div class="col-lg-4">
-                <select name="lga" id="lga" class="form-control select-lga" required>
-            </div>
-            </select>
-        </div>
 
-    </br>
-    <br>
-
-        <div class="form-row">
-            <div class="col-lg-2">
-                <label>Facility Name</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="facility_name" placeholder="Enter Full Faciltity Name">
-            </div>
-            <div class="col-lg-2">
-                <label>Facility Code</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="facility_code" placeholder="Provide Facility Code">
-            </div>
-        </div>
-
-    </br>
-
-        <div class="form-row">
-            <div class="col-lg-2">
-                <label>Sender's Name</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="sender_full_name" placeholder="Full Name">
-            </div>
-            <div class="col-lg-2">
-                <label>Sender's Mobile</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="sender_phone" placeholder="Phone Number">
-            </div>
-        </div>
-
-    </br>
-
-        <div class="form-row">
-            <div class="col-lg-2">
-                <label>Date of Pick up</label>
-            </div>
-            <div class="col-lg-4 md-form md-outline input-with-post-icon datepicker">
-                <input placeholder="Select date" type="date" id="DateofPickUp" class="form-control">
-            </div>
-            <div class="col-lg-2">
-                <label>Pick up Time</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="pick_time" placeholder="Time format in hh:mm:ss">
-            </div>
-        </div>
-
-    </br>
-
-        <div class="form-row">
-            <div class="col-lg-2">
-                <label>Pick Up Schedule</label>
-            </div>
-            <div class="col-lg-4 md-form md-outline input-with-post-icon datepicker">
-               <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
-            </div>
-            <div class="col-lg-2">
-                <label>Sign</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="signature" placeholder="Signature">
-            </div>
-        </div>
-
-    <br>
-    <label><h3>3PL Details</h3></label>
-    </br>
-
-        <div class="form-row">
-            <div class="col-lg-2">
-                <label>Total Number of Samples</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="number_samples" placeholder="Enter Total Samples to be Shipped">
-            </div>
-            <div class="col-lg-2">
-                <label>Temp at Pickup</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="temperature" placeholder="Enter temperature in Celsius">
-            </div>
-        </div>
-
-    </br>
-
-        <div class="form-row">
-            <div class="col-lg-2">
-                <label>3PL Name</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="pl_name" placeholder="Full Name of 3PL">
-            </div>
-            <div class="col-lg-2">
-                <label>Phone Number</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="phone_3pl" placeholder="Enter 3PL Phone Number">
-            </div>
-        </div>
-
-    </br>
-
-        <div class="form-row">
-            <div class="col-lg-2">
-                <label>PCR Laboratory Name</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="pcr_lab_name" placeholder="Enter name of PCR Lab">
-            </div>
-            <div class="col-lg-2">
-                <label>PCR Lab Code</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="pcr_lab_code" placeholder="Enter PCR Lab Code">
-            </div>
-        </div>
-
-    </br>
-
-        <div class="form-row">
-            <div class="col-lg-2">
-                <label>Manifest ID</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="manifest_id" placeholder="Enter MAnifest ID">
-            </div>
-            <div class="col-lg-2">
-                <label>Result Status</label>
-            </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control" id="result_status" placeholder="Enter Result status">
-            </div>
-        </div>
-
-        </br>
-        <div class="form-row">
-                    <div class="col-lg-2">
-                        <label>Date Created By</label>
-                    </div>
-                    <div class="col-lg-4 md-form md-outline input-with-post-icon datepicker">
-                       <input placeholder="Select date" type="date" id="date_created" class="form-control">
-                    </div>
-                    <div class="col-lg-2">
-                        <label>Created By</label>
-                    </div>
-                    <div class="col-lg-4">
-                        <input type="text" class="form-control" id="createdBy" placeholder="Signature">
-                    </div>
-                </div>
-                        </br>
-                        <div class="form-row">
-                    <div class="col-lg-2">
-                        <label>Pick Up Schedule</label>
-                    </div>
-                    <div class="col-lg-4 md-form md-outline input-with-post-icon datepicker">
-                       <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
-                    </div>
-                    <div class="col-lg-2">
-                        <label>Sign</label>
-                    </div>
-                    <div class="col-lg-4">
-                        <input type="text" class="form-control" id="signature" placeholder="Signature">
-                    </div>
-                </div>
-
-    <br>
-<br>
-</div>
-    <button type="submit" onclick="getFormvalue_geo()">Save Manifest</button>
-
+<h2>Manifest Details</h2>
+<table>
+    <tr>
+        <td><label class="control-label">State of Origin</label></td>
+        <td><select onchange="toggleLGA(this);" name="state" id="state" class="form-control">
+            <option value="" selected="selected">- Select -</option>
+            <option value="Abia">Abia</option>
+            <option value="Adamawa">Adamawa</option>
+            <option value="AkwaIbom">AkwaIbom</option>
+            <option value="Anambra">Anambra</option>
+            <option value="Bauchi">Bauchi</option>
+            <option value="Bayelsa">Bayelsa</option>
+            <option value="Benue">Benue</option>
+            <option value="Borno">Borno</option>
+            <option value="Cross River">Cross River</option>
+            <option value="Delta">Delta</option>
+            <option value="Ebonyi">Ebonyi</option>
+            <option value="Edo">Edo</option>
+            <option value="Ekiti">Ekiti</option>
+            <option value="Enugu">Enugu</option>
+            <option value="FCT">FCT</option>
+            <option value="Gombe">Gombe</option>
+            <option value="Imo">Imo</option>
+            <option value="Jigawa">Jigawa</option>
+            <option value="Kaduna">Kaduna</option>
+            <option value="Kano">Kano</option>
+            <option value="Katsina">Katsina</option>
+            <option value="Kebbi">Kebbi</option>
+            <option value="Kogi">Kogi</option>
+            <option value="Kwara">Kwara</option>
+            <option value="Lagos">Lagos</option>
+            <option value="Nasarawa">Nasarawa</option>
+            <option value="Niger">Niger</option>
+            <option value="Ogun">Ogun</option>
+            <option value="Ondo">Ondo</option>
+            <option value="Osun">Osun</option>
+            <option value="Oyo">Oyo</option>
+            <option value="Plateau">Plateau</option>
+            <option value="Rivers">Rivers</option>
+            <option value="Sokoto">Sokoto</option>
+            <option value="Taraba">Taraba</option>
+            <option value="Yobe">Yobe</option>
+            <option value="Zamfara">Zamafara</option>
+        </select></td>
+        <td><label class="control-label">LGA of Origin</label></td>
+        <td><select name="lga" id="lga" class="form-control select-lga" required></select></td>
+    </tr>
+    <tr>
+        <td><label>Facility Name</label></td>
+        <td><input type="text" class="form-control" id="facility_name" placeholder="Enter Full Faciltity Name"></td>
+        <td><label>Facility Code</label></td>
+        <td><input type="number" class="form-control" id="facility_code" placeholder="Provide Facility Code"></td>
+    </tr>
+    <tr>
+        <td><label>Sender's Name</label></td>
+        <td><input type="text" class="form-control" id="sender_full_name" placeholder="Full Name"></td>
+        <td><label>Sender's Mobile</label></td>
+        <td><input type="number" class="form-control" id="sender_phone" placeholder="Phone Number"></td>
+    </tr>
+    <tr>
+        <td><label>Date of Pick up</label></td>
+        <td><div class="input-with-post-icon datepicker">
+            <input placeholder="Select date" type="date" id="DateofPickUp" class="form-control">
+        </div></td>
+        <td><label>Pick up Time</label></td>
+        <td><input type="time" class="form-control" id="pick_time" placeholder="Time format in hh:mm:ss"></td>
+    </tr>
+    <tr>
+        <td><label>Pick Up Schedule</label></td>
+        <td><div class="input-with-post-icon datepicker">
+            <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
+         </div></td>
+        <td><label>Sign</label></td>
+        <td><input type="text" class="form-control" id="signature" placeholder="Signature"></td>
+    </tr>
+    <tr>
+        <td><label>Total Number of Samples</label></td>
+        <td><input type="text" class="form-control" id="number_samples" placeholder="Enter Total Samples to be Shipped"></td>
+        <td><label>Temp at Pickup</label></td>
+        <td><input type="number" class="form-control" id="temperature" placeholder="Enter temperature in Celsius"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<h3>3PL Information</h3>
+<table>
+    <tr>
+        <td><label>3PL Name</label></td>
+        <td><input type="text" class="form-control" id="pl_name" placeholder="Full Name of 3PL"></td>
+        <td><label>Phone Number</label></td>
+        <td><input type="number" class="form-control" id="phone_3pl" placeholder="Enter 3PL Phone Number"></td>
+    </tr>
+    <tr>
+        <td><label>PCR Laboratory Name</label></td>
+        <td><input type="text" class="form-control" id="pcr_lab_name" placeholder="Enter name of PCR Lab"></td>
+        <td><label>PCR Lab Code</label></td>
+        <td><input type="text" class="form-control" id="pcr_lab_code" placeholder="Enter PCR Lab Code"></td>
+    </tr>
+    <tr>
+        <td><label>Manifest ID</label></td>
+        <td><input type="number" class="form-control" id="manifest_id" placeholder="Enter MAnifest ID"></td>
+        <td><label>Result Status</label></td>
+        <td><input type="text" class="form-control" id="result_status" placeholder="Enter Result status"></td>
+    </tr>
+    <tr>
+        <td><label>Date Created By</label></td>
+        <td><div class="input-with-post-icon datepicker">
+            <input placeholder="Select date" type="date" id="date_created" class="form-control">
+         </div></td>
+        <td><label>Created By</label></td>
+        <td><input type="text" class="form-control" id="createdBy" placeholder="Signature"></td>
+    </tr>
+    <tr>
+        <td><label>Pick Up Schedule</label></td>
+        <td><div class="input-with-post-icon datepicker">
+            <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
+         </div></td>
+        <td><label>Sign</label></td>
+        <td><input type="text" class="form-control" id="signature" placeholder="Signature"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><button type="submit" onclick="getFormvalue_geo()">Save Manifest</button></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
 
 <script>
     function getFormvalue_geo() {
