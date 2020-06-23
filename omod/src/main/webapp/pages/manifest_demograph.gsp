@@ -120,18 +120,12 @@
         <td><input type="text" class="form-control" id="pcr_lab_code" placeholder="Enter PCR Lab Code"></td>
     </tr>
     <tr>
-        <td><label>Manifest ID</label></td>
-        <td><input type="number" class="form-control" id="manifest_id" placeholder="Enter MAnifest ID"></td>
-        <td><label>Result Status</label></td>
-        <td><input type="text" class="form-control" id="result_status" placeholder="Enter Result status"></td>
-    </tr>
-    <tr>
         <td><label>Date Created By</label></td>
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="date_created" class="form-control">
          </div></td>
-        <td><label>Created By</label></td>
-        <td><input type="text" class="form-control" id="createdBy" placeholder="Signature"></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <td><label>Pick Up Schedule</label></td>
@@ -173,13 +167,14 @@
         var riderPhoneNumber = document.getElementById("phone_3pl").value;
         var pcrLabName = document.getElementById("pcr_lab_name").value;
         var pcrLabCode = document.getElementById("pcr_lab_code").value;
-        var manifestID = document.getElementById("manifest_id").value;
+        //var manifestID = document.getElementById("manifest_id").value;
         //var comment = document.getElementById("comment").value;
         //var  = document.getElementById("").value;
-        var resultStatus = document.getElementById("result_status").value;
-        var createdBy = document.getElementById("sender_full_name").value;
+        //var resultStatus = document.getElementById("result_status").value;
+        //var createdBy = document.getElementById("sender_full_name").value;
         var dateModified = document.getElementById("schedule_DateofPickUp").value;
         var dateCreated = document.getElementById("date_created").value;
+
         jq = jQuery;
 
         jq.ajax({
@@ -202,9 +197,9 @@
                 'riderPhoneNumber': riderPhoneNumber,
                 'pcrLabName': pcrLabName,
                 'pcrLabCode': pcrLabCode,
-                'manifestID': manifestID,
-                'resultStatus': resultStatus,
-                'createdBy': createdBy,
+                //'manifestID': manifestID,
+                //'resultStatus': resultStatus,
+                //'createdBy': createdBy,
                 'dateModified': dateModified,
                 'dateCreated': dateCreated
 
