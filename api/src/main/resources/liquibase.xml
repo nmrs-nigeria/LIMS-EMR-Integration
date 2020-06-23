@@ -28,6 +28,22 @@ VALUES
 );
 		]]></sql>
                 
-    </changeSet> 
+    </changeSet>
+    
+      <changeSet id="limsemr-v1.1-0" author="Morrison Idiasirue" >
+         <createTable tableName="lims_auth_module">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column  name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>                      
+        </createTable>     
+    </changeSet>
+       
  
 </databaseChangeLog>

@@ -124,12 +124,13 @@ public class EMRExchangeFragmentController {
     }
 	
 	//vlsamples is a list of VLSampleInformationFrontFacing and is a json string of Manifest object
-	public void performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
+	public String performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
 	        @RequestParam(value = "manifest", required = true) String manifestDraft,
 	        @RequestParam(value = "sampleSpace", required = true) String sampleSpace) {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		String responseMessage = "";
 		
 		Date dateSampleSent = new Date();
 		
@@ -167,20 +168,20 @@ public class EMRExchangeFragmentController {
 			
 			if (response == true) {
 				updateDateSampleSentOnDB(vLSampleInformations, dateSampleSent);
-				Manifest manifest = new Manifest();
-				manifest.setCreatedBy(Context.getAuthenticatedUser().toString());
-				manifest.setManifestID(manifestID);
-				manifest.setResultStatus("pending");
-				manifest.setSampleSpace(sampleSpace); //either VL, RECENCY OR EID
+				//  Manifest manifest = new Manifest();
+				convertManifest.setCreatedBy(Context.getAuthenticatedUser().toString());
+				convertManifest.setManifestID(manifestID);
+				convertManifest.setResultStatus("pending");
+				convertManifest.setSampleSpace(sampleSpace); //either VL, RECENCY OR EID
 				
-				boolean insertManifestResult = this.dBUtility.insertManifestEntry(manifest);
+				boolean insertManifestResult = this.dBUtility.insertManifestEntry(convertManifest);
 				if (insertManifestResult) {
 					boolean insertSamplesResult = this.dBUtility.insertManifestSaplesEntry(vLSampleInformations, manifestID,
 					    Context.getAuthenticatedUser().toString());
 					
 					System.out.println("finished logging samples");
 				}
-				
+				responseMessage = "sent sucessfully";
 			}
 			
 			//List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
@@ -188,6 +189,8 @@ public class EMRExchangeFragmentController {
 		catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
+		
+		return responseMessage;
 		
 		//TODO: confirm with Mubarak what details will be return to frontend
 	}
