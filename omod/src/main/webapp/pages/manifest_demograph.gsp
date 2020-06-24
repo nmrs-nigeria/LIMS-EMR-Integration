@@ -13,7 +13,16 @@
 <% ui.includeJavascript("limsemrops", "lga.min.js") %>
 <% ui.includeCss("limsemrops", "bootstrap.css") %>
 <% ui.includeJavascript("limsemrops", "jquery-3.5.1.js") %>
+<style>
+        table {
+            border: 1px solid #CCC;
+            border-collapse: collapse;
+        }
 
+        td {
+            border: none;
+        }
+    </style>
 <div class="container card" id="ui">
 
 
@@ -150,6 +159,9 @@
 </table>
 
 <script>
+//localStorage.clear();
+const vlsamples = JSON.parse(localStorage.getItem("sample_data"));
+const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
     function getFormvalue_geo() {
         var referringLabState = document.getElementById("state").value;
         var referringLabLga = document.getElementById("lga").value;
@@ -181,6 +193,7 @@
             url: "${ ui.actionLink("limsemrops", "EMRExchange", "performVLRequisition") }",
             dataType: "json",
             data: {
+            'manifest':{
                 'referringLabState': referringLabState,
                 'referringLabLga': referringLabLga,
                 'facility_name': facility_name,
@@ -201,12 +214,13 @@
                 //'resultStatus': resultStatus,
                 //'createdBy': createdBy,
                 'dateModified': dateModified,
-                'dateCreated': dateCreated
-
+                'dateCreated': dateCreated},
+            'vlsamples': vlsamples,
+            'sampleSpace': sampleSpace
             }
         }).success(function (data) {
 
-            console.log(data);
+            //console.log(data);
         })
             .error(function (xhr, status, err) {
                 console.log('error occurred');
