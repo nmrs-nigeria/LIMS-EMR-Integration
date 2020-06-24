@@ -104,7 +104,7 @@
             }
 
             //Display selected Row data in Alert Box.
-            alert(message);
+            //alert(message);
             window.location.assign("manifest_demograph.page");
         }
 

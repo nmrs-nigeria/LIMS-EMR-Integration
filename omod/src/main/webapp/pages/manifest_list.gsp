@@ -17,57 +17,66 @@
                 <tr>
                     <th>S/N</th>
                     <th>Manifest ID</th>
-                    <th>Number of Samples</th>
-                    <th>Date Created</th>
+                    <th>PCR Lab Name</th>
                     <th>Prepared By</th>
+                    <th>Date Prepared</th>
+                    <th>Total Sample</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+            <tbody id="list_manifests">
+
             </tbody>
             <tfoot>
                 <tr>
                     <th>S/N</th>
                     <th>Manifest ID</th>
-                    <th>Number of Samples</th>
-                    <th>Date Created</th>
+                    <th>PCR Lab Name</th>
                     <th>Prepared By</th>
+                    <th>Date Prepared</th>
+                    <th>Total Sample</th>
                 </tr>
             </tfoot>
         </table>
         </br>
         </div>
 </br>
-<button id="button" type="submit">Save Manifest</button>
+<button id="button" onclick="" type="submit">Save Manifest</button>
 </form>
 
-<% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
-<% ui.includeJavascript("limsemrops", "doc/datatables.min.js") %>
-<% ui.includeJavascript("limsemrops", "doc/jquery-3.5.1.js") %>
-<% ui.includeJavascript("limsemrops", "DataTables-1.10.21/js/jquery.dataTables.min.js") %>
-<% ui.includeJavascript("limsemrops", "pdfmake-0.1.36/pdfmake.min.js") %>
-<% ui.includeJavascript("limsemrops", "vfs_fonts.js") %>
-<% ui.includeJavascript("limsemrops", "lga.min.js") %>
-<% ui.includeJavascript("limsemrops", "PCRlabs.min.js") %>
-
 <script>
-jQuery(document).ready(function() {
-    var table = jQuery('#example').DataTable({"pagingType": "full", stateSave: true});
-    //"pagingType": "full_numbers"
+function buildTable() {
+        var table = document.getElementById('list_manifests');
+        //TODO
+        //Specify date and time of pickup in before printing...
+        for (var i = 0; i < sample_data_user.length; i++) {
+            var row = '<tr>' +
+                '<td></td>' +
+                '<td>' + sample_data_user[i].manifestID + '</td>' +
+                '<td>' + sample_data_user[i].pcrLabName + '</td>' +
+                '<td>' + sample_data_user[i].createdBy + '</td>' +
+                '<td>' + sample_data_user[i].dateCreated + '</td>' +
+                '<td>' + sample_data_user[i].riderTotalSamplesPicked + '</td>' +
+                '</tr>';
+            table.innerHTML += row
+        }
+    }
 
-    jQuery('#example tbody').on( 'click', 'tr', function () {
-        jQuery(this).toggleClass('selected');
-    } );
-    jQuery('#button').click( function () {
-        alert( table.rows('.selected').data().length +' row(s) selected' );
-    } );
-} );
+    var local_sample_data = localStorage.getItem("sample_data");
+    var local_sample_data = localStorage.getItem("samplespace_data");
+    var local_sample_data = localStorage.getItem("sample_data");
+        var sample_data_user = [];
+
+        if (local_sample_data !== undefined) {
+            console.log('sample is not undefined');
+            sample_data_user = JSON.parse(JSON.parse(local_sample_data));
+            if (sample_data_user !== undefined) {
+                buildTable();
+            } else {
+                console.log('local storage is empty');
+            }
+            //window.location.assign("manifest_demograph.page");
+
+        }
 </script>
 
 <!-- \$320,800 --!>

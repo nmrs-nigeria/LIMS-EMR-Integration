@@ -27,11 +27,11 @@ def id = config.id
     });
 </script>
 
-<a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">
+<!-- a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>
     <br/>
     <p>Generate</p>
-</a>
+</a-->
 
 <a href="schedule_manifest.page" class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>
@@ -39,6 +39,11 @@ def id = config.id
     <p>Generate Manifest</p>
 </a>
 
+<a href="manifest_list.page"  class="button app big" style="font-size:12px;min-height: 10px;">
+    <i class="icon-list"></i>
+    <br/>
+    <p>Manifests</p>
+</a>
 
 <a href="check_available_result.page"  class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>
