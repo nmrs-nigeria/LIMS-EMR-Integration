@@ -322,7 +322,7 @@ public class DBManager {
 	public int initializeAuthModuleUserNamePassword(Auth auth) throws SQLException {
 		//used to set the very first username and password pair for the authmodule
 		pStatement = conn.prepareStatement("insert into " + ConstantUtils.AUTHMODULE_TABLE
-		        + " (username, password) values (?,?);");
+		        + " (username, password) values (?,?)");
 		pStatement.setString(1, auth.getUsername());
 		pStatement.setString(2, auth.getPassword());
 		int response = pStatement.executeUpdate();
@@ -332,7 +332,7 @@ public class DBManager {
 	public int setAuthModuleUserNamePassword(Auth auth) throws SQLException {
 		//used when UPDATING the username and password pair for the authmodule
 		pStatement = conn.prepareStatement("update " + ConstantUtils.AUTHMODULE_TABLE
-		        + " SET username = ?, password = ? where username = ?;");
+		        + " SET username = ?, password = ? where username = ?");
 		pStatement.setString(1, auth.getUsername());
 		pStatement.setString(2, auth.getPassword());
 		pStatement.setString(3, auth.getUsername());
