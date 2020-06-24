@@ -6,10 +6,13 @@
 package org.openmrs.module.limsemrops.omodmodels;
 
 import java.util.Date;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * @author MORRISON.I
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Manifest {
 	
 	private String manifestID;

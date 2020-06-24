@@ -172,7 +172,8 @@ public class EMRExchangeFragmentController {
 				convertManifest.setCreatedBy(Context.getAuthenticatedUser().toString());
 				convertManifest.setManifestID(manifestID);
 				convertManifest.setResultStatus("pending");
-				convertManifest.setSampleSpace(sampleSpace); //either VL, RECENCY OR EID
+				convertManifest.setSampleSpace(sampleSpace); //either VL, RECENCY OR EID                               
+                                convertManifest.setTestType("VL");
 				
 				boolean insertManifestResult = this.dBUtility.insertManifestEntry(convertManifest);
 				if (insertManifestResult) {

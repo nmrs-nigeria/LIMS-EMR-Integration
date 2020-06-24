@@ -187,34 +187,27 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
         var dateModified = document.getElementById("schedule_DateofPickUp").value;
         var dateCreated = document.getElementById("date_created").value;
 
-        jq = jQuery;
-
-        jq.ajax({
-            url: "${ ui.actionLink("limsemrops", "EMRExchange", "performVLRequisition") }",
-            dataType: "json",
-            data: {
-            'manifest':{
+        var  manifestObj = {
                 'referringLabState': referringLabState,
                 'referringLabLga': referringLabLga,
-                'facility_name': facility_name,
-                'facility_code': facility_code,
-                'sender_full_name': sender_full_name,
-                'sender_phone': sender_phone,
-                'DateofPickUp': DateofPickUp,
-                'pick_time': pick_time,
                 'dateScheduleForPickup': dateScheduleForPickup,
-                'signature': signature,
                 'riderTotalSamplesPicked': riderTotalSamplesPicked,
                 'riderTempAtPickUp': riderTempAtPickUp,
                 'riderName': riderName,
                 'riderPhoneNumber': riderPhoneNumber,
                 'pcrLabName': pcrLabName,
                 'pcrLabCode': pcrLabCode,
-                //'manifestID': manifestID,
-                //'resultStatus': resultStatus,
-                //'createdBy': createdBy,
-                'dateModified': dateModified,
-                'dateCreated': dateCreated},
+                'samplePickUpOnTime':'yes'
+                                        }
+          manifestObj = JSON.stringify(manifestObj);
+        
+        jq = jQuery;
+
+        jq.ajax({
+            url: "${ ui.actionLink("limsemrops", "EMRExchange", "performVLRequisition") }",
+            dataType: "json",
+            data: {
+            'manifest':manifestObj,
             'vlsamples': vlsamples,
             'sampleSpace': sampleSpace
             }
