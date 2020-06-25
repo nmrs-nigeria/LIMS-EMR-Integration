@@ -207,6 +207,7 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
         }).success(function (data) {
             console.log(data);
             alert(Manifest Successfully sent to LIMS);
+            window.location.assign("manifest.page");
         })
             .error(function (xhr, status, err) {
                 console.log(err);
