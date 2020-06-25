@@ -150,7 +150,7 @@
         <td></td>
     </tr>
 </table>
-  
+
 <script>
 //localStorage.clear();
 const vlsamples = JSON.parse(localStorage.getItem("sample_data"));
