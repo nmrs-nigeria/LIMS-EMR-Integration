@@ -150,6 +150,8 @@ public class EMRExchangeFragmentController {
 			    new TypeReference<List<VLSampleInformationFrontFacing>>() {});
 			
 			Manifest convertManifest = mapper.readValue(manifestDraft, Manifest.class);
+			convertManifest.setPcrLabCode("LIMS150003"); // todo
+			convertManifest.setPcrLabName("Asokoro Laboratory and Training Center"); // todo
 			
 			System.out.println("about to update date sample sent");
 			
@@ -163,8 +165,16 @@ public class EMRExchangeFragmentController {
 			String manifestJsonString = mapper.writeValueAsString(vLSampleCollectionBatchManifest);
 			
 			System.out.println("about to send sample online");
-			Boolean response = this.exchangeLayer.sendSamplesOnline(manifestJsonString);
-			System.out.println("finished sending sample online");
+			Boolean response = null;
+			try {
+				System.out.println("manifest info is ");
+				System.out.println(manifestJsonString);
+				response = this.exchangeLayer.sendSamplesOnline(manifestJsonString);
+				System.out.println("finished sending sample online");
+			}
+			catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
 			
 			if (response == true) {
 				updateDateSampleSentOnDB(vLSampleInformations, dateSampleSent);
