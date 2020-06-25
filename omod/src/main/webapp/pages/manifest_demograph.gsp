@@ -12,7 +12,6 @@
     type="text/css" />
 <% ui.includeJavascript("limsemrops", "lga.min.js") %>
 <% ui.includeCss("limsemrops", "bootstrap.css") %>
-<% ui.includeJavascript("limsemrops", "jquery-3.5.1.js") %>
 <style>
         table {
             border: 1px solid #CCC;
@@ -74,12 +73,6 @@
         <td><select name="lga" id="lga" class="form-control select-lga" required></select></td>
     </tr>
     <tr>
-        <td><label>Facility Name</label></td>
-        <td><input type="text" class="form-control" id="facility_name" placeholder="Enter Full Faciltity Name"></td>
-        <td><label>Facility Code</label></td>
-        <td><input type="number" class="form-control" id="facility_code" placeholder="Provide Facility Code"></td>
-    </tr>
-    <tr>
         <td><label>Sender's Name</label></td>
         <td><input type="text" class="form-control" id="sender_full_name" placeholder="Full Name"></td>
         <td><label>Sender's Mobile</label></td>
@@ -98,8 +91,8 @@
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
          </div></td>
-        <td><label>Sign</label></td>
-        <td><input type="text" class="form-control" id="signature" placeholder="Signature"></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <td><label>Total Number of Samples</label></td>
@@ -142,7 +135,7 @@
             <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
          </div></td>
         <td><label>Sign</label></td>
-        <td><input type="text" class="form-control" id="signature" placeholder="Signature"></td>
+        <td></td>
     </tr>
     <tr>
         <td></td>
@@ -212,11 +205,11 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
             'sampleSpace': sampleSpace
             }
         }).success(function (data) {
-
-            //console.log(data);
+            console.log(data);
+            alert(Manifest Successfully sent to LIMS);
         })
             .error(function (xhr, status, err) {
-                console.log('error occurred');
+                console.log(err);
             });
     }
 </script>
