@@ -158,14 +158,14 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
     function getFormvalue_geo() {
         var referringLabState = document.getElementById("state").value;
         var referringLabLga = document.getElementById("lga").value;
-        var facility_name = document.getElementById("facility_name").value;
-        var facility_code = document.getElementById("facility_code").value;
+      //  var facility_name = document.getElementById("facility_name").value;
+       // var facility_code = document.getElementById("facility_code").value;
         var sender_full_name = document.getElementById("sender_full_name").value;
         var sender_phone = document.getElementById("sender_phone").value;
         var DateofPickUp = document.getElementById("DateofPickUp").value;
         var pick_time = document.getElementById("pick_time").value;
         var dateScheduleForPickup = document.getElementById("schedule_DateofPickUp").value;
-        var signature = document.getElementById("signature").value;
+    //    var signature = document.getElementById("signature").value;
         var riderTotalSamplesPicked = document.getElementById("number_samples").value;
         var riderTempAtPickUp = document.getElementById("temperature").value;
         var riderName = document.getElementById("pl_name").value;
@@ -206,7 +206,7 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
             }
         }).success(function (data) {
             console.log(data);
-            alert(Manifest Successfully sent to LIMS);
+            alert('Manifest Successfully sent to LIMS');
             window.location.assign("manifest.page");
         })
             .error(function (xhr, status, err) {
@@ -214,3 +214,4 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
             });
     }
 </script>
+</div>

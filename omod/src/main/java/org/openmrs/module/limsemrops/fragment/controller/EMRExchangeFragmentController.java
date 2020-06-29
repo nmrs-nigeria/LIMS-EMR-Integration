@@ -24,10 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.limsemrops.omodmodels.Manifest;
-import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
-import org.openmrs.module.limsemrops.omodmodels.VLSampleInformation;
-import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
+import org.openmrs.module.limsemrops.omodmodels.*;
 import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ExchangeLayer;
 import org.openmrs.module.limsemrops.service.SampleInfo;
@@ -35,6 +32,10 @@ import org.openmrs.module.limsemrops.utility.ConstantUtils;
 import org.openmrs.module.limsemrops.utility.ConstantUtils.SampleSpace;
 import org.openmrs.module.limsemrops.utility.LabFormUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -124,7 +125,8 @@ public class EMRExchangeFragmentController {
     }
 	
 	//vlsamples is a list of VLSampleInformationFrontFacing and is a json string of Manifest object
-	public String performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<?> performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
 	        @RequestParam(value = "manifest", required = true) String manifestDraft,
 	        @RequestParam(value = "sampleSpace", required = true) String sampleSpace) {
 		
@@ -161,8 +163,11 @@ public class EMRExchangeFragmentController {
 			vLSampleCollectionBatchManifest.setReceivingLabID(convertManifest.getPcrLabCode());
 			vLSampleCollectionBatchManifest.setReceivingLabName(convertManifest.getPcrLabName());
 			vLSampleCollectionBatchManifest.setSampleInformation(convertedSamples);
-			
-			String manifestJsonString = mapper.writeValueAsString(vLSampleCollectionBatchManifest);
+
+			SampleCollectionManifest sampleCollectionManifest = new SampleCollectionManifest();
+			sampleCollectionManifest.setViralloadManifest(vLSampleCollectionBatchManifest);
+
+			String manifestJsonString = mapper.writeValueAsString(sampleCollectionManifest);
 			
 			System.out.println("about to send sample online");
 			Boolean response = null;
@@ -193,15 +198,18 @@ public class EMRExchangeFragmentController {
 					System.out.println("finished logging samples");
 				}
 				responseMessage = "sent sucessfully";
+				return new ResponseEntity<>(responseMessage,HttpStatus.OK);
 			}
+
+
 			
 			//List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
 		}
 		catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
-		
-		return responseMessage;
+
+		return new ResponseEntity<>("Could not process request",HttpStatus.BAD_REQUEST);
 		
 		//TODO: confirm with Mubarak what details will be return to frontend
 	}
