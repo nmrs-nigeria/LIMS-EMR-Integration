@@ -11,18 +11,39 @@
 <form>
    </br>
     <h3>Results not available at this time</h3>
+    <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th><input id="sample_check" type="checkbox" onchange="checkUncheck(this)" name="chk[]" />
+                    <th>Sample ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date Sample Collected</th>
+                    <th>Order Type</th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th><input id="sample_check" type="checkbox" onchange="checkUncheck(this)" name="chk[]" />
+                    <th>Sample ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date Sample Collected</th>
+                    <th>Order Type</th>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
 </br>
 <button id="button" type="submit">Check Result</button>
 </form>
 
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
-<% ui.includeJavascript("limsemrops", "doc/datatables.min.js") %>
 <% ui.includeJavascript("limsemrops", "doc/jquery-3.5.1.js") %>
-<% ui.includeJavascript("limsemrops", "DataTables-1.10.21/js/jquery.dataTables.min.js") %>
-<% ui.includeJavascript("limsemrops", "pdfmake-0.1.36/pdfmake.min.js") %>
-<% ui.includeJavascript("limsemrops", "vfs_fonts.js") %>
-<% ui.includeJavascript("limsemrops", "lga.min.js") %>
-<% ui.includeJavascript("limsemrops", "PCRlabs.min.js") %>
 
 <script>
 jQuery(document).ready(function() {
