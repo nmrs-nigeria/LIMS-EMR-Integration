@@ -34,4 +34,11 @@ public class LimsemropsDao {
 		getSession().saveOrUpdate(item);
 		return item;
 	}
+	
+	/**
+	 * @param sessionFactory the sessionFactory to set
+	 */
+	public void setSessionFactory(DbSessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 }
