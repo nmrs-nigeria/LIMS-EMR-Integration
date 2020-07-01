@@ -17,10 +17,12 @@ public class LabFormUtils {
     //define all maps
     private Map<Integer, String> conceptMappings = new HashMap<>();
     private Map<Integer, Integer> integerConceptMappings = new HashMap<>();
+    private Map<Integer, String> pcrLabs = new HashMap<>();
 
     public LabFormUtils() {
         this.fillConceptMappings();
         this.fillIntegerConceptMappings();
+        this.fillPCRLabs();
     }
 
     public static final Integer VIRAL_LOAD_REQUEST_RECENCY = 166244;
@@ -56,6 +58,28 @@ public class LabFormUtils {
         //PMTCT conceptMappings.put(165978, "7"); //PMTCT
     }
 
+    private void fillPCRLabs() {
+        //PCR Lab
+        pcrLabs.put(166217, "LIMS190001");
+        pcrLabs.put(166218, "LIMS040001");
+        pcrLabs.put(166219, "LIMS330001");
+        pcrLabs.put(166220, "LIMS150001");
+        pcrLabs.put(166221, "LIMS070001");
+        pcrLabs.put(166222, "LIMS160001");
+        pcrLabs.put(166223, "LIMS320001");
+        pcrLabs.put(166224, "LIMS250001");
+        pcrLabs.put(166225, "LIMS150002");
+        pcrLabs.put(166226, "LIMS250002");
+        pcrLabs.put(166227, "LIMS040002");
+        pcrLabs.put(166228, "LIMS300001");
+        pcrLabs.put(166229, "LIMS080001");
+        pcrLabs.put(166230, "LIMS030001");
+        pcrLabs.put(166231, "LIMS340001");
+        pcrLabs.put(166232, "LIMS350001");
+        pcrLabs.put(166234, "LIMS250003");
+
+    }
+
     public Map<Integer, String> getConceptMappings() {
         return conceptMappings;
     }
@@ -63,5 +87,12 @@ public class LabFormUtils {
     public Map<Integer, Integer> getIntegerConceptMappings() {
         return integerConceptMappings;
     }
+
+    public Map<Integer, String> getPcrLabs() {
+        return pcrLabs;
+    }
+
+    
+    
 
 }

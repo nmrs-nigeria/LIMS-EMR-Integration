@@ -33,6 +33,8 @@ public class ConstantUtils {
 	// concepts
 	public final static int ART_START_DATE_CONCEPT = 159599;
 	
+	public final static int PCR_LABS_CONCEPT = 166233;
+	
 	/* Identifier IDs */
 	public static final int PEPFAR_IDENTIFIER_INDEX = 4;
 	

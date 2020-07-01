@@ -27,11 +27,13 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.limsemrops.omodmodels.*;
 import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ExchangeLayer;
+import org.openmrs.module.limsemrops.service.LookUpManager;
 import org.openmrs.module.limsemrops.service.SampleInfo;
 import org.openmrs.module.limsemrops.utility.ConstantUtils;
 import org.openmrs.module.limsemrops.utility.ConstantUtils.SampleSpace;
 import org.openmrs.module.limsemrops.utility.LabFormUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,9 +51,12 @@ public class EMRExchangeFragmentController {
 	
 	private DBUtility dBUtility;
 	
+	private LookUpManager lookUpManager;
+	
 	public EMRExchangeFragmentController() {
 		this.exchangeLayer = new ExchangeLayer();
 		this.dBUtility = new DBUtility();
+		this.lookUpManager = new LookUpManager();
 	}
 	
 	public void testVLLoad() {
@@ -124,124 +129,137 @@ public class EMRExchangeFragmentController {
 
     }
 	
+	@RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getDefaultPCRLabs() {
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<PCRLab> pCRLabs = lookUpManager.getPCRLabs();
+        String response = null;
+        try {
+            response = mapper.writeValueAsString(pCRLabs);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+	
 	//vlsamples is a list of VLSampleInformationFrontFacing and is a json string of Manifest object
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
-	        @RequestParam(value = "manifest", required = true) String manifestDraft,
-	        @RequestParam(value = "sampleSpace", required = true) String sampleSpace) {
-		
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		String responseMessage = "";
-		
-		Date dateSampleSent = new Date();
-		
-		String temString = UUID.randomUUID().toString();
-		String manifestID = temString.substring(1, 15).toUpperCase();
-		
-		VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
-		
-		vLSampleCollectionBatchManifest.setManifestID(manifestID);
-		vLSampleCollectionBatchManifest.setSendingFacilityID(Utils.getFacilityDATIMId());
-		vLSampleCollectionBatchManifest.setSendingFacilityName(Utils.getFacilityName());
-		
-		// vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
-		try {
-			
-			List<VLSampleInformationFrontFacing> vLSampleInformations = mapper.readValue(vlsamples,
-			    new TypeReference<List<VLSampleInformationFrontFacing>>() {});
-			
-			Manifest convertManifest = mapper.readValue(manifestDraft, Manifest.class);
-			convertManifest.setPcrLabCode("LIMS150003"); // todo
-			convertManifest.setPcrLabName("Asokoro Laboratory and Training Center"); // todo
-			
-			System.out.println("about to update date sample sent");
-			
-			List<VLSampleInformation> convertedSamples = updateDateSampleSent(vLSampleInformations, dateSampleSent);
-			System.out.println("finished updating date sample sent");
-			
-			vLSampleCollectionBatchManifest.setReceivingLabID(convertManifest.getPcrLabCode());
-			vLSampleCollectionBatchManifest.setReceivingLabName(convertManifest.getPcrLabName());
-			vLSampleCollectionBatchManifest.setSampleInformation(convertedSamples);
+    public ResponseEntity<?> performVLRequisition(@RequestParam(value = "vlsamples", required = true) String vlsamples,
+            @RequestParam(value = "manifest", required = true) String manifestDraft,
+            @RequestParam(value = "sampleSpace", required = true) String sampleSpace) {
 
-			SampleCollectionManifest sampleCollectionManifest = new SampleCollectionManifest();
-			sampleCollectionManifest.setViralloadManifest(vLSampleCollectionBatchManifest);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        String responseMessage = "";
 
-			String manifestJsonString = mapper.writeValueAsString(sampleCollectionManifest);
-			
-			System.out.println("about to send sample online");
-			Boolean response = null;
-			try {
-				System.out.println("manifest info is ");
-				System.out.println(manifestJsonString);
-				response = this.exchangeLayer.sendSamplesOnline(manifestJsonString);
-				System.out.println("finished sending sample online");
-			}
-			catch (Exception ex) {
-				System.out.println(ex.getMessage());
-			}
-			
-			if (response == true) {
-				updateDateSampleSentOnDB(vLSampleInformations, dateSampleSent);
-				//  Manifest manifest = new Manifest();
-				convertManifest.setCreatedBy(Context.getAuthenticatedUser().toString());
-				convertManifest.setManifestID(manifestID);
-				convertManifest.setResultStatus("pending");
-				convertManifest.setSampleSpace(sampleSpace); //either VL, RECENCY OR EID                               
-				convertManifest.setTestType("VL");
-				
-				boolean insertManifestResult = this.dBUtility.insertManifestEntry(convertManifest);
-				if (insertManifestResult) {
-					boolean insertSamplesResult = this.dBUtility.insertManifestSaplesEntry(vLSampleInformations, manifestID,
-					    Context.getAuthenticatedUser().toString());
-					
-					System.out.println("finished logging samples");
-				}
-				responseMessage = "sent sucessfully";
-				return new ResponseEntity<>(responseMessage,HttpStatus.OK);
-			}
+        Date dateSampleSent = new Date();
 
+        String temString = UUID.randomUUID().toString();
+        String manifestID = temString.substring(1, 15).toUpperCase();
 
-			
-			//List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
-		}
-		catch (Exception ex) {
-			System.err.println(ex.getMessage());
-		}
+        VLSampleCollectionBatchManifest vLSampleCollectionBatchManifest = new VLSampleCollectionBatchManifest();
 
-		return new ResponseEntity<>("Could not process request",HttpStatus.BAD_REQUEST);
-		
-		//TODO: confirm with Mubarak what details will be return to frontend
-	}
+        vLSampleCollectionBatchManifest.setManifestID(manifestID);
+        vLSampleCollectionBatchManifest.setSendingFacilityID(Utils.getFacilityDATIMId());
+        vLSampleCollectionBatchManifest.setSendingFacilityName(Utils.getFacilityName());
+
+        // vLSampleCollectionBatchManifest.setSampleInformation(vLSampleInformations);
+        try {
+
+            List<VLSampleInformationFrontFacing> vLSampleInformations = mapper.readValue(vlsamples,
+                    new TypeReference<List<VLSampleInformationFrontFacing>>() {
+            });
+
+            Manifest convertManifest = mapper.readValue(manifestDraft, Manifest.class);
+            convertManifest.setPcrLabCode("LIMS150003"); // todo
+            convertManifest.setPcrLabName("Asokoro Laboratory and Training Center"); // todo
+
+            System.out.println("about to update date sample sent");
+
+            List<VLSampleInformation> convertedSamples = updateDateSampleSent(vLSampleInformations, dateSampleSent);
+            System.out.println("finished updating date sample sent");
+
+            vLSampleCollectionBatchManifest.setReceivingLabID(convertManifest.getPcrLabCode());
+            vLSampleCollectionBatchManifest.setReceivingLabName(convertManifest.getPcrLabName());
+            vLSampleCollectionBatchManifest.setSampleInformation(convertedSamples);
+
+            SampleCollectionManifest sampleCollectionManifest = new SampleCollectionManifest();
+            sampleCollectionManifest.setViralloadManifest(vLSampleCollectionBatchManifest);
+
+            String manifestJsonString = mapper.writeValueAsString(sampleCollectionManifest);
+
+            System.out.println("about to send sample online");
+            Boolean response = null;
+            try {
+                System.out.println("manifest info is ");
+                System.out.println(manifestJsonString);
+                response = this.exchangeLayer.sendSamplesOnline(manifestJsonString);
+                System.out.println("finished sending sample online");
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+
+            if (response == true) {
+                updateDateSampleSentOnDB(vLSampleInformations, dateSampleSent);
+                //  Manifest manifest = new Manifest();
+                convertManifest.setCreatedBy(Context.getAuthenticatedUser().toString());
+                convertManifest.setManifestID(manifestID);
+                convertManifest.setResultStatus("pending");
+                convertManifest.setSampleSpace(sampleSpace); //either VL, RECENCY OR EID                               
+                convertManifest.setTestType("VL");
+
+                boolean insertManifestResult = this.dBUtility.insertManifestEntry(convertManifest);
+                if (insertManifestResult) {
+                    boolean insertSamplesResult = this.dBUtility.insertManifestSaplesEntry(vLSampleInformations, manifestID,
+                            Context.getAuthenticatedUser().toString());
+
+                    System.out.println("finished logging samples");
+                }
+                responseMessage = "sent sucessfully";
+                return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+            }
+
+            //List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        return new ResponseEntity<>("Could not process request", HttpStatus.BAD_REQUEST);
+
+        //TODO: confirm with Mubarak what details will be return to frontend
+    }
 	
-	public String getAllSavedManifest() {
-		
-		ObjectMapper mapper = new ObjectMapper();
-		List<Manifest> manifests = dBUtility.getManifests();
-		String response = null;
-		try {
-			response = mapper.writeValueAsString(manifests);
-		}
-		catch (JsonProcessingException ex) {
-			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		
-		return response;
-	}
+	@RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getAllSavedManifest() {
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Manifest> manifests = dBUtility.getManifests();
+        String response = null;
+        try {
+            response = mapper.writeValueAsString(manifests);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 	
-	public String getManifestSamples(@RequestParam(value = "manifestId") String manifestId) {
-		ObjectMapper mapper = new ObjectMapper();
-		List<VLSampleInformationFrontFacing> manifestSamples = dBUtility.getSamplesByManifestId(manifestId);
-		String response = null;
-		try {
-			response = mapper.writeValueAsString(manifestSamples);
-		}
-		catch (JsonProcessingException ex) {
-			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		
-		return response;
-	}
+	@RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getManifestSamples(@RequestParam(value = "manifestId") String manifestId) {
+        ObjectMapper mapper = new ObjectMapper();
+        List<VLSampleInformationFrontFacing> manifestSamples = dBUtility.getSamplesByManifestId(manifestId);
+        String response = null;
+        try {
+            response = mapper.writeValueAsString(manifestSamples);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 	
 	private List<VLSampleInformation> updateDateSampleSent(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {
 
