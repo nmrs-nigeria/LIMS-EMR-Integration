@@ -21,7 +21,7 @@
                 <th>Sample ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Date Sample Collected</th>
+                <th>Age</th>
                 <th>Order Type</th>
                 </th>
             </tr>
@@ -35,7 +35,7 @@
                 <th>Sample ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Date Sample Collected</th>
+                <th>Age</th>
                 <th>Order Type</th>
                 </th>
             </tr>
@@ -58,7 +58,7 @@
                 '<td>' + sample_data_user[i].sampleID + '</td>' +
                 '<td>' + sample_data_user[i].firstName + '</td>' +
                 '<td>' + sample_data_user[i].surName + '</td>' +
-                '<td>' + sample_data_user[i].sampleCollectionDate + '</td>' +
+                '<td>' + sample_data_user[i].age + '</td>' +
                 '<td>' + sample_data_user[i].sampleType + '</td>' +
                 '</tr>';
             table.innerHTML += row
