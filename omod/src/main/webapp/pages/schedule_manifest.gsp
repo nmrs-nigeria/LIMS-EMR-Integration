@@ -14,10 +14,8 @@
     }
 </style>
 
-<div class="container">
     <p class="lead">Generate Manifest</p>
 
-    <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="md-form md-outline input-with-post-icon datepicker">
@@ -30,27 +28,23 @@
                     <label for="example">End Date</label>
                 </div>
                 <div>
-                    </br>
-                    </br>
                     <select id="Test_Type" class="form-control">
                         <option value="" selected="selected">- Select -</option>
                         <option value="VL">Viral Load</option>
                         <option value="eid">EID</option>
                         <option value="recency">Recency</option>
                     </select>
-                    </br>
+                    <label>Test Type</label>
+
                 </div>
-                <input type="button" value="Submit" onclick="getFormvalue()">
 
             </div>
         </div>
-    </div>
 
-</div>
+                <input type="button" value="Submit" onclick="getFormvalue()">
+3087200215
 </br>
-</br>
-<button type="submit" onclick="document.write(" HTML DOM is working")">Show Manifest</button>
-<hr />
+
 <script>
     function getFormvalue() {
         //var x=document.getElementById("form1");

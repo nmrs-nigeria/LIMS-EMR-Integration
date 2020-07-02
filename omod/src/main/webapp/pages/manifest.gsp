@@ -109,7 +109,9 @@
         }
 
     var local_sample_data = localStorage.getItem("sample_data");
+    console.log(local_sample_data)
     var sample_data_user = [];
+    //console.log(local_sample_data)
 
     if (local_sample_data !== undefined) {
         console.log('sample is not undefined');

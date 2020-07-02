@@ -28,7 +28,7 @@
 <h2>Manifest Details</h2>
 <table>
     <tr>
-        <td><label class="control-label">State of Origin</label></td>
+        <td><label class="control-label">Facility State</label></td>
         <td><select onchange="toggleLGA(this);" name="state" id="state" class="form-control">
             <option value="" selected="selected">- Select -</option>
             <option value="Abia">Abia</option>
@@ -69,7 +69,7 @@
             <option value="Yobe">Yobe</option>
             <option value="Zamfara">Zamafara</option>
         </select></td>
-        <td><label class="control-label">LGA of Origin</label></td>
+        <td><label class="control-label">Facility LGA</label></td>
         <td><select name="lga" id="lga" class="form-control select-lga" required></select></td>
     </tr>
     <tr>
@@ -107,19 +107,43 @@
         <td></td>
     </tr>
 </table>
-<h3>3PL Information</h3>
+<h3>Rider Information</h3>
 <table>
     <tr>
-        <td><label>3PL Name</label></td>
+        <td><label>Rider Name</label></td>
         <td><input type="text" class="form-control" id="pl_name" placeholder="Full Name of 3PL"></td>
-        <td><label>Phone Number</label></td>
-        <td><input type="number" class="form-control" id="phone_3pl" placeholder="Enter 3PL Phone Number"></td>
+        <td><label>Rider Phone Number</label></td>
+        <td><input type="text" class="form-control" id="phone_3pl" placeholder="Enter 3PL Phone Number"></td>
     </tr>
     <tr>
         <td><label>PCR Laboratory Name</label></td>
-        <td><input type="text" class="form-control" id="pcr_lab_name" placeholder="Enter name of PCR Lab"></td>
+        <td><select class="form-control">
+                        <option value="" selected="selected">- Select -</option>
+                        <option value="Abia">68 NARH Yaba, Lagos</option>
+                        <option value="Adamawa">Ahmadu Bello University Teaching Hospital (ABUTH)</option>
+                        <option value="AkwaIbom">Aminu Kano Teaching Hopital PCR Lab</option>
+                        <option value="Anambra">Asokoro Laboratory and Training Center</option>
+                        <option value="Bauchi">Chukwuemeka Odumegwu Ojukwu University Teaching Hospital (COOUTH).</option>
+                        <option value="Bayelsa">Defence Reference laboratory (DRL) Abuja</option>
+                        <option value="Benue">Federal Medical Center Jalingo</option>
+                        <option value="Borno">Federal Medical Center Makurdi</option>
+                        <option value="Cross River">Federal Teaching Hospital (FTH) Gombe</option>
+                        <option value="Delta">Jos University Teaching Hospital (JUTH) Jos</option>
+                        <option value="Ebonyi">Lagos State University Teaching Hospital (LASUTH) Lagos</option>
+                        <option value="Edo">National Reference Laboratory Gaduwa (NRL) Abuja</option>
+                        <option value="Ekiti">Nigerian Institute of Medical Research (NIMR) Lagos</option>
+                        <option value="Enugu">Nnamdi Azikiwe University Teaching Hospital (NAUTH)</option>
+                        <option value="FCT">Obafemi Awolowo University Teaching Hospital (OAUTH) Ile-Ife</option>
+                        <option value="Gombe">Plateau State Human Virology Research Center</option>
+                        <option value="Imo">Rivers State University Hospital (RSUTH)</option>
+                        <option value="Jigawa">University College Hospital Ibadan</option>
+                        <option value="Kaduna">University Of Abuja Teaching Hospital PCR Lab</option>
+                        <option value="Kano">University of Maiduguri Teaching Hospital (UMTH) Maiduguri</option>
+                        <option value="Katsina">University of Uyo teaching Hospital (UUTH) Uyo</option>
+                        <option value="Kebbi">Usman Danfodio University Teaching Hospital (UDUTH)</option>
+                    </select></td>
         <td><label>PCR Lab Code</label></td>
-        <td><input type="text" class="form-control" id="pcr_lab_code" placeholder="Enter PCR Lab Code"></td>
+        <td><input type="text" class="form-control" id="pcr_lab_code"></td>
     </tr>
     <tr>
         <td><label>Date Created By</label></td>
@@ -134,7 +158,7 @@
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
          </div></td>
-        <td><label>Sign</label></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -204,6 +228,7 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
             'vlsamples': vlsamples,
             'sampleSpace': sampleSpace
             }
+            console.log(sampleSpace)
         }).success(function (data) {
             console.log(data);
             alert('Manifest Successfully sent to LIMS');
@@ -214,4 +239,3 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
             });
     }
 </script>
-</div>
