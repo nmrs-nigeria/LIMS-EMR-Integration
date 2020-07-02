@@ -9,9 +9,6 @@
 <% ui.includeCss("limsemrops", "bootstrap.min.css") %>
 
 <style>
-    body {
-        margin: 30px;
-    }
 </style>
 
     <p class="lead">Generate Manifest</p>
@@ -42,7 +39,7 @@
         </div>
 
                 <input type="button" value="Submit" onclick="getFormvalue()">
-3087200215
+
 </br>
 
 <script>
