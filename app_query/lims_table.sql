@@ -61,3 +61,20 @@ constraint  `sample_manifest_id_fk` foreign key (`manifest_id`) references lims_
 constraint `sample_encounter_id` FOREIGN KEY (`encounter_id`) REFERENCES `encounter` (`encounter_id`)
 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table lims_manifest_result(
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`laboratoryRegistrationNumber` varchar(15) NOT NULL
+`pcrLAbSampleNumber` varchar(15) NOT NULL,
+`dateSampleReceievedAtPCRLab` datetime NOT NULL,
+`testResult` varchar(10) NOT NULL,
+`resultDate` datetime NOT NULL,
+`approvalDate` datetime NOT NULL,
+`sampleStatus` int(2) NOT NULL,
+`sampleTestable` varchar(2) NOT NULL
+
+
+PRIMARY KEY (`id`),
+constraint  `sample_manifest_id_fk` foreign key (`manifest_id`) references lims_manifest(manifest_id),
+constraint `sample_encounter_id` FOREIGN KEY (`encounter_id`) REFERENCES `encounter` (`encounter_id`)
+)
