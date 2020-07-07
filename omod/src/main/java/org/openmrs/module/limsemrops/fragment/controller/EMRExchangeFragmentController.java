@@ -304,7 +304,7 @@ public class EMRExchangeFragmentController {
 
     }
 	
-	private void updateDateSampleResulttOnDB(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {
+	/**private void updateDateSampleResulttOnDB(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {
 
         allVLSamplefromUI.stream().forEach(a -> {
             Encounter labEncounter = Context.getEncounterService().getEncounter(a.getEncounterId());
@@ -323,5 +323,5 @@ public class EMRExchangeFragmentController {
 
         });
 
-    }
+    }*//
 }
