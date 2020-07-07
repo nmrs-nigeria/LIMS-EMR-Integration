@@ -53,7 +53,7 @@ create table lims_manifest_samples(
 `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 `created_by` varchar(32) NOT NULL,
 `date_modified` datetime null ON UPDATE CURRENT_TIMESTAMP,
-`modified_by` varchar(32) NULL,  
+`modified_by` varchar(32) NULL,
 
 
 PRIMARY KEY (`id`),

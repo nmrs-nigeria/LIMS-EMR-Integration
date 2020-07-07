@@ -303,4 +303,25 @@ public class EMRExchangeFragmentController {
         });
 
     }
+	
+	private void updateDateSampleResulttOnDB(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {
+
+        allVLSamplefromUI.stream().forEach(a -> {
+            Encounter labEncounter = Context.getEncounterService().getEncounter(a.getEncounterId());
+
+            Obs dateSampleSentObs = new Obs();
+            dateSampleSentObs.setConcept(Context.getConceptService().getConcept(LabFormUtils.DATE_SAMPLE_SENT_TO_PCR_LAB));
+            dateSampleSentObs.setValueDate(dateSampleSent);
+            dateSampleSentObs.setObsDatetime(new Date());
+            dateSampleSentObs.setPerson(labEncounter.getPatient());
+            dateSampleSentObs.setEncounter(labEncounter);
+            dateSampleSentObs.setUuid(UUID.randomUUID().toString());
+
+            labEncounter.addObs(dateSampleSentObs);
+
+            Context.getEncounterService().saveEncounter(labEncounter);
+
+        });
+
+    }
 }
