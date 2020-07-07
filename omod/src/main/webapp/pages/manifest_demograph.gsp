@@ -76,18 +76,18 @@
         <td><label>Sender's Name</label></td>
         <td><input type="text" class="form-control" id="sender_full_name" placeholder="Full Name"></td>
         <td><label>Sender's Mobile</label></td>
-        <td><input type="text" class="form-control" id="sender_phone" placeholder="Phone Number"></td>
+        <td><input type="number" class="form-control" id="sender_phone" placeholder="Phone Number"></td>
     </tr>
     <tr>
-        <td><label>Date of Pickup</label></td>
+        <td><label>Date of Pick up</label></td>
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="DateofPickUp" class="form-control">
         </div></td>
-        <td><label>Time of Pickup</label></td>
+        <td><label>Pick up Time</label></td>
         <td><input type="time" class="form-control" id="pick_time" placeholder="Time format in hh:mm:ss"></td>
     </tr>
     <tr>
-        <td><label>Pickup Schedule</label></td>
+        <td><label>Pick Up Schedule</label></td>
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
          </div></td>
@@ -110,43 +110,43 @@
 <h3>Rider Information</h3>
 <table>
     <tr>
-        <td><label>Rider's Name</label></td>
+        <td><label>Rider Name</label></td>
         <td><input type="text" class="form-control" id="pl_name" placeholder="Full Name of 3PL"></td>
-        <td><label>Rider's Phone Number</label></td>
+        <td><label>Rider Phone Number</label></td>
         <td><input type="text" class="form-control" id="phone_3pl" placeholder="Enter 3PL Phone Number"></td>
     </tr>
     <tr>
         <td><label>PCR Laboratory Name</label></td>
-        <td><select onchange="togglePCR(this);" name="lab" id="lab" class="form-control">
+        <td><select class="form-control">
                         <option value="" selected="selected">- Select -</option>
-                        <option value="NARH_Yaba_Lagos">68 NARH Yaba, Lagos</option>
-                        <option value="Ahmadu_Bello_University_Teaching_Hospital">Ahmadu Bello University Teaching Hospital (ABUTH)</option>
-                        <option value="Aminu_Kano_Teaching_Hopital_PCR_Lab">Aminu Kano Teaching Hopital PCR Lab</option>
-                        <option value="Asokoro_Laboratory_and_Training_Center">Asokoro Laboratory and Training Center</option>
-                        <option value="Chukwuemeka_Odumegwu_Ojukwu_University_Teaching_Hospital">Chukwuemeka Odumegwu Ojukwu University Teaching Hospital (COOUTH).</option>
-                        <option value="Defence_Reference_laboratory_Abuja">Defence Reference laboratory (DRL) Abuja</option>
-                        <option value="Federal_Medical_Center_Jalingo">Federal Medical Center Jalingo</option>
-                        <option value="Federal_Medical_Center_Makurdi">Federal Medical Center Makurdi</option>
-                        <option value="Federal_Teaching_Hospital_Gombe">Federal Teaching Hospital (FTH) Gombe</option>
-                        <option value="Jos_University_Teaching_Hospital">Jos University Teaching Hospital (JUTH) Jos</option>
-                        <option value="Lagos_State_University_Teaching_Hospital">Lagos State University Teaching Hospital (LASUTH) Lagos</option>
-                        <option value="National_Reference_Laboratory_Gaduwa_Abuja">National Reference Laboratory Gaduwa (NRL) Abuja</option>
-                        <option value="Nigerian_Institute_of_Medical_Research_Lagos">Nigerian Institute of Medical Research (NIMR) Lagos</option>
-                        <option value="Nnamdi_Azikiwe_University_Teaching_Hospital">Nnamdi Azikiwe University Teaching Hospital (NAUTH)</option>
-                        <option value="Obafemi_Awolowo_University_Teaching_Hospital">Obafemi Awolowo University Teaching Hospital (OAUTH) Ile-Ife</option>
-                        <option value="Plateau_State_Human_Virology_Research_Center">Plateau State Human Virology Research Center</option>
-                        <option value="Rivers_State_University_Hospital">Rivers State University Hospital (RSUTH)</option>
-                        <option value="University_College_Hospital_Ibadan">University College Hospital Ibadan</option>
-                        <option value="University_Of_Abuja_Teaching_Hospital_PCR_Lab">University Of Abuja Teaching Hospital PCR Lab</option>
-                        <option value="University_of_Maiduguri_Teaching_Hospital_Maiduguri">University of Maiduguri Teaching Hospital (UMTH) Maiduguri</option>
-                        <option value="University_of_Uyo_teaching_Hospital">University of Uyo teaching Hospital (UUTH) Uyo</option>
-                        <option value="Usman_Danfodio_University_Teaching_Hospital">Usman Danfodio University Teaching Hospital (UDUTH)</option>
+                        <option value="Abia">68 NARH Yaba, Lagos</option>
+                        <option value="Adamawa">Ahmadu Bello University Teaching Hospital (ABUTH)</option>
+                        <option value="AkwaIbom">Aminu Kano Teaching Hopital PCR Lab</option>
+                        <option value="Anambra">Asokoro Laboratory and Training Center</option>
+                        <option value="Bauchi">Chukwuemeka Odumegwu Ojukwu University Teaching Hospital (COOUTH).</option>
+                        <option value="Bayelsa">Defence Reference laboratory (DRL) Abuja</option>
+                        <option value="Benue">Federal Medical Center Jalingo</option>
+                        <option value="Borno">Federal Medical Center Makurdi</option>
+                        <option value="Cross River">Federal Teaching Hospital (FTH) Gombe</option>
+                        <option value="Delta">Jos University Teaching Hospital (JUTH) Jos</option>
+                        <option value="Ebonyi">Lagos State University Teaching Hospital (LASUTH) Lagos</option>
+                        <option value="Edo">National Reference Laboratory Gaduwa (NRL) Abuja</option>
+                        <option value="Ekiti">Nigerian Institute of Medical Research (NIMR) Lagos</option>
+                        <option value="Enugu">Nnamdi Azikiwe University Teaching Hospital (NAUTH)</option>
+                        <option value="FCT">Obafemi Awolowo University Teaching Hospital (OAUTH) Ile-Ife</option>
+                        <option value="Gombe">Plateau State Human Virology Research Center</option>
+                        <option value="Imo">Rivers State University Hospital (RSUTH)</option>
+                        <option value="Jigawa">University College Hospital Ibadan</option>
+                        <option value="Kaduna">University Of Abuja Teaching Hospital PCR Lab</option>
+                        <option value="Kano">University of Maiduguri Teaching Hospital (UMTH) Maiduguri</option>
+                        <option value="Katsina">University of Uyo teaching Hospital (UUTH) Uyo</option>
+                        <option value="Kebbi">Usman Danfodio University Teaching Hospital (UDUTH)</option>
                     </select></td>
         <td><label>PCR Lab Code</label></td>
-        <td><select name="pcr" id="pcr_lab_code" class="form-control select-lga" required></select>></td>
+        <td><input type="text" class="form-control" id="pcr_lab_code"></td>
     </tr>
     <tr>
-        <td><label>Pick Up Schedule</label></td>
+        <td><label>Date Created By</label></td>
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="date_created" class="form-control">
          </div></td>
@@ -154,8 +154,10 @@
         <td></td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
+        <td><label>Pick Up Schedule</label></td>
+        <td><div class="input-with-post-icon datepicker">
+            <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
+         </div></td>
         <td></td>
         <td></td>
     </tr>
