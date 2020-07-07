@@ -49,7 +49,7 @@ create table lims_manifest_samples(
 `date_sample_sent` datetime null,
 `encounter_id` int(11) NOT NULL,
 `sample_status` varchar(32) NULL,
-`rejection reason` varchar(32) NULL,
+`rejection_reason` varchar(32) NULL,
 `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 `created_by` varchar(32) NOT NULL,
 `date_modified` datetime null ON UPDATE CURRENT_TIMESTAMP,

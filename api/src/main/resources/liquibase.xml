@@ -45,5 +45,209 @@ VALUES
         </createTable>     
     </changeSet>
     
+    <changeSet id="limsemr-v1.1-1" author="Morrison Idiasirue" >
+        <createTable tableName="lims_manifest">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column  name="manifest_id" type="varchar(255)" >
+                <constraints nullable="false" unique="true" />
+            </column>
+            
+            <column  name="sample_space" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="test_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="referring_lab_state" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="referring_lab_lga" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_schedule_for_pickup" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="sample_pick_up_on_time" type="varchar(32)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="rider_total_samples_picked" type="int">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="rider_temp_at_pick_up" type="varchar(32)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="rider_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="rider_phone_number" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="pcr_lab_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="pcr_lab_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="result_status" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_created" type="datetime" defaultValueDate="now()" >
+                <constraints nullable="false"   />
+            </column>
+            
+            <column  name="created_by" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_modified" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="modified_by" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column> 
+                                                                  
+        </createTable>
+        
+    </changeSet>
+        
+    <changeSet id="limsemr-v1.1-2" author="Morrison Idiasirue" >
+        <createTable tableName="lims_manifest_samples">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column  name="manifest_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="patient_id" type="varchar(1024)">
+                <constraints nullable="false"/>
+            </column>
+        
+        
+            <column  name="firstname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="surname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sex" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="pregnantBreastFeedingStatus" type="int">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="age" type="int">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="dateOfBirth" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="sample_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sample_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="indication_vl_test" type="int">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="art_commencement_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="drugregimen" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="sample_ordered_by" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="sample_ordered_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="sample_collected_by" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sample_collected_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sample_collection_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="date_sample_sent" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+          
+            <column  name="encounter_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sample_status" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="rejection_reason" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+                           
+            <column  name="date_created" type="datetime" defaultValueDate="now()" >
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="created_by" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_modified" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="modified_by" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column> 
+                                                                  
+        </createTable>
+        
+        <addForeignKeyConstraint constraintName="sample_manifest_id_fkk"
+                                  baseTableName="lims_manifest_samples" baseColumnNames="manifest_id"
+                                  referencedTableName="lims_manifest" referencedColumnNames="manifest_id"/>
+        
+        <addForeignKeyConstraint constraintName="sample_encounter_id_fkk"
+                                        baseTableName="lims_manifest_samples" baseColumnNames="encounter_id"
+                                        referencedTableName="encounter" referencedColumnNames="encounter_id"/>
+        
+             
+    </changeSet>
+    
        
 </databaseChangeLog>
