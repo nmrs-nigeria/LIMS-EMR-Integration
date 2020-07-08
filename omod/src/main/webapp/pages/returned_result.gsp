@@ -22,24 +22,8 @@
 
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>NRL/UATH/20/15341</td>
-                    <td>2020-05-01</td>
-                    <td> <20</td>
-                    <td>2020-06-17</td>
-                    <td>2020-06-25</td>
-                    <td>Y</td>
-                  </tr>
+            <tbody id="result_LIMS">
 
-                  <tr>
-                     <td>NRL/UATH/20/15347</td>
-                     <td>2020-05-03</td>
-                     <td>40000</td>
-                     <td>2020-06-25</td>
-                     <td>2020-06-25</td>
-                     <td>Y</td>
-                  </tr>
             </tbody>
             <tfoot>
                 <tr>
