@@ -226,7 +226,7 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
             'vlsamples': vlsamples,
             'sampleSpace': sampleSpace
             }
-            console.log(sampleSpace)
+           // console.log(sampleSpace)
         }).success(function (data) {
             console.log(data);
             alert('Manifest Successfully sent to LIMS');
@@ -237,3 +237,4 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
             });
     }
 </script>
+</div>
