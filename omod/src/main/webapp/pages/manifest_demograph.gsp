@@ -76,29 +76,29 @@
         <td><label>Sender's Name</label></td>
         <td><input type="text" class="form-control" id="sender_full_name" placeholder="Full Name"></td>
         <td><label>Sender's Mobile</label></td>
-        <td><input type="number" class="form-control" id="sender_phone" placeholder="Phone Number"></td>
+        <td><input type="text" class="form-control" id="sender_phone" placeholder="Phone Number"></td>
     </tr>
     <tr>
-        <td><label>Date of Pick up</label></td>
+        <td><label>Date of Pickup</label></td>
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="DateofPickUp" class="form-control">
         </div></td>
-        <td><label>Pick up Time</label></td>
+        <td><label>Time of Pickup</label></td>
         <td><input type="time" class="form-control" id="pick_time" placeholder="Time format in hh:mm:ss"></td>
     </tr>
     <tr>
-        <td><label>Pick Up Schedule</label></td>
+        <td><label>Schedule Pickup</label></td>
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
          </div></td>
-        <td></td>
-        <td></td>
+        <td><label class="form-check-label" for="exampleCheck1">Timely Pickup</label></td>
+        <td><input type="checkbox" class="form-check-input" id="timely_pickup"></td>
     </tr>
     <tr>
         <td><label>Total Number of Samples</label></td>
         <td><input type="text" class="form-control" id="number_samples" placeholder="Enter Total Samples to be Shipped"></td>
         <td><label>Temp at Pickup</label></td>
-        <td><input type="number" class="form-control" id="temperature" placeholder="Enter temperature in Celsius"></td>
+        <td><input type="text" class="form-control" id="temperature" placeholder="Temperature at Pickup"></td>
     </tr>
     <tr>
         <td></td>
@@ -111,9 +111,9 @@
 <table>
     <tr>
         <td><label>Rider Name</label></td>
-        <td><input type="text" class="form-control" id="pl_name" placeholder="Full Name of 3PL"></td>
+        <td><input type="text" class="form-control" id="pl_name" placeholder="Rider's Full Name"></td>
         <td><label>Rider Phone Number</label></td>
-        <td><input type="text" class="form-control" id="phone_3pl" placeholder="Enter 3PL Phone Number"></td>
+        <td><input type="text" class="form-control" id="phone_3pl" placeholder="Rider's Phone Number"></td>
     </tr>
     <tr>
         <td><label>PCR Laboratory Name</label></td>
@@ -146,7 +146,7 @@
         <td><input type="text" class="form-control" id="pcr_lab_code"></td>
     </tr>
     <tr>
-        <td><label>Date Created By</label></td>
+        <td><label>Date Created</label></td>
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="date_created" class="form-control">
          </div></td>

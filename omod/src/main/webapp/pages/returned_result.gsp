@@ -22,7 +22,7 @@
 
                 </tr>
             </thead>
-            <tbody id="result_LIMS">
+            <tbody id="Printresult">
 
             </tbody>
             <tfoot>
