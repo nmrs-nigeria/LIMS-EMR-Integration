@@ -186,7 +186,7 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
         //var resultStatus = document.getElementById("result_status").value;
         //var createdBy = document.getElementById("sender_full_name").value;
         var dateModified = document.getElementById("schedule_DateofPickUp").value;
-        var dateCreated = document.getElementById("date_created").value;
+        //var dateCreated = document.getElementById("date_created").value;
 
         var  manifestObj = {
                 'referringLabState': referringLabState,
