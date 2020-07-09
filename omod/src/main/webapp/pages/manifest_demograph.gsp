@@ -142,8 +142,8 @@
                         <option value="Katsina">University of Uyo teaching Hospital (UUTH) Uyo</option>
                         <option value="Kebbi">Usman Danfodio University Teaching Hospital (UDUTH)</option>
                     </select></td>
-        <td><label>PCR Lab Code</label></td>
-        <td><input type="text" class="form-control" id="pcr_lab_code"></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <td></td>
