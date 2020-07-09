@@ -146,10 +146,8 @@
         <td><input type="text" class="form-control" id="pcr_lab_code"></td>
     </tr>
     <tr>
-        <td><label>Date Created</label></td>
-        <td><div class="input-with-post-icon datepicker">
-            <input placeholder="Select date" type="date" id="date_created" class="form-control">
-         </div></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>
