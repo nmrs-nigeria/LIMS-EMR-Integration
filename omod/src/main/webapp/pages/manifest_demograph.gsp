@@ -117,7 +117,7 @@
     </tr>
     <tr>
         <td><label>PCR Laboratory Name</label></td>
-        <td><select class="form-control">
+        <td><select class="form-control" id="pcr_lab_name" >
                         <option value="" selected="selected">- Select -</option>
                         <option value="Abia">68 NARH Yaba, Lagos</option>
                         <option value="Adamawa">Ahmadu Bello University Teaching Hospital (ABUTH)</option>
