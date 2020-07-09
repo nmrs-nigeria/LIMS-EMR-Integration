@@ -91,8 +91,8 @@
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
          </div></td>
-        <td><label class="form-check-label" for="exampleCheck1">Timely Pickup</label></td>
-        <td><input type="checkbox" class="form-check-input" id="timely_pickup"></td>
+        <td><label class="form-check-label">Timely Pickup</label></td>
+        <td><input type="checkbox" id="timely_pickup"></td>
     </tr>
     <tr>
         <td><label>Total Number of Samples</label></td>
@@ -150,20 +150,6 @@
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="date_created" class="form-control">
          </div></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><label>Pick Up Schedule</label></td>
-        <td><div class="input-with-post-icon datepicker">
-            <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
-         </div></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
         <td></td>
         <td></td>
     </tr>
