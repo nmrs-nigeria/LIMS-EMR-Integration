@@ -53,8 +53,8 @@
             </tfoot>
         </table>
 </br>
-<button id="button" type="submit" onclick="getResult_return()">Check Result</button>
-<button type="button" onclick="loadDoc()">Request data</button>
+<button id="button" type="submit" onclick="getResult_return()">Update Result</button>
+<button type="button" onclick="loadDoc()">Check Result</button>
 
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
 <% ui.includeJavascript("limsemrops", "doc/jquery-3.5.1.js") %>

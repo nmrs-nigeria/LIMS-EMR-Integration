@@ -145,10 +145,8 @@
        
     </tr>
     <tr>
-        <td><label>Date Created</label></td>
-        <td><div class="input-with-post-icon datepicker">
-            <input placeholder="Select date" type="date" id="date_created" class="form-control">
-         </div></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -187,7 +185,7 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
         //var resultStatus = document.getElementById("result_status").value;
         //var createdBy = document.getElementById("sender_full_name").value;
         var dateModified = document.getElementById("schedule_DateofPickUp").value;
-        var dateCreated = document.getElementById("date_created").value;
+        //var dateCreated = document.getElementById("date_created").value;
 
         var  manifestObj = {
                 'referringLabState': referringLabState,
