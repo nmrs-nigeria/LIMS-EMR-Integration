@@ -142,8 +142,7 @@
                         <option value="Katsina">University of Uyo teaching Hospital (UUTH) Uyo</option>
                         <option value="Kebbi">Usman Danfodio University Teaching Hospital (UDUTH)</option>
                     </select></td>
-        <td><label>PCR Lab Code</label></td>
-        <td><input type="text" class="form-control" id="pcr_lab_code"></td>
+       
     </tr>
     <tr>
         <td><label>Date Created</label></td>
@@ -181,7 +180,7 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
         var riderName = document.getElementById("pl_name").value;
         var riderPhoneNumber = document.getElementById("phone_3pl").value;
         var pcrLabName = document.getElementById("pcr_lab_name").value;
-        var pcrLabCode = document.getElementById("pcr_lab_code").value;
+      //  var pcrLabCode = document.getElementById("pcr_lab_code").value;
         //var manifestID = document.getElementById("manifest_id").value;
         //var comment = document.getElementById("comment").value;
         //var  = document.getElementById("").value;
