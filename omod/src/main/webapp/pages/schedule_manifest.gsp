@@ -12,6 +12,15 @@
 </style>
 
     <p class="lead">Generate Manifest</p>
+    
+    <div id="gen-wait" class="dialog" style="display: none; ">
+    <div class="row">
+        <div class="col-md-3 col-xs-3 offset-2" >
+            <img src="../moduleResources/nigeriaemr/images/Sa7X.gif" alt="Loading Gif"  style="width:100px">
+        </div>              
+    </div>
+
+</div>
 
         <div class="card-body">
             <div class="row">
@@ -51,6 +60,8 @@
         var endDate = document.getElementById("Date_Rage_2").value;
 
         jq = jQuery;
+        
+        jq('#gen-wait').show();
 
         jq.ajax({
             url: "${ ui.actionLink("limsemrops", "EMRExchange", "searchVLSamples") }",
@@ -69,6 +80,7 @@
             const sample_data_set = JSON.parse(localStorage.getItem("sample_data"));
             console.log(sampleSpace_set)
             console.log(sample_data_set)
+             jq('#gen-wait').hide();
             window.location.assign("manifest.page");
         })
             .error(function (xhr, status, err) {

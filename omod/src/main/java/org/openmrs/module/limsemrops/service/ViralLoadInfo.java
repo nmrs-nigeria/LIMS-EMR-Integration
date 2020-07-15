@@ -197,6 +197,8 @@ public class ViralLoadInfo {
 			if (rovingObs != null && rovingObs.getValueCoded() != null) {
 				vLSampleInformation
 				        .setIndicationVLTest(getIntgerMappedAnswerValue(rovingObs.getValueCoded().getConceptId()));
+			} else if (sampleSpace.equals(ConstantUtils.SampleSpace.RECENCY)) {
+				vLSampleInformation.setIndicationVLTest(7); //recency indication for VL as agreed
 			}
 			
 			vLSampleInformation.setArtCommencementDate(getPatientARTStartDate(p));

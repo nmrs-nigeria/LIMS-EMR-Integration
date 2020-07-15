@@ -140,7 +140,7 @@ public class EMRExchangeFragmentController {
         } catch (JsonProcessingException ex) {
             Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+            System.err.println(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }

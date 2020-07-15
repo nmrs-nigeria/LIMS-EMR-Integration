@@ -196,7 +196,7 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
                 'riderName': riderName,
                 'riderPhoneNumber': riderPhoneNumber,
                 'pcrLabName': pcrLabName,
-                'pcrLabCode': pcrLabCode,
+                'pcrLabCode': 'test',
                 'samplePickUpOnTime':'yes'
                                         }
           manifestObj = JSON.stringify(manifestObj);
