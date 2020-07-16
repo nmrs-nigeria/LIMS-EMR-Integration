@@ -27,11 +27,11 @@ def id = config.id
     });
 </script>
 
-<a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">
+<!-- <a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>
     <br/>
     <p>Generate</p>
-</a>
+</a> -->
 
 <a href="schedule_manifest.page" class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>

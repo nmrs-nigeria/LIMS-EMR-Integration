@@ -30,11 +30,9 @@ import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ExchangeLayer;
 import org.openmrs.module.limsemrops.service.LookUpManager;
 import org.openmrs.module.limsemrops.service.SampleInfo;
-import org.openmrs.module.limsemrops.utility.ConstantUtils;
 import org.openmrs.module.limsemrops.utility.ConstantUtils.SampleSpace;
 import org.openmrs.module.limsemrops.utility.LabFormUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -211,7 +209,7 @@ public class EMRExchangeFragmentController {
                 System.out.println(ex.getMessage());
             }
 
-            if (response == true) {
+            if (response) {
                 updateDateSampleSentOnDB(vLSampleInformations, dateSampleSent);
                 //  Manifest manifest = new Manifest();
                 convertManifest.setCreatedBy(Context.getAuthenticatedUser().toString());

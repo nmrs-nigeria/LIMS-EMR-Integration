@@ -80,21 +80,27 @@ public class PatientDemographics {
 
             Set<PatientID> patientIdList = new HashSet<>();
 
-        PatientID patientID = new PatientID();
+        PatientID patientID;
 
         if (this.pepfarid != null) {
+           patientID = new PatientID();
+            System.out.println("About to pull pepfar ID");
             patientID.setIdNumber(this.pepfarid.getIdentifier());
             patientID.setIdTypeCode("CLIENTID");
             patientIdList.add(patientID);
+            System.out.println("pepfar is "+this.pepfarid.getIdentifier());
+             System.out.println("Finished pulling pepfar ID");
         }
 
         if (this.pidHospital != null) {
+            patientID = new PatientID();
             patientID.setIdNumber(this.pidHospital.getIdentifier());
             patientID.setIdTypeCode("HOSPITALNO");
             patientIdList.add(patientID);
         }
 
         if (this.pidRecent != null) {
+            patientID = new PatientID();
             patientID.setIdNumber(this.pidRecent.getIdentifier());
             patientID.setIdTypeCode("RECENT");
             patientIdList.add(patientID);
