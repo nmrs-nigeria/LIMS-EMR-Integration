@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -39,6 +40,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author MORRISON.I
@@ -303,18 +312,16 @@ public class EMRExchangeFragmentController {
         });
 
     }
-	/**
-	 * private void updateDateSampleResulttOnDB(List<VLSampleInformationFrontFacing>
-	 * allVLSamplefromUI, Date dateSampleSent) { allVLSamplefromUI.stream().forEach(a -> { Encounter
-	 * labEncounter = Context.getEncounterService().getEncounter(a.getEncounterId()); Obs
-	 * dateSampleSentObs = new Obs();
-	 * dateSampleSentObs.setConcept(Context.getConceptService().getConcept
-	 * (LabFormUtils.DATE_SAMPLE_SENT_TO_PCR_LAB)); dateSampleSentObs.setValueDate(dateSampleSent);
-	 * dateSampleSentObs.setObsDatetime(new Date());
-	 * dateSampleSentObs.setPerson(labEncounter.getPatient());
-	 * dateSampleSentObs.setEncounter(labEncounter);
-	 * dateSampleSentObs.setUuid(UUID.randomUUID().toString());
-	 * labEncounter.addObs(dateSampleSentObs);
-	 * Context.getEncounterService().saveEncounter(labEncounter); }); }
-	 **/
+	
+	// Get sample result from LIMS
+	RestTemplate restTemplate = new RestTemplate();
+	
+	@RequestMapping(/*value="/template/sample_results", */method = RequestMethod.GET)
+	public String getProductsByTemplate() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		return restTemplate.exchange("https://lims.ng/api/samples/result.php", HttpMethod.GET, entity, String.class)
+		        .getBody();
+	}
 }
