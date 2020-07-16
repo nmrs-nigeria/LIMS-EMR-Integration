@@ -13,7 +13,8 @@
     <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
-                    <th>Sample Number</th>
+                    <th>Lab Reg Number</th>
+                    <th>Lab Sample Number</th>
                     <th>visit Date</th>
                     <th>Test Result</th>
                     <th>Result Date</th>
@@ -22,33 +23,18 @@
 
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>NRL/UATH/20/15341</td>
-                    <td>2020-05-01</td>
-                    <td> <20</td>
-                    <td>2020-06-17</td>
-                    <td>2020-06-25</td>
-                    <td>Y</td>
-                  </tr>
+            <tbody  id="getResult_return">
 
-                  <tr>
-                     <td>NRL/UATH/20/15347</td>
-                     <td>2020-05-03</td>
-                     <td>40000</td>
-                     <td>2020-06-25</td>
-                     <td>2020-06-25</td>
-                     <td>Y</td>
-                  </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Sample Number</th>
-                    <th>visit Date</th>
-                    <th>Test Result</th>
-                    <th>Result Date</th>
-                    <th>Approval Date</th>
-                    <th>Sample Testable</th>
+                    <th>Lab Reg Number</th>
+                                        <th>Lab Sample Number</th>
+                                        <th>visit Date</th>
+                                        <th>Test Result</th>
+                                        <th>Result Date</th>
+                                        <th>Approval Date</th>
+                                        <th>Sample Testable</th>
                 </tr>
             </tfoot>
         </table>
