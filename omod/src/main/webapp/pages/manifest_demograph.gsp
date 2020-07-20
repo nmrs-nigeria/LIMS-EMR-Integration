@@ -200,7 +200,7 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
                 'samplePickUpOnTime':'yes'
                                         }
           manifestObj = JSON.stringify(manifestObj);
-        
+
         jq = jQuery;
 
         jq.ajax({
