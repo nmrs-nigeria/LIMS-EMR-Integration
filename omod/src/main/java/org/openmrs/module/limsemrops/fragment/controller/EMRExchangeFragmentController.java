@@ -33,6 +33,7 @@ import org.openmrs.module.limsemrops.service.SampleInfo;
 import org.openmrs.module.limsemrops.utility.ConstantUtils.SampleSpace;
 import org.openmrs.module.limsemrops.utility.LabFormUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
