@@ -314,8 +314,8 @@ public class EMRExchangeFragmentController {
 	// Get sample result from LIMS
 	RestTemplate restTemplate = new RestTemplate();
 	
-	@RequestMapping(/*value="/template/sample_results", */method = RequestMethod.GET)
-	public String getProductsByTemplate() {
+	@RequestMapping(/*value="/template/sample_results", */method = RequestMethod.GET, path = "returned_result")
+	public String getResultByManifest() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
