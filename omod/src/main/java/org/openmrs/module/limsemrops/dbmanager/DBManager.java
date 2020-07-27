@@ -23,6 +23,7 @@ import org.openmrs.Patient;
 import org.openmrs.module.limsemrops.omodmodels.Auth;
 import org.openmrs.module.limsemrops.omodmodels.DBConnection;
 import org.openmrs.module.limsemrops.omodmodels.Manifest;
+import org.openmrs.module.limsemrops.omodmodels.PatientID;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 import org.openmrs.module.limsemrops.utility.ConstantUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
@@ -166,7 +167,7 @@ public class DBManager {
 		
 	}
 	
-	public int insertManifestSamples(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings, String manifestID, String createdBy) throws SQLException {
+	public int insertManifestSamples(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings, String manifestID, String createdBy,Date dateSampleSent) throws SQLException {
         
         ObjectMapper mapper = new ObjectMapper();
         AtomicInteger response = new AtomicInteger(0);
@@ -196,7 +197,7 @@ public class DBManager {
                 pStatement.setDate(15, new java.sql.Date(a.getSampleOrderDate().getTime()));
                 pStatement.setString(16, a.getSampleCollectedBy());
                 pStatement.setDate(17, new java.sql.Date(a.getSampleCollectionDate().getTime()));
-                pStatement.setDate(18, new java.sql.Date(a.getDateSampleSent().getTime()));
+                pStatement.setDate(18, new java.sql.Date(dateSampleSent.getTime())); //date sample sent
                 pStatement.setInt(19, a.getEncounterId());
                 pStatement.setString(20, createdBy);
                 pStatement.setDate(21, new java.sql.Date(a.getSampleCollectionTime().getTime()));
@@ -252,13 +253,52 @@ public class DBManager {
         
     }
 	
+	public Manifest getAllManifestByID(String manifestID) throws SQLException {
+		pStatement = conn
+		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
+		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
+		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where manifest_id = ? ");
+		
+		pStatement.setString(1, manifestID);
+		
+		resultSet = pStatement.executeQuery();
+		Manifest m = null;
+		
+		while (resultSet.next()) {
+			
+			m = new Manifest();
+			m.setCreatedBy(resultSet.getString("created_by"));
+			m.setDateModified(resultSet.getDate("date_modified"));
+			m.setDateScheduleForPickup(resultSet.getDate("date_schedule_for_pickup"));
+			m.setManifestID(resultSet.getString("manifest_id"));
+			m.setModifiedBy(resultSet.getString("modified_by"));
+			m.setPcrLabCode(resultSet.getString("pcr_lab_code"));
+			m.setPcrLabName(resultSet.getString("pcr_lab_name"));
+			m.setReferringLabLga(resultSet.getString("referring_lab_lga"));
+			m.setReferringLabState(resultSet.getString("referring_lab_state"));
+			m.setResultStatus(resultSet.getString("result_status"));
+			m.setRiderName(resultSet.getString("rider_name"));
+			m.setRiderPhoneNumber(resultSet.getString("rider_phone_number"));
+			m.setRiderTempAtPickUp(resultSet.getString("pcr_lab_name"));
+			m.setRiderTotalSamplesPicked(resultSet.getInt("rider_total_samples_picked"));
+			m.setSamplePickUpOnTime(resultSet.getString("sample_pick_up_on_time"));
+			m.setSampleSpace(resultSet.getString("sample_space"));//VL or RECENT
+			m.setTestType(resultSet.getString("test_type"));
+			m.setDateCreated(resultSet.getDate("date_created"));
+			
+		}
+		
+		return m;
+		
+	}
+	
 	public List<VLSampleInformationFrontFacing> getManifestSamples(String manifestId) throws SQLException, IOException {
         
         pStatement = conn.prepareStatement("SELECT id, manifest_id, patient_id, firstname, surname, sex, pregnantBreastFeedingStatus, age, dateOfBirth, sample_id, "
                 + "sample_type, indication_vl_test, art_commencement_date, drugregimen, "
                 + "sample_ordered_by, sample_ordered_date, sample_collected_by, sample_collected_date, "
-                + "date_sample_sent, encounter_id, date_created,sample_status,rejection_reason, created_by, sample_collection_time, date_modified, modified_by\n"
-                + "FROM lims_manifest_samples where manifest_id = ? ");
+                + "date_sample_sent, encounter_id, date_created,sample_status,rejection_reason, created_by, sample_collection_time, date_modified, modified_by"
+                + " FROM lims_manifest_samples where manifest_id = ? ");
         
         pStatement.setString(1, manifestId);
         
@@ -281,7 +321,7 @@ public class DBManager {
             vl.setFirstName(resultSet.getString("firstname"));
             vl.setIndicationVLTest(resultSet.getInt("indication_vl_test"));
             if (resultSet.getString("patient_id") != null) {
-                vl.setPatientID(mapper.readValue(resultSet.getString("patient_id"), new TypeReference<List<Patient>>() {
+                vl.setPatientID(mapper.readValue(resultSet.getString("patient_id"), new TypeReference<List<PatientID>>() {
                 }));
             }
             vl.setPregnantBreastFeedingStatus(resultSet.getString("pregnantBreastFeedingStatus"));

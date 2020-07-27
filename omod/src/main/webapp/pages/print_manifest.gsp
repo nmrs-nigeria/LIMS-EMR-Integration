@@ -2,10 +2,10 @@
 
 <%= ui.resourceLinks() %>
 <script type="text/javascript"
-    src="/openmrs/ms/uiframework/resource/uicommons/scripts/datetimepicker/bootstrap-datetimepicker.min.js?cache=1525344062488"></script>
+src="/openmrs/ms/uiframework/resource/uicommons/scripts/datetimepicker/bootstrap-datetimepicker.min.js?cache=1525344062488"></script>
 
 <link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488"
-    type="text/css" />
+type="text/css" />
 <% ui.includeCss("limsemrops", "bootstrap.min.css") %>
 
 
@@ -13,8 +13,15 @@
 <body id="target">
     <div id="manifest_content">
         <div class="main">
-            <div class="header-text">
-                <h1>FEDERAL MINISTRY OF HEALTH</h1>
+
+            <div>
+                <div class="header-text col-md-8 offset-4">
+                    <h1>NISRN TRANSPORTATION MANIFEST</h1>
+                </div>
+
+                <div class="col-md-4">
+                    <img src="../moduleResources/limsemrops/images/coat.jpg" alt="Loading Gif"  style="width:100px">
+                </div>
             </div>
 
 
@@ -23,33 +30,21 @@
             </div-->
 
             <div class="header-sub-text">
-                Manifest Created By: MUBARAK DADA <br>
-                Facility Contact: 08055533311 <br>
-                Date Created: 07 - 05 - 2020
+                Manifest Created By: JOHN DOE <br>
+                Facility Contact: 08011111111 <br>
+                Date Created: 21 - 05 - 2020
             </div>
-
+            <br>
             <div class="manifest-details">
                 <div class="row">
-                    <div class="column" style="background-color:#fff;">
-                      <h2>PCI Details</h2>
-                      <div class="col-right">Destination</div><div class="col-left">NRL</div>
-                      <div class="col-right">PCR Lab Code</div><div class="col-left">NG 1004</div>
-                      <div class="col-right">State</div><div class="col-left">Abuja</div>
-                      <div class="col-right">LGA</div><div class="col-left">AMAC</div>
+                    <div class="col-md-4" id="pcr_details" style="background-color:#fff;">
+
                     </div>
-                    <div class="column" style="background-color:#fff;">
-                      <h2>Courier Details</h2>
-                      <div class="col-right">Courier Name</div><div class="col-left">Emeka Orji</div>
-                      <div class="col-right">Courier Contact</div><div class="col-left">08165773746</div>
-                      <div class="col-right">Pickup Date</div><div class="col-left">05/07/2020</div>
-                      <div class="col-right">Sign</div><div class="col-left"></div>
+                    <div class="col-md-4" id="rider_profile" style="background-color:#fff;">
+
                     </div>
-                    <div class="column" style="background-color:#fff;">
-                      <h2>Manifest Details</h2>
-                      <div class="col-right">Manifest ID</div><div class="col-left">AB5678J</div>
-                      <div class="col-right">Total Sample</div><div class="col-left">12</div>
-                      <div class="col-right">Test Type</div><div class="col-left">VL</div>
-                      <div class="col-right">Status</div><div class="col-left">Sent</div>
+                    <div class="col-md-4" id="manifest_detail" style="background-color:#fff;">
+
                     </div>
                 </div>
             </div>
@@ -62,76 +57,116 @@
                             <th>Sample ID</th>
                             <th>Patient ID</th>
                             <th>Date Collected</th>
-                            <th>Test Type</th>
-                            <th>Encoutered ID</th>
+                            <th>Sample Type</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>12478</td>
-                            <td>KN35456</td>
-                            <td>20-06-2020</td>
-                            <td>VL</td>
-                            <td>82373</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>12478</td>
-                            <td>KN35456</td>
-                            <td>20-06-2020</td>
-                            <td>VL</td>
-                            <td>82373</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>12478</td>
-                            <td>KN35456</td>
-                            <td>20-06-2020</td>
-                            <td>VL</td>
-                            <td>82373</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>12478</td>
-                            <td>KN35456</td>
-                            <td>20-06-2020</td>
-                            <td>VL</td>
-                            <td>82373</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>12478</td>
-                            <td>KN35456</td>
-                            <td>20-06-2020</td>
-                            <td>VL</td>
-                            <td>82373</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>12478</td>
-                            <td>KN35456</td>
-                            <td>20-06-2020</td>
-                            <td>VL</td>
-                            <td>82373</td>
-                        </tr>
+                    <tbody id="sample_body">
+          
                     </tbody>
                 </table>
             </div>
 
         </div>
     </div>
-    <button id="cmd">Generate PDF</button>
-    </body>
+    <br>
+    <button id="cmd" onclick="printDoc()">Print</button>
+</body>
 
 
 <script>
-var todays_Date = new Date().toLocaleDateString();
+    jq = jQuery;
+   // localStorage.setItem("manifestid", "01D96B3-9B2F-4");
+    var manifestID =    localStorage.getItem("manifestid");
+    console.log(manifestID);
 
-var doc = new jsPDF()
-var manifest_form = document.querySelector('#manifest_hard')
-doc.fromHTML(manifest_form, 15, 15)
-doc.save(todays_Date+"_manifest_form.pdf")
+    jq.ajax({
+            url: "${ ui.actionLink("limsemrops", "EMRExchange", "getSavedManifestById") }",
+    dataType: "json",
+    data: {
+    'manifestId':manifestID
+    }
+
+    }).success(function (data) {
+    data = JSON.parse(data.body);
+    console.log(data);    
+    if(data != ""){
+    //pcr lab details
+        jq('#pcr_details').append("<h2>PCR Details</h2>");
+        jq('#pcr_details').append("<p>Destination</p>");
+         jq('#pcr_details').append("<span>"+data.pcrLabName+"</span>");
+          jq('#pcr_details').append("<p>PCR Lab Code</p>");
+         jq('#pcr_details').append("<span>"+data.pcrLabCode+"</span>");
+
+    // rider profile
+         jq('#rider_profile').append("<h2>Courier Details</h2>");
+         jq('#rider_profile').append("<p>Courier Name</p>");
+         jq('#rider_profile').append("<span>"+data.riderName+"</span>");
+         jq('#rider_profile').append("<p>Courier Contact</p>");
+        jq('#rider_profile').append("<span>"+data.riderPhoneNumber+"</span>");
+        jq('#rider_profile').append("<p>Pickup Date</p>");
+       jq('#rider_profile').append("<span>"+data.dateScheduleForPickup+"</span>");
+
+    // manifest details     
+ jq('#manifest_detail').append("<h2>Courier Details</h2>");
+ jq('#manifest_detail').append("<p>Manifest ID</p>");
+ jq('#manifest_detail').append("<span>"+data.manifestID+"</span>");
+  jq('#manifest_detail').append("<p>Total Sample</p>");
+ jq('#manifest_detail').append("<span>"+data.riderTotalSamplesPicked+"</span>");
+ jq('#manifest_detail').append("<p>Test type</p>");
+ jq('#manifest_detail').append("<span>"+data.testType+"</span>");
+  jq('#manifest_detail').append("<p>Result Status</p>");
+  jq('#manifest_detail').append("<span>"+data.resultStatus+"</span>");
+
+    }
+    })
+    .error(function (xhr, status, err) {
+    console.log(err);
+    });
+
+
+</script>
+
+<script>
+    jq = jQuery;
+    //  localStorage.setItem("manifestid", "01D96B3-9B2F-4");
+    var manifestID =    localStorage.getItem("manifestid");
+    console.log(manifestID);
+
+    jq.ajax({
+            url: "${ ui.actionLink("limsemrops", "EMRExchange", "getManifestSamples") }",
+    dataType: "json",
+    data: {
+    'manifestId':manifestID
+    }
+
+    }).success(function (data) {
+    data = JSON.parse(data.body);
+    console.log(data);    
+    for(var i=0;i<data.length;i++) {
+
+        var sn = i+1;
+        jq('#sample_body').append('<tr>');
+      jq('#sample_body').append("<td>"+sn+"</td>");
+     jq('#sample_body').append("<td>"+data[i].sampleID+"</td>");
+      jq('#sample_body').append("<td>"+data[i].patientID[0].idNumber+"</td>");
+      jq('#sample_body').append("<td>"+data[i].sampleCollectionDate+"</td>");
+      jq('#sample_body').append("<td>"+data[i].sampleType+"</td>");
+ jq('#sample_body').append('</tr>');
+ 
+    }
+    })
+    .error(function (xhr, status, err) {
+    console.log(err);
+    });
+
+
+
+</script>
+
+<script>
+    function printDoc(){
+    window.print();
+    }
 </script>
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
 <% ui.includeJavascript("limsemrops", "moment.js") %>

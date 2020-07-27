@@ -61,6 +61,8 @@ public class EMRExchangeFragmentController {
 	
 	private LookUpManager lookUpManager;
 	
+	private ObjectMapper mapper;
+	
 	public EMRExchangeFragmentController() {
 		this.exchangeLayer = new ExchangeLayer();
 		this.dBUtility = new DBUtility();
@@ -114,7 +116,7 @@ public class EMRExchangeFragmentController {
             @RequestParam(value = "sampleSpace") String sampleSpace) {
 
         String response = null;
-        ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         List<VLSampleInformationFrontFacing> vlSampleInfo = new ArrayList<>();
@@ -140,7 +142,7 @@ public class EMRExchangeFragmentController {
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getDefaultPCRLabs() {
 
-        ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
         List<PCRLab> pCRLabs = lookUpManager.getPCRLabs();
         String response = null;
         try {
@@ -159,7 +161,7 @@ public class EMRExchangeFragmentController {
             @RequestParam(value = "manifest", required = true) String manifestDraft,
             @RequestParam(value = "sampleSpace", required = true) String sampleSpace) {
 
-        ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         String responseMessage = "";
 
@@ -222,12 +224,17 @@ public class EMRExchangeFragmentController {
                 boolean insertManifestResult = this.dBUtility.insertManifestEntry(convertManifest);
                 if (insertManifestResult) {
                     boolean insertSamplesResult = this.dBUtility.insertManifestSaplesEntry(vLSampleInformations, manifestID,
-                            Context.getAuthenticatedUser().toString());
+                            Context.getAuthenticatedUser().toString(),dateSampleSent);
 
                     System.out.println("finished logging samples");
                 }
-                responseMessage = "sent sucessfully";
-                return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+              //  responseMessage = "sent sucessfully";
+                
+                RequisitionResponse requisitionResponse = new RequisitionResponse();
+                requisitionResponse.setManifestID(manifestID);
+                requisitionResponse.setResponseMessage("sent sucessfully");
+                
+                return new ResponseEntity<>(mapper.writeValueAsString(requisitionResponse), HttpStatus.OK);
             }
 
             //List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
@@ -243,7 +250,8 @@ public class EMRExchangeFragmentController {
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAllSavedManifest() {
 
-        ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
+         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         List<Manifest> manifests = dBUtility.getManifests();
         String response = null;
         try {
@@ -256,8 +264,25 @@ public class EMRExchangeFragmentController {
     }
 	
 	@RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getSavedManifestById(@RequestParam(value = "manifestId", required = true) String manifestId) {
+
+        mapper = new ObjectMapper();
+         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        Manifest manifest = dBUtility.getManifestsbyId(manifestId);
+        String response = null;
+        try {
+            response = mapper.writeValueAsString(manifest);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+	
+	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getManifestSamples(@RequestParam(value = "manifestId") String manifestId) {
-        ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
+         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         List<VLSampleInformationFrontFacing> manifestSamples = dBUtility.getSamplesByManifestId(manifestId);
         String response = null;
         try {
@@ -273,7 +298,7 @@ public class EMRExchangeFragmentController {
 
         List<VLSampleInformation> allConvertedSamples = new ArrayList<>();
 
-        ObjectMapper mapper
+         mapper
                 = new ObjectMapper()
                         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 

@@ -85,7 +85,7 @@
         })
             .error(function (xhr, status, err) {
                 console.log('error occurred');
-                 jq('#gen-wait').hi;
+                 jq('#gen-wait').hide();
             });
             //window.location.assign("manifest.page");
     }
