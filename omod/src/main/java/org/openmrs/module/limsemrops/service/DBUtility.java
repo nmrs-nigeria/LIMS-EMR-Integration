@@ -101,12 +101,13 @@ public class DBUtility {
 	}
 	
 	public boolean insertManifestSaplesEntry(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings,
-	        String manifestId, String createdBy,Date dateSampleSent) {
+	        String manifestId, String createdBy, Date dateSampleSent) {
 		
 		int response = 0;
 		try {
 			this.ndrDBManager.openConnection();
-			response = this.ndrDBManager.insertManifestSamples(vLSampleInformationFrontFacings, manifestId, createdBy,dateSampleSent);
+			response = this.ndrDBManager.insertManifestSamples(vLSampleInformationFrontFacings, manifestId, createdBy,
+			    dateSampleSent);
 		}
 		catch (Exception ex) {
 			System.err.println(ex.getMessage());
