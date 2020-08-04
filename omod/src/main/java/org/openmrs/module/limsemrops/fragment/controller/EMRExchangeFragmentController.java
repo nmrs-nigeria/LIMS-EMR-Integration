@@ -161,7 +161,7 @@ public class EMRExchangeFragmentController {
             @RequestParam(value = "manifest", required = true) String manifestDraft,
             @RequestParam(value = "sampleSpace", required = true) String sampleSpace) {
 
-        mapper = new ObjectMapper();
+       ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         String responseMessage = "";
 
@@ -184,8 +184,8 @@ public class EMRExchangeFragmentController {
             });
 
             Manifest convertManifest = mapper.readValue(manifestDraft, Manifest.class);
-            convertManifest.setPcrLabCode("LIMS150003"); // todo
-            convertManifest.setPcrLabName("Asokoro Laboratory and Training Center"); // todo
+            convertManifest.setPcrLabCode("LIMS150002"); // todo
+            convertManifest.setPcrLabName("National Reference Laboratory Gaduwa (NRL) Abuja"); // todo
 
             System.out.println("about to update date sample sent");
 
