@@ -196,27 +196,39 @@ public class DBManager {
                 pStatement.setInt(11, a.getIndicationVLTest());
                 if (a.getArtCommencementDate() != null) {
                     pStatement.setDate(12, new java.sql.Date(a.getArtCommencementDate().getTime()));
+                }else{
+                pStatement.setDate(12, null);
                 }
 
                 pStatement.setString(13, a.getDrugRegimen());
                 pStatement.setString(14, a.getSampleOrderedBy());
                 if (a.getSampleOrderDate() != null) {
                     pStatement.setDate(15, new java.sql.Date(a.getSampleOrderDate().getTime()));
+                }else{
+                pStatement.setDate(15, null);
                 }
 
                 pStatement.setString(16, a.getSampleCollectedBy());
                 if (a.getSampleCollectionDate() != null) {
                     pStatement.setDate(17, new java.sql.Date(a.getSampleCollectionDate().getTime()));
+                }else{
+                pStatement.setDate(17, null);
                 }
+                
                 if (dateSampleSent != null) {
                     pStatement.setDate(18, new java.sql.Date(dateSampleSent.getTime())); //date sample sent
+                }else{
+                pStatement.setDate(18, null);
                 }
 
                 pStatement.setInt(19, a.getEncounterId());
                 pStatement.setString(20, createdBy);
                 if (a.getSampleCollectionTime() != null) {
                     pStatement.setDate(21, new java.sql.Date(a.getSampleCollectionTime().getTime()));
+                }else{
+                pStatement.setDate(21, null);
                 }
+                
 
                 pStatement.setString(22, "pending"); //sample status
 

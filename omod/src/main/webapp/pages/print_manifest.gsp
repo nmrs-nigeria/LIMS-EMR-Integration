@@ -32,7 +32,7 @@ type="text/css" />
             <div class="header-sub-text">
                 Manifest Created By: JOHN DOE <br>
                 Facility Contact: 08011111111 <br>
-                Date Created: 21 - 05 - 2020
+                Date Created: 04 - 08 - 2020
             </div>
             <br>
             <div class="manifest-details">
