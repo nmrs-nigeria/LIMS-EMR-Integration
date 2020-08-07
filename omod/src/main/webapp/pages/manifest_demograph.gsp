@@ -119,28 +119,7 @@
         <td><label>PCR Laboratory Name</label></td>
         <td><select class="form-control" id="pcr_lab_name" >
                         <option value="" selected="selected">- Select -</option>
-                        <option value="Abia">68 NARH Yaba, Lagos</option>
-                        <option value="Adamawa">Ahmadu Bello University Teaching Hospital (ABUTH)</option>
-                        <option value="AkwaIbom">Aminu Kano Teaching Hopital PCR Lab</option>
-                        <option value="Anambra">Asokoro Laboratory and Training Center</option>
-                        <option value="Bauchi">Chukwuemeka Odumegwu Ojukwu University Teaching Hospital (COOUTH).</option>
-                        <option value="Bayelsa">Defence Reference laboratory (DRL) Abuja</option>
-                        <option value="Benue">Federal Medical Center Jalingo</option>
-                        <option value="Borno">Federal Medical Center Makurdi</option>
-                        <option value="Cross River">Federal Teaching Hospital (FTH) Gombe</option>
-                        <option value="Delta">Jos University Teaching Hospital (JUTH) Jos</option>
-                        <option value="Ebonyi">Lagos State University Teaching Hospital (LASUTH) Lagos</option>
-                        <option value="Edo">National Reference Laboratory Gaduwa (NRL) Abuja</option>
-                        <option value="Ekiti">Nigerian Institute of Medical Research (NIMR) Lagos</option>
-                        <option value="Enugu">Nnamdi Azikiwe University Teaching Hospital (NAUTH)</option>
-                        <option value="FCT">Obafemi Awolowo University Teaching Hospital (OAUTH) Ile-Ife</option>
-                        <option value="Gombe">Plateau State Human Virology Research Center</option>
-                        <option value="Imo">Rivers State University Hospital (RSUTH)</option>
-                        <option value="Jigawa">University College Hospital Ibadan</option>
-                        <option value="Kaduna">University Of Abuja Teaching Hospital PCR Lab</option>
-                        <option value="Kano">University of Maiduguri Teaching Hospital (UMTH) Maiduguri</option>
-                        <option value="Katsina">University of Uyo teaching Hospital (UUTH) Uyo</option>
-                        <option value="Kebbi">Usman Danfodio University Teaching Hospital (UDUTH)</option>
+             
                     </select></td>
        
     </tr>
@@ -159,10 +138,37 @@
 </table>
 
 <script>
+
+    jq = jQuery;
+
+        jq.ajax({
+            url: "${ ui.actionLink("limsemrops", "EMRExchange", "getDefaultPCRLabs") }",
+            dataType: "json"
+            
+        }).success(function (data) {
+        data = JSON.parse(data.body);
+        if(data != ""){
+        console.log(data);
+        for(var a=0; a<data.length; a++){
+         jq('#pcr_lab_name').append("<option value="+data[a].pcrLabCode+">"+data[a].pcrLab+"</option>");
+        }
+       
+        
+        }
+        
+        })
+            .error(function (xhr, status, err) {
+                console.log(err);
+            });  
+    
+</script>
+
+<script>
 //localStorage.clear();
 const vlsamples = JSON.parse(localStorage.getItem("sample_data"));
 const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
 document.getElementById("number_samples").value = JSON.parse(JSON.parse(localStorage.getItem("sample_data"))).length;
+
 
 
     function getFormvalue_geo() {
