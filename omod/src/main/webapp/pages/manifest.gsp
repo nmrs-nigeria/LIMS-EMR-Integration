@@ -96,7 +96,7 @@ type="text/css" />
                     });
 
                 console.log(checkSamples[0]);
-                alert(checkSamples[0]);
+              //  alert(checkSamples[0]);
                 var checkedSamplesString = JSON.stringify(checkSamples);
                 localStorage.setItem("check_sample",checkedSamplesString);
 
@@ -108,16 +108,21 @@ type="text/css" />
                 sample_data_user = JSON.parse(JSON.parse(local_sample_data));
                 for(var i=0; i<sample_data_user.length; i++){
                     if(checkSamples.includes(sample_data_user[i].sampleID)){
-
+                    final_checked_sample.push(sample_data_user[i]);
                     }
                 }
+                
+                final_checked_sample = JSON.stringify(final_checked_sample);
+                
+               localStorage.setItem("sample_data",final_checked_sample);  
 
             }
 
         window.location.assign("manifest_demograph.page");
         }
-
-        var local_sample_data = localStorage.getItem("sample_data");
+        
+        
+          var local_sample_data = localStorage.getItem("sample_data");
         console.log(local_sample_data)
         var sample_data_user = [];
         //console.log(local_sample_data)
@@ -133,4 +138,7 @@ type="text/css" />
         //window.location.assign("manifest_demograph.page");
 
         }
+
+
+        
 </script>
