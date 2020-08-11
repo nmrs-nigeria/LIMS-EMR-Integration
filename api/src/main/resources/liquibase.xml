@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
  
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
  
     <!--
-    	See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
-    	documentation on this file.
+        See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
+        documentation on this file.
     
         See http://www.liquibase.org/manual/home#available_database_refactorings
         for a list of supported elements and attributes
     -->
  
-  <changeSet id="limsemr-v1.0-0" author="Morrison Idiasirue" >
+    <changeSet id="limsemr-v1.0-0" author="Morrison Idiasirue" >
         <comment>
-          insert menu link for the app
+            insert menu link for the app
         </comment>
     
         <sql><![CDATA[			
@@ -28,6 +28,22 @@ VALUES
 );
 		]]></sql>
                 
-    </changeSet> 
- 
+    </changeSet>
+    
+    <changeSet id="limsemr-v1.1-0" author="Morrison Idiasirue" >
+        <createTable tableName="lims_auth_module">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column  name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>                      
+        </createTable>     
+    </changeSet>
+    
+       
 </databaseChangeLog>

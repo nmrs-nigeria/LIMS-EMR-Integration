@@ -8,34 +8,44 @@
 <% ui.includeCss("limsemrops", "datatables.min.css") %>
 <% ui.includeCss("limsemrops", "docs/DataTables-1.10.21/css/jquery.bootstrap.min.css") %>
 
-<form>
-   </br>
-    <h3>Results not available at this time</h3>
-</br>
-<button id="button" type="submit">Check Result</button>
-</form>
 
-<% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
-<% ui.includeJavascript("limsemrops", "doc/datatables.min.js") %>
-<% ui.includeJavascript("limsemrops", "doc/jquery-3.5.1.js") %>
-<% ui.includeJavascript("limsemrops", "DataTables-1.10.21/js/jquery.dataTables.min.js") %>
-<% ui.includeJavascript("limsemrops", "pdfmake-0.1.36/pdfmake.min.js") %>
-<% ui.includeJavascript("limsemrops", "vfs_fonts.js") %>
-<% ui.includeJavascript("limsemrops", "lga.min.js") %>
-<% ui.includeJavascript("limsemrops", "PCRlabs.min.js") %>
+   </br>
+    <h3>Results Available</h3>
+    <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Manifest ID</th>
+                    <th>Facility ID</th>
+                    <th>Test Type</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>99FE9D9-BF7D-4</td>
+                    <td>Ro8QYYh2EVH</td>
+                    <td>Viral Load</td>
+                  </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                                    <th>Manifest ID</th>
+                                    <th>Facility ID</th>
+                                    <th>Test Type</th>
+
+                                </tr>
+                </tr>
+            </tfoot>
+        </table>
+</br>
+<button type="submit" onclick="getResult_()">Check Result</button>
+
+
 
 <script>
-jQuery(document).ready(function() {
-    var table = jQuery('#example').DataTable({"pagingType": "full", stateSave: true});
-    //"pagingType": "full_numbers"
-
-    jQuery('#example tbody').on( 'click', 'tr', function () {
-        jQuery(this).toggleClass('selected');
-    } );
-    jQuery('#button').click( function () {
-        alert( table.rows('.selected').data().length +' row(s) selected' );
-    } );
-} );
+function getResult_(){
+window.location.assign("returned_result.page");
+}
 </script>
 
 <!-- \$320,800 --!>

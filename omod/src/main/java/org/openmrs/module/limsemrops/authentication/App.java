@@ -1,5 +1,4 @@
-import com.mashape.unirest.*;
-
+// import com.mashape.unirest.*;
 /**
  * Hello world! "C:\Users\Mubarak
  * Abdu-Aguye\.vscode\extensions\vscjava.vscode-java-debug-0.25.1\scripts\launcher.bat" "C:\Program
@@ -18,9 +17,9 @@ public final class App {
 	 */
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
-		AuthModule am = new AuthModule("MAbduAguye@mgic.umaryland.edu", "mubarak@2k1", "https://lims.ng/api/login.php");
-		String tk = am.getToken();
-		System.out.println(tk);
+		//   AuthModule am = new AuthModule("MAbduAguye@mgic.umaryland.edu", "mubarak@2k1", "https://lims.ng/api/login.php");
+		//    String tk = am.getToken();
+		//    System.out.println(tk);
 		
 		//HttpResponse<String> response = Unirest.post("https://lims.ng/api/login.php").body("{\"email\": \"MAbduAguye@mgic.umaryland.edu\",\"password\": \"mubarak@2k1\"}").asString();
 		//System.out.println(response.getBody());

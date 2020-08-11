@@ -71,6 +71,29 @@ public class DBManager {
         
     }
 	
+	public List<Integer> getRecentRecencyClientEncounter(Date startDate, Date endDate) throws SQLException {
+        
+        String sqlStr = "select encounter_id from " + ConstantUtils.ENCOUNTER_TABLE + " where encounter_type = "
+                + ConstantUtils.Laboratory_Encounter_Type_Id
+                + " and encounter_datetime >= ? "
+                + "and encounter_datetime <= ? and `voided` = 0 ";
+        
+        pStatement = conn.prepareStatement(sqlStr);
+        
+        pStatement.setDate(1, new java.sql.Date(startDate.getTime()));
+        pStatement.setDate(2, new java.sql.Date(endDate.getTime()));
+        resultSet = pStatement.executeQuery();
+        
+        List<Integer> idlist = new ArrayList<>();
+        
+        while (resultSet.next()) {
+            idlist.add(resultSet.getInt("encounter_id"));
+        }
+        
+        return idlist;
+        
+    }
+	
 	public List<Integer> getTestRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
 
         //select * from encounter where encounter_type = 14 and encounter_datetime > '2019-10-01 00:00:00' and encounter_datetime < '2019-12-01 00:00:00' and voided = 0
@@ -299,7 +322,7 @@ public class DBManager {
 	public int initializeAuthModuleUserNamePassword(Auth auth) throws SQLException {
 		//used to set the very first username and password pair for the authmodule
 		pStatement = conn.prepareStatement("insert into " + ConstantUtils.AUTHMODULE_TABLE
-		        + " (username, password) values (?,?);");
+		        + " (username, password) values (?,?)");
 		pStatement.setString(1, auth.getUsername());
 		pStatement.setString(2, auth.getPassword());
 		int response = pStatement.executeUpdate();
@@ -309,7 +332,7 @@ public class DBManager {
 	public int setAuthModuleUserNamePassword(Auth auth) throws SQLException {
 		//used when UPDATING the username and password pair for the authmodule
 		pStatement = conn.prepareStatement("update " + ConstantUtils.AUTHMODULE_TABLE
-		        + " SET username = ?, password = ? where username = ?;");
+		        + " SET username = ?, password = ? where username = ?");
 		pStatement.setString(1, auth.getUsername());
 		pStatement.setString(2, auth.getPassword());
 		pStatement.setString(3, auth.getUsername());

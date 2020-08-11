@@ -16,10 +16,10 @@ import org.openmrs.module.limsemrops.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("limsemrops.LimsemropsDao")
+// @Repository("limsemrops.LimsemropsDao")
 public class LimsemropsDao {
 	
-	@Autowired
+	// @Autowired
 	DbSessionFactory sessionFactory;
 	
 	private DbSession getSession() {
@@ -33,5 +33,12 @@ public class LimsemropsDao {
 	public Item saveItem(Item item) {
 		getSession().saveOrUpdate(item);
 		return item;
+	}
+	
+	/**
+	 * @param sessionFactory the sessionFactory to set
+	 */
+	public void setSessionFactory(DbSessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 }

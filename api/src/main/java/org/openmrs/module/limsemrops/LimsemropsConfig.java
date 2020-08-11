@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * Contains module's config.
  */
-@Component("limsemrops.LimsemropsConfig")
+// @Component("limsemrops.LimsemropsConfig")
 public class LimsemropsConfig {
 	
 	public final static String MODULE_PRIVILEGE = "Limsemrops Privilege";

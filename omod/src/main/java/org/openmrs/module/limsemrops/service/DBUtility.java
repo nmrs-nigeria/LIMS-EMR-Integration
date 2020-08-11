@@ -15,6 +15,7 @@ import org.openmrs.Patient;
 import org.openmrs.module.limsemrops.dbmanager.DBManager;
 import org.openmrs.module.limsemrops.omodmodels.Manifest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
+import org.openmrs.module.limsemrops.utility.ConstantUtils;
 
 /**
  * @author MORRISON.I
@@ -28,12 +29,17 @@ public class DBUtility {
 		
 	}
 	
-	public List<Integer> getLabEncountersByDate(Date startDate, Date endDate) {
+	public List<Integer> getLabEncountersByDate(Date startDate, Date endDate, ConstantUtils.SampleSpace sampleSpace) {
         List<Integer> encounters = new ArrayList<>();
 
         try {
             this.ndrDBManager.openConnection();
-            encounters = this.ndrDBManager.getRecentLabEncounter(startDate, endDate);
+            if (sampleSpace.equals(ConstantUtils.SampleSpace.VL)) {
+                encounters = this.ndrDBManager.getRecentLabEncounter(startDate, endDate);
+            } else if (sampleSpace.equals(ConstantUtils.SampleSpace.RECENCY)) {
+                encounters = this.ndrDBManager.getRecentRecencyClientEncounter(startDate, endDate);
+            }
+
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         } finally {

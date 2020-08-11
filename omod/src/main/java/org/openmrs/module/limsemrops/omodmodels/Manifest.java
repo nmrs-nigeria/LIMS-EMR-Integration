@@ -6,10 +6,13 @@
 package org.openmrs.module.limsemrops.omodmodels;
 
 import java.util.Date;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * @author MORRISON.I
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Manifest {
 	
 	private String manifestID;
@@ -32,7 +35,7 @@ public class Manifest {
 	
 	private String riderPhoneNumber;
 	
-	private String samplePickUpOnTime; //true or false string ..  did not use boolean
+	private String samplePickUpOnTime; //true or false string ..  did not use boolean .. Create on UI
 	
 	private String pcrLabName;
 	
