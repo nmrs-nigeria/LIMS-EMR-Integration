@@ -47,5 +47,3 @@ function getResult_(){
 window.location.assign("returned_result.page");
 }
 </script>
-
-<!-- \$320,800 --!>

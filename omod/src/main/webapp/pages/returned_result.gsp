@@ -13,28 +13,39 @@
     <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
-                    <th>Lab Reg Number</th>
-                    <th>Lab Sample Number</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
                     <th>visit Date</th>
                     <th>Test Result</th>
                     <th>Result Date</th>
                     <th>Approval Date</th>
                     <th>Sample Testable</th>
+                    <th>Sendig PCR Lab</th>
 
                 </tr>
             </thead>
-            <tbody  id="getResult_return">
-
+            <tbody>
+            <tr>
+                <td>Mujidah</td>
+                <td>Hafiz</td>
+                <td>2020-07-20</td>
+                <td>87432</td>
+                <td>2020-02-01</td>
+                <td>2020-07-21</td>
+                <td>Y</td>
+                <td>PLASVIREC TESTING LAB</td>
+                </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Lab Reg Number</th>
-                                        <th>Lab Sample Number</th>
-                                        <th>visit Date</th>
-                                        <th>Test Result</th>
-                                        <th>Result Date</th>
-                                        <th>Approval Date</th>
-                                        <th>Sample Testable</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>visit Date</th>
+                    <th>Test Result</th>
+                    <th>Result Date</th>
+                    <th>Approval Date</th>
+                    <th>Sample Testable</th>
+                    <th>Sendig PCR Lab</th>
                 </tr>
             </tfoot>
         </table>
@@ -46,7 +57,7 @@
 <% ui.includeJavascript("limsemrops", "doc/jquery-3.5.1.js") %>
 
 <script>
-        //https://run.mocky.io/v3/77c64347-3ae4-40fa-afec-648b076edafe
+
         function loadDoc() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
