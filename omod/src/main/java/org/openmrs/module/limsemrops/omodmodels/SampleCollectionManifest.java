@@ -5,6 +5,7 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 /**
@@ -12,16 +13,17 @@ import java.io.Serializable;
  */
 public class SampleCollectionManifest implements Serializable {
 	
-	private VLSampleCollectionBatchManifest viralloadManifest;
+	private VLSampleCollectionBatchManifest viralLoadManifest;
 	
 	private EIDSampleCollectionBatchManifest eidManifest;
 	
+	@JsonProperty("viralLoadManifest")
 	public VLSampleCollectionBatchManifest getViralloadManifest() {
-		return viralloadManifest;
+		return viralLoadManifest;
 	}
 	
 	public void setViralloadManifest(VLSampleCollectionBatchManifest viralloadManifest) {
-		this.viralloadManifest = viralloadManifest;
+		this.viralLoadManifest = viralloadManifest;
 	}
 	
 	public EIDSampleCollectionBatchManifest getEidManifest() {

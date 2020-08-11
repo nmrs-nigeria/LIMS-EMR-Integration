@@ -32,9 +32,9 @@ public class LabFormUtils {
     public static final Integer INDICATION_FOR_VL = 164980;
     public static final Integer SAMPLE_COLLECTION_DATE = 159951;
     public static final Integer DATE_SAMPLE_SENT_TO_PCR_LAB = 165988;
-    public static final Integer DATE_SAMPLE_RECEIVED_TO_PCR_LAB = 165716;
+    public static final Integer DATE_SAMPLE_RECEIVED_AT_PCR_LAB = 165716;
     public static final Integer VIRAL_LOAD_RESULT = 856;
-    public static final Integer DATE_SAMPLE_SENT_FROM_PCR_LAB = 165989;
+    public static final Integer DATE_RESULT_SENT_FROM_PCR_LAB = 165989;
     public static final Integer DATE_RESULT_WAS_RECEIVED_AT_FACILITY = 165987;
     public static final Integer DATE_SAMPLE_ORDERED = 164989;
     public final static int CHECKED_BY = 164983;

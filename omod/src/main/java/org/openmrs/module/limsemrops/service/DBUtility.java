@@ -101,12 +101,13 @@ public class DBUtility {
 	}
 	
 	public boolean insertManifestSaplesEntry(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings,
-	        String manifestId, String createdBy) {
+	        String manifestId, String createdBy, Date dateSampleSent) {
 		
 		int response = 0;
 		try {
 			this.ndrDBManager.openConnection();
-			response = this.ndrDBManager.insertManifestSamples(vLSampleInformationFrontFacings, manifestId, createdBy);
+			response = this.ndrDBManager.insertManifestSamples(vLSampleInformationFrontFacings, manifestId, createdBy,
+			    dateSampleSent);
 		}
 		catch (Exception ex) {
 			System.err.println(ex.getMessage());
@@ -133,6 +134,23 @@ public class DBUtility {
 
         return manifests;
     }
+	
+	public Manifest getManifestsbyId(String manifestId) {
+		Manifest manifest = null;
+		
+		try {
+			this.ndrDBManager.openConnection();
+			manifest = ndrDBManager.getAllManifestByID(manifestId);
+		}
+		catch (Exception ex) {
+			System.err.println(ex.getMessage());
+		}
+		finally {
+			this.ndrDBManager.closeConnection();
+		}
+		
+		return manifest;
+	}
 	
 	public List<VLSampleInformationFrontFacing> getSamplesByManifestId(String manifestId) {
 

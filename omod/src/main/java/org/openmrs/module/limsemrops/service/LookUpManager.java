@@ -39,8 +39,8 @@ public class LookUpManager {
         if (pcrlabconcept != null) {
             pcrlabconcept.getAnswers().forEach((ConceptAnswer a) -> {
                 PCRLab pCRLab = new PCRLab();
-                pCRLab.setPcrLab(a.getConcept().getName().getName());
-                pCRLab.setPcrLabCode(this.labFormUtils.getPcrLabs().get(a.getConcept().getConceptId()));
+                pCRLab.setPcrLab(a.getAnswerConcept().getName().getName());
+                pCRLab.setPcrLabCode(this.labFormUtils.getPcrLabs().get(a.getAnswerConcept().getId()));
                 pCRLabs.add(pCRLab);
             });
         }

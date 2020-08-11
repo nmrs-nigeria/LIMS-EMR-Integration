@@ -22,7 +22,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>99FE9D9-BF7D-4</td>
+                    <td>r-FMCK162020-07-16</td>
                     <td>Ro8QYYh2EVH</td>
                     <td>Viral Load</td>
                   </tr>
@@ -47,5 +47,3 @@ function getResult_(){
 window.location.assign("returned_result.page");
 }
 </script>
-
-<!-- \$320,800 --!>

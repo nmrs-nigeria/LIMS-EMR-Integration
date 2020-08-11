@@ -87,18 +87,18 @@
         <td><input type="time" class="form-control" id="pick_time" placeholder="Time format in hh:mm:ss"></td>
     </tr>
     <tr>
-        <td><label>Pickup Schedule</label></td>
+        <td><label>Schedule Pickup</label></td>
         <td><div class="input-with-post-icon datepicker">
             <input placeholder="Select date" type="date" id="schedule_DateofPickUp" class="form-control">
          </div></td>
-        <td></td>
-        <td></td>
+        <td><label class="form-check-label">Timely Pickup</label></td>
+        <td><input type="checkbox" id="timely_pickup"></td>
     </tr>
     <tr>
         <td><label>Total Number of Samples</label></td>
         <td><input type="text" class="form-control" id="number_samples" placeholder="Enter Total Samples to be Shipped"></td>
         <td><label>Temp at Pickup</label></td>
-        <td><input type="number" class="form-control" id="temperature" placeholder="Enter temperature in Celsius"></td>
+        <td><input type="text" class="form-control" id="temperature" placeholder="Temperature at Pickup"></td>
     </tr>
     <tr>
         <td></td>
@@ -110,54 +110,18 @@
 <h3>Rider Information</h3>
 <table>
     <tr>
-        <td><label>Rider's Name</label></td>
-        <td><input type="text" class="form-control" id="pl_name" placeholder="Full Name of 3PL"></td>
-        <td><label>Rider's Phone Number</label></td>
-        <td><input type="text" class="form-control" id="phone_3pl" placeholder="Enter 3PL Phone Number"></td>
+        <td><label>Rider Name</label></td>
+        <td><input type="text" class="form-control" id="pl_name" placeholder="Rider's Full Name"></td>
+        <td><label>Rider Phone Number</label></td>
+        <td><input type="text" class="form-control" id="phone_3pl" placeholder="Rider's Phone Number"></td>
     </tr>
     <tr>
         <td><label>PCR Laboratory Name</label></td>
-        <td><select onchange="togglePCR(this);" name="lab" id="lab" class="form-control">
+        <td><select class="form-control" id="pcr_lab_name" >
                         <option value="" selected="selected">- Select -</option>
-                        <option value="NARH_Yaba_Lagos">68 NARH Yaba, Lagos</option>
-                        <option value="Ahmadu_Bello_University_Teaching_Hospital">Ahmadu Bello University Teaching Hospital (ABUTH)</option>
-                        <option value="Aminu_Kano_Teaching_Hopital_PCR_Lab">Aminu Kano Teaching Hopital PCR Lab</option>
-                        <option value="Asokoro_Laboratory_and_Training_Center">Asokoro Laboratory and Training Center</option>
-                        <option value="Chukwuemeka_Odumegwu_Ojukwu_University_Teaching_Hospital">Chukwuemeka Odumegwu Ojukwu University Teaching Hospital (COOUTH).</option>
-                        <option value="Defence_Reference_laboratory_Abuja">Defence Reference laboratory (DRL) Abuja</option>
-                        <option value="Federal_Medical_Center_Jalingo">Federal Medical Center Jalingo</option>
-                        <option value="Federal_Medical_Center_Makurdi">Federal Medical Center Makurdi</option>
-                        <option value="Federal_Teaching_Hospital_Gombe">Federal Teaching Hospital (FTH) Gombe</option>
-                        <option value="Jos_University_Teaching_Hospital">Jos University Teaching Hospital (JUTH) Jos</option>
-                        <option value="Lagos_State_University_Teaching_Hospital">Lagos State University Teaching Hospital (LASUTH) Lagos</option>
-                        <option value="National_Reference_Laboratory_Gaduwa_Abuja">National Reference Laboratory Gaduwa (NRL) Abuja</option>
-                        <option value="Nigerian_Institute_of_Medical_Research_Lagos">Nigerian Institute of Medical Research (NIMR) Lagos</option>
-                        <option value="Nnamdi_Azikiwe_University_Teaching_Hospital">Nnamdi Azikiwe University Teaching Hospital (NAUTH)</option>
-                        <option value="Obafemi_Awolowo_University_Teaching_Hospital">Obafemi Awolowo University Teaching Hospital (OAUTH) Ile-Ife</option>
-                        <option value="Plateau_State_Human_Virology_Research_Center">Plateau State Human Virology Research Center</option>
-                        <option value="Rivers_State_University_Hospital">Rivers State University Hospital (RSUTH)</option>
-                        <option value="University_College_Hospital_Ibadan">University College Hospital Ibadan</option>
-                        <option value="University_Of_Abuja_Teaching_Hospital_PCR_Lab">University Of Abuja Teaching Hospital PCR Lab</option>
-                        <option value="University_of_Maiduguri_Teaching_Hospital_Maiduguri">University of Maiduguri Teaching Hospital (UMTH) Maiduguri</option>
-                        <option value="University_of_Uyo_teaching_Hospital">University of Uyo teaching Hospital (UUTH) Uyo</option>
-                        <option value="Usman_Danfodio_University_Teaching_Hospital">Usman Danfodio University Teaching Hospital (UDUTH)</option>
+             
                     </select></td>
-        <td><label>PCR Lab Code</label></td>
-        <td><select name="pcr" id="pcr_lab_code" class="form-control select-lga" required></select>></td>
-    </tr>
-    <tr>
-        <td><label>Pick Up Schedule</label></td>
-        <td><div class="input-with-post-icon datepicker">
-            <input placeholder="Select date" type="date" id="date_created" class="form-control">
-         </div></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+       
     </tr>
     <tr>
         <td></td>
@@ -174,9 +138,39 @@
 </table>
 
 <script>
+
+    jq = jQuery;
+
+        jq.ajax({
+            url: "${ ui.actionLink("limsemrops", "EMRExchange", "getDefaultPCRLabs") }",
+            dataType: "json"
+            
+        }).success(function (data) {
+        data = JSON.parse(data.body);
+        if(data != ""){
+        console.log(data);
+        for(var a=0; a<data.length; a++){
+         jq('#pcr_lab_name').append("<option value="+data[a].pcrLabCode+">"+data[a].pcrLab+"</option>");
+        }
+       
+        
+        }
+        
+        })
+            .error(function (xhr, status, err) {
+                console.log(err);
+            });  
+    
+</script>
+
+<script>
 //localStorage.clear();
 const vlsamples = JSON.parse(localStorage.getItem("sample_data"));
 const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
+document.getElementById("number_samples").value = JSON.parse(JSON.parse(localStorage.getItem("sample_data"))).length;
+
+
+
     function getFormvalue_geo() {
         var referringLabState = document.getElementById("state").value;
         var referringLabLga = document.getElementById("lga").value;
@@ -193,14 +187,14 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
         var riderName = document.getElementById("pl_name").value;
         var riderPhoneNumber = document.getElementById("phone_3pl").value;
         var pcrLabName = document.getElementById("pcr_lab_name").value;
-        var pcrLabCode = document.getElementById("pcr_lab_code").value;
+      //  var pcrLabCode = document.getElementById("pcr_lab_code").value;
         //var manifestID = document.getElementById("manifest_id").value;
         //var comment = document.getElementById("comment").value;
         //var  = document.getElementById("").value;
         //var resultStatus = document.getElementById("result_status").value;
         //var createdBy = document.getElementById("sender_full_name").value;
         var dateModified = document.getElementById("schedule_DateofPickUp").value;
-        var dateCreated = document.getElementById("date_created").value;
+        //var dateCreated = document.getElementById("date_created").value;
 
         var  manifestObj = {
                 'referringLabState': referringLabState,
@@ -211,11 +205,11 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
                 'riderName': riderName,
                 'riderPhoneNumber': riderPhoneNumber,
                 'pcrLabName': pcrLabName,
-                'pcrLabCode': pcrLabCode,
+                'pcrLabCode': 'test',
                 'samplePickUpOnTime':'yes'
                                         }
           manifestObj = JSON.stringify(manifestObj);
-        
+
         jq = jQuery;
 
         jq.ajax({
@@ -226,14 +220,18 @@ const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
             'vlsamples': vlsamples,
             'sampleSpace': sampleSpace
             }
-            console.log(sampleSpace)
+           // console.log(sampleSpace)
         }).success(function (data) {
             console.log(data);
-            alert('Manifest Successfully sent to LIMS');
-            window.location.assign("manifest.page");
+            data = JSON.parse(data.body);
+            console.log(data);
+            localStorage.setItem("manifestid", data.manifestID);
+            alert('Samples successfully registered in Lab');
+            window.location.assign("print_manifest.page");
         })
             .error(function (xhr, status, err) {
                 console.log(err);
             });
     }
 </script>
+</div>

@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +30,6 @@ import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ExchangeLayer;
 import org.openmrs.module.limsemrops.service.LookUpManager;
 import org.openmrs.module.limsemrops.service.SampleInfo;
-import org.openmrs.module.limsemrops.utility.ConstantUtils;
 import org.openmrs.module.limsemrops.utility.ConstantUtils.SampleSpace;
 import org.openmrs.module.limsemrops.utility.LabFormUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
@@ -39,6 +39,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author MORRISON.I
@@ -52,6 +60,8 @@ public class EMRExchangeFragmentController {
 	private DBUtility dBUtility;
 	
 	private LookUpManager lookUpManager;
+	
+	private ObjectMapper mapper;
 	
 	public EMRExchangeFragmentController() {
 		this.exchangeLayer = new ExchangeLayer();
@@ -106,7 +116,7 @@ public class EMRExchangeFragmentController {
             @RequestParam(value = "sampleSpace") String sampleSpace) {
 
         String response = null;
-        ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         List<VLSampleInformationFrontFacing> vlSampleInfo = new ArrayList<>();
@@ -132,7 +142,7 @@ public class EMRExchangeFragmentController {
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getDefaultPCRLabs() {
 
-        ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
         List<PCRLab> pCRLabs = lookUpManager.getPCRLabs();
         String response = null;
         try {
@@ -140,7 +150,7 @@ public class EMRExchangeFragmentController {
         } catch (JsonProcessingException ex) {
             Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        System.err.println(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
@@ -151,7 +161,7 @@ public class EMRExchangeFragmentController {
             @RequestParam(value = "manifest", required = true) String manifestDraft,
             @RequestParam(value = "sampleSpace", required = true) String sampleSpace) {
 
-        ObjectMapper mapper = new ObjectMapper();
+       ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         String responseMessage = "";
 
@@ -174,8 +184,8 @@ public class EMRExchangeFragmentController {
             });
 
             Manifest convertManifest = mapper.readValue(manifestDraft, Manifest.class);
-            convertManifest.setPcrLabCode("LIMS150003"); // todo
-            convertManifest.setPcrLabName("Asokoro Laboratory and Training Center"); // todo
+            convertManifest.setPcrLabCode("LIMS150002"); // todo
+            convertManifest.setPcrLabName("National Reference Laboratory Gaduwa (NRL) Abuja"); // todo
 
             System.out.println("about to update date sample sent");
 
@@ -202,7 +212,7 @@ public class EMRExchangeFragmentController {
                 System.out.println(ex.getMessage());
             }
 
-            if (response == true) {
+            if (response) {
                 updateDateSampleSentOnDB(vLSampleInformations, dateSampleSent);
                 //  Manifest manifest = new Manifest();
                 convertManifest.setCreatedBy(Context.getAuthenticatedUser().toString());
@@ -214,12 +224,17 @@ public class EMRExchangeFragmentController {
                 boolean insertManifestResult = this.dBUtility.insertManifestEntry(convertManifest);
                 if (insertManifestResult) {
                     boolean insertSamplesResult = this.dBUtility.insertManifestSaplesEntry(vLSampleInformations, manifestID,
-                            Context.getAuthenticatedUser().toString());
+                            Context.getAuthenticatedUser().toString(), dateSampleSent);
 
                     System.out.println("finished logging samples");
                 }
-                responseMessage = "sent sucessfully";
-                return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+                //  responseMessage = "sent sucessfully";
+
+                RequisitionResponse requisitionResponse = new RequisitionResponse();
+                requisitionResponse.setManifestID(manifestID);
+                requisitionResponse.setResponseMessage("sent sucessfully");
+
+                return new ResponseEntity<>(mapper.writeValueAsString(requisitionResponse), HttpStatus.OK);
             }
 
             //List<VLSampleInformation> vlSamples = mapper.readValue(vlsamples, List<VLSampleInformation>);
@@ -235,7 +250,8 @@ public class EMRExchangeFragmentController {
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAllSavedManifest() {
 
-        ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         List<Manifest> manifests = dBUtility.getManifests();
         String response = null;
         try {
@@ -248,8 +264,25 @@ public class EMRExchangeFragmentController {
     }
 	
 	@RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getSavedManifestById(@RequestParam(value = "manifestId", required = true) String manifestId) {
+
+        mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        Manifest manifest = dBUtility.getManifestsbyId(manifestId);
+        String response = null;
+        try {
+            response = mapper.writeValueAsString(manifest);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+	
+	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getManifestSamples(@RequestParam(value = "manifestId") String manifestId) {
-        ObjectMapper mapper = new ObjectMapper();
+        mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         List<VLSampleInformationFrontFacing> manifestSamples = dBUtility.getSamplesByManifestId(manifestId);
         String response = null;
         try {
@@ -265,7 +298,7 @@ public class EMRExchangeFragmentController {
 
         List<VLSampleInformation> allConvertedSamples = new ArrayList<>();
 
-        ObjectMapper mapper
+        mapper
                 = new ObjectMapper()
                         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -303,4 +336,68 @@ public class EMRExchangeFragmentController {
         });
 
     }
+	
+	private void updatePatientSampleRecordwithResult(int encounterId, Date dateSampleReceivedAtPCRLab,
+	        Date dateResultDispatched, String testResult) {
+		
+		Encounter labEncounter = Context.getEncounterService().getEncounter(encounterId);
+		
+		Obs dateSampleReceivedAtPCRObs = new Obs();
+		dateSampleReceivedAtPCRObs.setConcept(Context.getConceptService().getConcept(
+		    LabFormUtils.DATE_SAMPLE_RECEIVED_AT_PCR_LAB));
+		dateSampleReceivedAtPCRObs.setValueDate(dateSampleReceivedAtPCRLab);
+		dateSampleReceivedAtPCRObs.setObsDatetime(new Date());
+		dateSampleReceivedAtPCRObs.setPerson(labEncounter.getPatient());
+		dateSampleReceivedAtPCRObs.setEncounter(labEncounter);
+		dateSampleReceivedAtPCRObs.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(dateSampleReceivedAtPCRObs);
+		
+		Obs dateResultDispatchedObs = new Obs();
+		dateResultDispatchedObs.setConcept(Context.getConceptService()
+		        .getConcept(LabFormUtils.DATE_RESULT_SENT_FROM_PCR_LAB));
+		dateResultDispatchedObs.setValueDate(dateResultDispatched);
+		dateResultDispatchedObs.setObsDatetime(new Date());
+		dateResultDispatchedObs.setPerson(labEncounter.getPatient());
+		dateResultDispatchedObs.setEncounter(labEncounter);
+		dateResultDispatchedObs.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(dateResultDispatchedObs);
+		
+		Obs dateResultReceivedAtFacilityObs = new Obs();
+		dateResultReceivedAtFacilityObs.setConcept(Context.getConceptService().getConcept(
+		    LabFormUtils.DATE_RESULT_WAS_RECEIVED_AT_FACILITY));
+		dateResultReceivedAtFacilityObs.setValueDate(new Date());
+		dateResultReceivedAtFacilityObs.setObsDatetime(new Date());
+		dateResultReceivedAtFacilityObs.setPerson(labEncounter.getPatient());
+		dateResultReceivedAtFacilityObs.setEncounter(labEncounter);
+		dateResultReceivedAtFacilityObs.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(dateResultReceivedAtFacilityObs);
+		
+		Obs testResultObs = new Obs();
+		testResultObs.setConcept(Context.getConceptService().getConcept(LabFormUtils.VIRAL_LOAD_RESULT));
+		testResultObs.setValueNumeric(Double.valueOf(testResult)); //TODO: change test result to text on NMRS Lab form.
+		testResultObs.setObsDatetime(new Date());
+		testResultObs.setPerson(labEncounter.getPatient());
+		testResultObs.setEncounter(labEncounter);
+		testResultObs.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(testResultObs);
+		
+		Context.getEncounterService().saveEncounter(labEncounter);
+		
+	}
+	
+	// Get sample result from LIMS
+	RestTemplate restTemplate = new RestTemplate();
+	
+	//	@RequestMapping(/*value="/template/sample_results", */method = RequestMethod.GET, path = "returned_result")
+	public String getResultByManifest() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		return restTemplate.exchange("https://lims.ng/api/samples/result.php", HttpMethod.GET, entity, String.class)
+		        .getBody();
+	}
 }
