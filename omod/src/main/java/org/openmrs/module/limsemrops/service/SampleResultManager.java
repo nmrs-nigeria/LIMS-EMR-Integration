@@ -6,13 +6,17 @@
 package org.openmrs.module.limsemrops.service;
 
 /**
- *
  * @author MORRISON.I
  */
 public class SampleResultManager {
-    
-    private void fetchSampleWithoutResultFrom(){}
-    private void pullManifestResultFromLIMS(){}
-    private void updateManifestResultOnDB(){}
-    
+	
+	private void fetchSampleWithoutResultFromDB() {
+	}
+	
+	private void pullManifestResultFromLIMS() {
+	}
+	
+	private void updateManifestResultOnDB() {
+	}
+	
 }

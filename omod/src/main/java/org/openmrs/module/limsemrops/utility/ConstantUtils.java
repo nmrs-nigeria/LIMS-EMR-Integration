@@ -56,6 +56,7 @@ public class ConstantUtils {
 	public static final String BASE_URL = "https://www.lims.ng/api";
 	
 	public static final String POST_SAMPLES = "/samples/create.php";
+        public static final String REQUEST_SAMPLE_RESULT = "/result";
 	
 	//public enums
 	public enum SampleSpace {

@@ -167,7 +167,7 @@
 //localStorage.clear();
 const vlsamples = JSON.parse(localStorage.getItem("sample_data"));
 const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
-document.getElementById("number_samples").value = JSON.parse(JSON.parse(localStorage.getItem("sample_data"))).length;
+document.getElementById("number_samples").value = JSON.parse(localStorage.getItem("sample_data")).length;
 
 
 

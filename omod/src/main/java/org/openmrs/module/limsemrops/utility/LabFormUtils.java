@@ -77,6 +77,11 @@ public class LabFormUtils {
         pcrLabs.put(166231, "LIMS340001");
         pcrLabs.put(166232, "LIMS350001");
         pcrLabs.put(166234, "LIMS250003");
+        pcrLabs.put(166247, "LIMS150003");
+        pcrLabs.put(166248, "LIMS150004");
+        pcrLabs.put(166249, "LIMS200001");
+        pcrLabs.put(166250, "LIMS320002");
+        pcrLabs.put(166251, "LIMS310001");
 
     }
 
