@@ -24,6 +24,7 @@ import org.openmrs.module.limsemrops.omodmodels.Auth;
 import org.openmrs.module.limsemrops.omodmodels.DBConnection;
 import org.openmrs.module.limsemrops.omodmodels.Manifest;
 import org.openmrs.module.limsemrops.omodmodels.PatientID;
+import org.openmrs.module.limsemrops.omodmodels.Result;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 import org.openmrs.module.limsemrops.utility.ConstantUtils;
 import org.openmrs.module.limsemrops.utility.Utils;
@@ -32,47 +33,24 @@ import org.openmrs.module.limsemrops.utility.Utils;
  * @author MORRISON.I
  */
 public class DBManager {
-
-    Connection conn = null;
-
-    PreparedStatement pStatement = null;
-
-    private ResultSet resultSet = null;
-
-    public DBManager() {
-
-    }
-
-    public void openConnection() throws SQLException {
-        DBConnection openmrsConn = Utils.getNmrsConnectionDetails();
-
-        conn = DriverManager.getConnection(openmrsConn.getUrl(), openmrsConn.getUsername(), openmrsConn.getPassword());
-    }
-
-    public List<Integer> getRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
-
-        String sqlStr = "select encounter_id from " + ConstantUtils.ENCOUNTER_TABLE + " where encounter_type = "
-                + ConstantUtils.Laboratory_Encounter_Type_Id
-                + " and encounter_datetime >= ? "
-                + "and encounter_datetime <= ? and `voided` = 0 ";
-
-        pStatement = conn.prepareStatement(sqlStr);
-
-        pStatement.setDate(1, new java.sql.Date(startDate.getTime()));
-        pStatement.setDate(2, new java.sql.Date(endDate.getTime()));
-        resultSet = pStatement.executeQuery();
-
-        List<Integer> idlist = new ArrayList<>();
-
-        while (resultSet.next()) {
-            idlist.add(resultSet.getInt("encounter_id"));
-        }
-
-        return idlist;
-
-    }
-
-    public List<Integer> getRecentRecencyClientEncounter(Date startDate, Date endDate) throws SQLException {
+	
+	Connection conn = null;
+	
+	PreparedStatement pStatement = null;
+	
+	private ResultSet resultSet = null;
+	
+	public DBManager() {
+		
+	}
+	
+	public void openConnection() throws SQLException {
+		DBConnection openmrsConn = Utils.getNmrsConnectionDetails();
+		
+		conn = DriverManager.getConnection(openmrsConn.getUrl(), openmrsConn.getUsername(), openmrsConn.getPassword());
+	}
+	
+	public List<Integer> getRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
 
         String sqlStr = "select encounter_id from " + ConstantUtils.ENCOUNTER_TABLE + " where encounter_type = "
                 + ConstantUtils.Laboratory_Encounter_Type_Id
@@ -94,8 +72,31 @@ public class DBManager {
         return idlist;
 
     }
+	
+	public List<Integer> getRecentRecencyClientEncounter(Date startDate, Date endDate) throws SQLException {
 
-    public List<Integer> getTestRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
+        String sqlStr = "select encounter_id from " + ConstantUtils.ENCOUNTER_TABLE + " where encounter_type = "
+                + ConstantUtils.Laboratory_Encounter_Type_Id
+                + " and encounter_datetime >= ? "
+                + "and encounter_datetime <= ? and `voided` = 0 ";
+
+        pStatement = conn.prepareStatement(sqlStr);
+
+        pStatement.setDate(1, new java.sql.Date(startDate.getTime()));
+        pStatement.setDate(2, new java.sql.Date(endDate.getTime()));
+        resultSet = pStatement.executeQuery();
+
+        List<Integer> idlist = new ArrayList<>();
+
+        while (resultSet.next()) {
+            idlist.add(resultSet.getInt("encounter_id"));
+        }
+
+        return idlist;
+
+    }
+	
+	public List<Integer> getTestRecentLabEncounter(Date startDate, Date endDate) throws SQLException {
 
         //select * from encounter where encounter_type = 14 and encounter_datetime > '2019-10-01 00:00:00' and encounter_datetime < '2019-12-01 00:00:00' and voided = 0
         pStatement = conn.prepareStatement("select * from encounter where encounter_type = 11 "
@@ -118,8 +119,8 @@ public class DBManager {
         return idlist;
 
     }
-
-    public List<Integer> getEnrollmentAndPharmacyEncounter(Patient p) throws SQLException {
+	
+	public List<Integer> getEnrollmentAndPharmacyEncounter(Patient p) throws SQLException {
 
         pStatement = conn.prepareStatement("select * from encounter where encounter_type in (?,?) and patient_id = ?  and voided = 0");
         pStatement.setInt(1, ConstantUtils.HIV_Enrollment_Encounter_Type_Id);
@@ -137,37 +138,75 @@ public class DBManager {
         return idlist;
 
     }
-
-    public int insertManifest(Manifest manifest) throws SQLException {
-        pStatement = conn
-                .prepareStatement("insert into "
-                        + ConstantUtils.MANIFEST_TABLE
-                        + "(manifest_id,sample_space,result_status,created_by,test_type,referring_lab_state,referring_lab_lga,"
-                        + "date_schedule_for_pickup,sample_pick_up_on_time,rider_total_samples_picked,rider_temp_at_pick_up,rider_name,"
-                        + "rider_phone_number,pcr_lab_name,pcr_lab_code) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        pStatement.setString(1, manifest.getManifestID());
-        pStatement.setString(2, manifest.getSampleSpace());
-        pStatement.setString(3, manifest.getResultStatus());
-        pStatement.setString(4, manifest.getCreatedBy());
-        pStatement.setString(5, manifest.getTestType());
-        pStatement.setString(6, manifest.getReferringLabState());
-        pStatement.setString(7, manifest.getReferringLabLga());
-        pStatement.setDate(8, new java.sql.Date(manifest.getDateScheduleForPickup().getTime()));
-        pStatement.setString(9, manifest.getSamplePickUpOnTime());
-        pStatement.setInt(10, manifest.getRiderTotalSamplesPicked());
-        pStatement.setString(11, manifest.getRiderTempAtPickUp());
-        pStatement.setString(12, manifest.getRiderName());
-        pStatement.setString(13, manifest.getRiderPhoneNumber());
-        pStatement.setString(14, manifest.getPcrLabName());
-        pStatement.setString(15, manifest.getPcrLabCode());
-
-        int response = pStatement.executeUpdate();
-
-        return response;
-
-    }
-
-    public int insertManifestSamples(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings, String manifestID, String createdBy, Date dateSampleSent) throws SQLException {
+	
+	public int insertManifest(Manifest manifest) throws SQLException {
+		pStatement = conn
+		        .prepareStatement("insert into "
+		                + ConstantUtils.MANIFEST_TABLE
+		                + "(manifest_id,sample_space,result_status,created_by,test_type,referring_lab_state,referring_lab_lga,"
+		                + "date_schedule_for_pickup,sample_pick_up_on_time,rider_total_samples_picked,rider_temp_at_pick_up,rider_name,"
+		                + "rider_phone_number,pcr_lab_name,pcr_lab_code) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		pStatement.setString(1, manifest.getManifestID());
+		pStatement.setString(2, manifest.getSampleSpace());
+		pStatement.setString(3, manifest.getResultStatus());
+		pStatement.setString(4, manifest.getCreatedBy());
+		pStatement.setString(5, manifest.getTestType());
+		pStatement.setString(6, manifest.getReferringLabState());
+		pStatement.setString(7, manifest.getReferringLabLga());
+		pStatement.setDate(8, new java.sql.Date(manifest.getDateScheduleForPickup().getTime()));
+		pStatement.setString(9, manifest.getSamplePickUpOnTime());
+		pStatement.setInt(10, manifest.getRiderTotalSamplesPicked());
+		pStatement.setString(11, manifest.getRiderTempAtPickUp());
+		pStatement.setString(12, manifest.getRiderName());
+		pStatement.setString(13, manifest.getRiderPhoneNumber());
+		pStatement.setString(14, manifest.getPcrLabName());
+		pStatement.setString(15, manifest.getPcrLabCode());
+		
+		int response = pStatement.executeUpdate();
+		
+		return response;
+		
+	}
+	
+	public int insertSampleResult(Result result) throws SQLException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		AtomicInteger response = new AtomicInteger(0);
+		
+		try {
+			pStatement = conn
+			        .prepareStatement("insert into "
+			                + ConstantUtils.MANIFEST_SAMPLES_TABLE
+			                + "(sample_id,manifest_id, patient_id, pcrLab_sample_number,date_sample_receievedat_pcrlab,test_result,result_date,"
+			                + "approval_date,assay_date,date_result_dispatched,sample_status,sample_testable ) "
+			                + "values(?,?,?,?,?,?,?,?,?,?,?,?)");
+			
+			pStatement.setString(1, result.getSampleID());
+			pStatement.setString(2, result.getManifestID());
+			pStatement.setString(3, mapper.writeValueAsString(result.getPatientID()));
+			pStatement.setString(4, result.getPcrLabSampleNumber());
+			pStatement.setDate(5, new java.sql.Date(result.getDateSampleReceievedAtPCRLab().getTime()));
+			pStatement.setString(6, result.getTestResult());
+			pStatement.setDate(7, new java.sql.Date(result.getResultDate().getTime()));
+			pStatement.setDate(8, new java.sql.Date(result.getApprovalDate().getTime()));
+			pStatement.setDate(9, new java.sql.Date(result.getAssayDate().getTime()));
+			pStatement.setDate(10, new java.sql.Date(result.getDateResultDispatched().getTime()));
+			pStatement.setString(11, result.getSampleStatus());
+			pStatement.setString(12, result.getSampleTestable());
+			
+			pStatement.executeUpdate();
+			
+			response.incrementAndGet();
+		}
+		catch (Exception ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		return response.intValue();
+		
+	}
+	
+	public int insertManifestSamples(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings, String manifestID, String createdBy, Date dateSampleSent) throws SQLException {
 
         ObjectMapper mapper = new ObjectMapper();
         AtomicInteger response = new AtomicInteger(0);
@@ -243,49 +282,51 @@ public class DBManager {
         return response.intValue();
 
     }
-    
-       public List<Manifest> getAllPendingManifest() throws SQLException {
-        pStatement = conn.prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
-                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
-                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where result_status = 'pending' ");
-
-        resultSet = pStatement.executeQuery();
-
-        return convertResultSetToManifestList(resultSet);
-
-    }
-
-    public List<Manifest> getAllManifest() throws SQLException {
-        pStatement = conn.prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
-                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
-                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest");
-
-        resultSet = pStatement.executeQuery();
-
-        return convertResultSetToManifestList(resultSet);
-
-    }
-
-    public Manifest getAllManifestByID(String manifestID) throws SQLException {
-        pStatement = conn
-                .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
-                        + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
-                        + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where manifest_id = ? ");
-
-        pStatement.setString(1, manifestID);
-
-        resultSet = pStatement.executeQuery();
-
-        List<Manifest> manifests = convertResultSetToManifestList(resultSet);
-        if (!manifests.isEmpty()) {
-            return manifests.get(0);
-        }
-
-        return null;
-
-    }
-
-    public List<Manifest> convertResultSetToManifestList(ResultSet resultSet) throws SQLException {
+	
+	public List<Manifest> getAllPendingManifest() throws SQLException {
+		pStatement = conn
+		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
+		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
+		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where result_status = 'pending' ");
+		
+		resultSet = pStatement.executeQuery();
+		
+		return convertResultSetToManifestList(resultSet);
+		
+	}
+	
+	public List<Manifest> getAllManifest() throws SQLException {
+		pStatement = conn
+		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
+		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
+		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest");
+		
+		resultSet = pStatement.executeQuery();
+		
+		return convertResultSetToManifestList(resultSet);
+		
+	}
+	
+	public Manifest getAllManifestByID(String manifestID) throws SQLException {
+		pStatement = conn
+		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
+		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
+		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where manifest_id = ? ");
+		
+		pStatement.setString(1, manifestID);
+		
+		resultSet = pStatement.executeQuery();
+		
+		List<Manifest> manifests = convertResultSetToManifestList(resultSet);
+		if (!manifests.isEmpty()) {
+			return manifests.get(0);
+		}
+		
+		return null;
+		
+	}
+	
+	public List<Manifest> convertResultSetToManifestList(ResultSet resultSet) throws SQLException {
 
         List<Manifest> manifests = new ArrayList<>();
 
@@ -317,8 +358,8 @@ public class DBManager {
         return manifests;
 
     }
-
-    public List<VLSampleInformationFrontFacing> getManifestSamples(String manifestId) throws SQLException, IOException {
+	
+	public List<VLSampleInformationFrontFacing> getManifestSamples(String manifestId) throws SQLException, IOException {
 
         pStatement = conn.prepareStatement("SELECT id, manifest_id, patient_id, firstname, surname, sex, pregnantBreastFeedingStatus, age, dateOfBirth, sample_id, "
                 + "sample_type, indication_vl_test, art_commencement_date, drugregimen, "
@@ -369,55 +410,56 @@ public class DBManager {
         return vLSampleInformationFrontFacings;
 
     }
-
-    public Auth getAuthModuleUserNamePassword() throws SQLException {
-
-        pStatement = conn.prepareStatement("select * from " + ConstantUtils.AUTHMODULE_TABLE + " where id = 1");
-        resultSet = pStatement.executeQuery();
-
-        Auth a = new Auth();
-        while (resultSet.next()) {
-            a.setUsername(resultSet.getString("username"));
-            a.setPassword(resultSet.getString("password"));
-            break;
-        }
-
-        return a;
-    }
-
-    public int initializeAuthModuleUserNamePassword(Auth auth) throws SQLException {
-        //used to set the very first username and password pair for the authmodule
-        pStatement = conn.prepareStatement("insert into " + ConstantUtils.AUTHMODULE_TABLE
-                + " (username, password) values (?,?)");
-        pStatement.setString(1, auth.getUsername());
-        pStatement.setString(2, auth.getPassword());
-        int response = pStatement.executeUpdate();
-        return response;
-    }
-
-    public int setAuthModuleUserNamePassword(Auth auth) throws SQLException {
-        //used when UPDATING the username and password pair for the authmodule
-        pStatement = conn.prepareStatement("update " + ConstantUtils.AUTHMODULE_TABLE
-                + " SET username = ?, password = ? where username = ?");
-        pStatement.setString(1, auth.getUsername());
-        pStatement.setString(2, auth.getPassword());
-        pStatement.setString(3, auth.getUsername());
-
-        int response = pStatement.executeUpdate();
-        return response;
-    }
-
-    public void closeConnection() {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-            if (pStatement != null) {
-                pStatement.close();
-            }
-        } catch (Exception ex) {
-
-        }
-    }
-
+	
+	public Auth getAuthModuleUserNamePassword() throws SQLException {
+		
+		pStatement = conn.prepareStatement("select * from " + ConstantUtils.AUTHMODULE_TABLE + " where id = 1");
+		resultSet = pStatement.executeQuery();
+		
+		Auth a = new Auth();
+		while (resultSet.next()) {
+			a.setUsername(resultSet.getString("username"));
+			a.setPassword(resultSet.getString("password"));
+			break;
+		}
+		
+		return a;
+	}
+	
+	public int initializeAuthModuleUserNamePassword(Auth auth) throws SQLException {
+		//used to set the very first username and password pair for the authmodule
+		pStatement = conn.prepareStatement("insert into " + ConstantUtils.AUTHMODULE_TABLE
+		        + " (username, password) values (?,?)");
+		pStatement.setString(1, auth.getUsername());
+		pStatement.setString(2, auth.getPassword());
+		int response = pStatement.executeUpdate();
+		return response;
+	}
+	
+	public int setAuthModuleUserNamePassword(Auth auth) throws SQLException {
+		//used when UPDATING the username and password pair for the authmodule
+		pStatement = conn.prepareStatement("update " + ConstantUtils.AUTHMODULE_TABLE
+		        + " SET username = ?, password = ? where username = ?");
+		pStatement.setString(1, auth.getUsername());
+		pStatement.setString(2, auth.getPassword());
+		pStatement.setString(3, auth.getUsername());
+		
+		int response = pStatement.executeUpdate();
+		return response;
+	}
+	
+	public void closeConnection() {
+		try {
+			if (conn != null) {
+				conn.close();
+			}
+			if (pStatement != null) {
+				pStatement.close();
+			}
+		}
+		catch (Exception ex) {
+			
+		}
+	}
+	
 }

@@ -5,6 +5,8 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import java.util.List;
+
 /**
  * @author MORRISON.I
  */
@@ -22,7 +24,7 @@ public class VLResultResponse {
 	
 	private Integer testType;
 	
-	private ViralLoadTestReport viralLoadTestReport;
+	private List<ViralLoadTestReport> viralLoadTestReport;
 	
 	public String getManifestID() {
 		return manifestID;
@@ -72,11 +74,11 @@ public class VLResultResponse {
 		this.testType = testType;
 	}
 	
-	public ViralLoadTestReport getViralLoadTestReport() {
+	public List<ViralLoadTestReport> getViralLoadTestReport() {
 		return viralLoadTestReport;
 	}
 	
-	public void setViralLoadTestReport(ViralLoadTestReport viralLoadTestReport) {
+	public void setViralLoadTestReport(List<ViralLoadTestReport> viralLoadTestReport) {
 		this.viralLoadTestReport = viralLoadTestReport;
 	}
 	

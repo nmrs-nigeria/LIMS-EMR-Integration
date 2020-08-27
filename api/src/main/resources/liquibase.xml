@@ -249,5 +249,85 @@ VALUES
              
     </changeSet>
     
+    
+     <changeSet id="limsemr-v1.1-3" author="Morrison Idiasirue" >
+        <createTable tableName="lims_manifest_result">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column  name="manifest_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="patient_id" type="varchar(1024)">
+                <constraints nullable="false"/>
+            </column>
+        
+                
+            <column  name="sample_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="pcr_lab_samplenumber" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+              <column  name="date_sample_receieved_at_pcrlab" type="datetime" >
+                <constraints nullable="false"/>
+            </column>
+            
+             <column  name="test_result" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+              <column  name="result_date" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+               <column  name="assay_date" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+                <column  name="approval_date" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+               <column  name="date_result_dispatched" type="datetime" >
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="sample_status" type="int" >
+                <constraints nullable="false"/>
+            </column>
+            
+              <column  name="sample_testable" type="varchar(2)" >
+                <constraints nullable="false"/>
+            </column>
+                       
+            <column  name="date_created" type="datetime" defaultValueDate="now()" >
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="created_by" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_modified" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="modified_by" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column> 
+                                                                  
+        </createTable>
+        
+        <addForeignKeyConstraint constraintName="sample_manifest_id_fkk"
+                                  baseTableName="lims_manifest_samples" baseColumnNames="manifest_id"
+                                  referencedTableName="lims_manifest" referencedColumnNames="manifest_id"/>
+        
+             
+    </changeSet>
+    
        
 </databaseChangeLog>

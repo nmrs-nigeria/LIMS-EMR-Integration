@@ -64,12 +64,16 @@ constraint `sample_encounter_id` FOREIGN KEY (`encounter_id`) REFERENCES `encoun
 
 create table lims_manifest_result(
 `id` int(11) NOT NULL AUTO_INCREMENT,
-`laboratoryRegistrationNumber` varchar(15) NOT NULL
+`sampleID` varchar(15) NOT NULL,
+`manifestID` varchar(32) NOT NULL,
+`patientID` varchar(256) NOT NULL,
 `pcrLabSampleNumber` varchar(15) NOT NULL,
 `dateSampleReceievedAtPCRLab` datetime NOT NULL,
 `testResult` varchar(10) NOT NULL,
 `resultDate` datetime NOT NULL,
 `approvalDate` datetime NOT NULL,
+`assayDate` datetime NOT NULL,
+`dateResultDispatched` datetime NOT NULL,
 `sampleStatus` int(2) NOT NULL,
 `sampleTestable` varchar(2) NOT NULL
 

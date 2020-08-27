@@ -22,4 +22,52 @@ public class ResultRequest {
 	
 	private String manifestID;
 	
+	public String getSendingFacilityID() {
+		return sendingFacilityID;
+	}
+	
+	public void setSendingFacilityID(String sendingFacilityID) {
+		this.sendingFacilityID = sendingFacilityID;
+	}
+	
+	public String getSendingFacilityName() {
+		return sendingFacilityName;
+	}
+	
+	public void setSendingFacilityName(String sendingFacilityName) {
+		this.sendingFacilityName = sendingFacilityName;
+	}
+	
+	public String getReceivingPCRLabID() {
+		return receivingPCRLabID;
+	}
+	
+	public void setReceivingPCRLabID(String receivingPCRLabID) {
+		this.receivingPCRLabID = receivingPCRLabID;
+	}
+	
+	public String getReceivingPCRLabName() {
+		return receivingPCRLabName;
+	}
+	
+	public void setReceivingPCRLabName(String receivingPCRLabName) {
+		this.receivingPCRLabName = receivingPCRLabName;
+	}
+	
+	public String getTestType() {
+		return testType;
+	}
+	
+	public void setTestType(String testType) {
+		this.testType = testType;
+	}
+	
+	public String getManifestID() {
+		return manifestID;
+	}
+	
+	public void setManifestID(String manifestID) {
+		this.manifestID = manifestID;
+	}
+	
 }

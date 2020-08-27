@@ -19,34 +19,32 @@ import org.openmrs.module.limsemrops.utility.GeneralMapper;
  * @author MORRISON.I
  */
 public class ExchangeLayer {
-
-    public boolean sendSamplesOnline(String sampleCollectionManifest) throws UnirestException {
-
-        Unirest.setObjectMapper(GeneralMapper.getCustomObjectMapper());
-
-        HttpResponse<String> response = Unirest.post(ConstantUtils.BASE_URL + ConstantUtils.POST_SAMPLES)
-                .header("Content-Type", "application/json").body(sampleCollectionManifest).asString();
-
-        if (response != null && response.getStatus() == 200) {
-            System.out.println(response.getBody());
-            return true;
-        }
-        System.out.println("REQUEST FAILED");
-        return false;
-
-    }
-
-    public void requestManifestResultOnline(ResultRequest resultRequest) throws UnirestException {
-
-        Unirest.setObjectMapper(GeneralMapper.getCustomObjectMapper());
-
-        HttpResponse<VLResultResponse> response = Unirest.post(ConstantUtils.BASE_URL + ConstantUtils.REQUEST_SAMPLE_RESULT)
-                .header("Content-Type", "application/json").body(resultRequest).asObject(VLResultResponse.class);
-
-        if (response != null && response.getStatus() == 200) {
-           //got results
-        }
-
-    }
-
+	
+	public boolean sendSamplesOnline(String sampleCollectionManifest) throws UnirestException {
+		
+		Unirest.setObjectMapper(GeneralMapper.getCustomObjectMapper());
+		
+		HttpResponse<String> response = Unirest.post(ConstantUtils.BASE_URL + ConstantUtils.POST_SAMPLES)
+		        .header("Content-Type", "application/json").body(sampleCollectionManifest).asString();
+		
+		if (response != null && response.getStatus() == 200) {
+			System.out.println(response.getBody());
+			return true;
+		}
+		System.out.println("REQUEST FAILED");
+		return false;
+		
+	}
+	
+	public HttpResponse<VLResultResponse> requestManifestResultOnline(ResultRequest resultRequest) throws UnirestException {
+		
+		Unirest.setObjectMapper(GeneralMapper.getCustomObjectMapper());
+		
+		HttpResponse<VLResultResponse> response = Unirest.post(ConstantUtils.BASE_URL + ConstantUtils.REQUEST_SAMPLE_RESULT)
+		        .header("Content-Type", "application/json").body(resultRequest).asObject(VLResultResponse.class);
+		
+		return response;
+		
+	}
+	
 }

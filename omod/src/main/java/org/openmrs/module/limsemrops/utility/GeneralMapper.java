@@ -5,10 +5,14 @@
  */
 package org.openmrs.module.limsemrops.utility;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.mashape.unirest.http.ObjectMapper;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.openmrs.module.limsemrops.omodmodels.Result;
+import org.openmrs.module.limsemrops.omodmodels.ViralLoadTestReport;
 
 /**
  * @author MORRISON.I
@@ -40,6 +44,14 @@ public class GeneralMapper {
 				return null;
 			}
 		};
+	}
+	
+	public static Result mapToSampleResultModel(ViralLoadTestReport viralLoadTestReport) throws JsonProcessingException,
+	        IOException {
+		com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper().configure(
+		    DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		return mapper.readValue(mapper.writeValueAsString(viralLoadTestReport), Result.class);
+		
 	}
 	
 }
