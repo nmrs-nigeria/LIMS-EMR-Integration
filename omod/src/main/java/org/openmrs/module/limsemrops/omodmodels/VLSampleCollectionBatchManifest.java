@@ -6,6 +6,7 @@
 package org.openmrs.module.limsemrops.omodmodels;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +23,16 @@ public class VLSampleCollectionBatchManifest implements Serializable {
 	private String receivingLabID;
 	
 	private String receivingLabName;
+	
+	private Date dateScheduledForPickup;
+	
+	private Integer temperatureAtPickup;
+	
+	private String samplePackagedBy;
+	
+	private String courierRiderName;
+	
+	private String courierContact;
 	
 	private List<VLSampleInformation> sampleInformation;
 	
@@ -71,6 +82,46 @@ public class VLSampleCollectionBatchManifest implements Serializable {
 	
 	public void setSampleInformation(List<VLSampleInformation> sampleInformation) {
 		this.sampleInformation = sampleInformation;
+	}
+	
+	public Date getDateScheduledForPickup() {
+		return dateScheduledForPickup;
+	}
+	
+	public void setDateScheduledForPickup(Date dateScheduledForPickup) {
+		this.dateScheduledForPickup = dateScheduledForPickup;
+	}
+	
+	public Integer getTemperatureAtPickup() {
+		return temperatureAtPickup;
+	}
+	
+	public void setTemperatureAtPickup(Integer temperatureAtPickup) {
+		this.temperatureAtPickup = temperatureAtPickup;
+	}
+	
+	public String getSamplePackagedBy() {
+		return samplePackagedBy;
+	}
+	
+	public void setSamplePackagedBy(String samplePackagedBy) {
+		this.samplePackagedBy = samplePackagedBy;
+	}
+	
+	public String getCourierRiderName() {
+		return courierRiderName;
+	}
+	
+	public void setCourierRiderName(String courierRiderName) {
+		this.courierRiderName = courierRiderName;
+	}
+	
+	public String getCourierContact() {
+		return courierContact;
+	}
+	
+	public void setCourierContact(String courierContact) {
+		this.courierContact = courierContact;
 	}
 	
 }

@@ -11,7 +11,6 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 /**
  * @author MORRISON.I
  */
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Manifest {
 	
@@ -50,6 +49,8 @@ public class Manifest {
 	private String modifiedBy;
 	
 	private Date dateCreated;
+	
+	private String samplePackagedBy;
 	
 	public Date getDateCreated() {
 		return dateCreated;
@@ -193,6 +194,14 @@ public class Manifest {
 	
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
+	}
+	
+	public String getSamplePackagedBy() {
+		return samplePackagedBy;
+	}
+	
+	public void setSamplePackagedBy(String samplePackagedBy) {
+		this.samplePackagedBy = samplePackagedBy;
 	}
 	
 }

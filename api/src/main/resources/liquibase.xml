@@ -322,7 +322,7 @@ VALUES
                                                                   
         </createTable>
         
-        <addForeignKeyConstraint constraintName="sample_manifest_id_fkk"
+        <addForeignKeyConstraint constraintName="result_sample_manifest_id_fkk"
                                   baseTableName="lims_manifest_samples" baseColumnNames="manifest_id"
                                   referencedTableName="lims_manifest" referencedColumnNames="manifest_id"/>
         

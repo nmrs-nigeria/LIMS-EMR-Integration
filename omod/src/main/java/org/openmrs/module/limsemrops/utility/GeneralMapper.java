@@ -7,6 +7,7 @@ package org.openmrs.module.limsemrops.utility;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mashape.unirest.http.ObjectMapper;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -50,6 +51,9 @@ public class GeneralMapper {
 	        IOException {
 		com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper().configure(
 		    DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		
 		return mapper.readValue(mapper.writeValueAsString(viralLoadTestReport), Result.class);
 		
 	}

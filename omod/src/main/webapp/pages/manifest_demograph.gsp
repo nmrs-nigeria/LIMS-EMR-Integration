@@ -165,7 +165,7 @@
 
 <script>
 //localStorage.clear();
-const vlsamples = JSON.parse(localStorage.getItem("sample_data"));
+var vlsamples = JSON.parse(localStorage.getItem("sample_data"));
 const sampleSpace = JSON.parse(localStorage.getItem("sampleSpace_data"));
 document.getElementById("number_samples").value = JSON.parse(localStorage.getItem("sample_data")).length;
 
@@ -186,8 +186,9 @@ document.getElementById("number_samples").value = JSON.parse(localStorage.getIte
         var riderTempAtPickUp = document.getElementById("temperature").value;
         var riderName = document.getElementById("pl_name").value;
         var riderPhoneNumber = document.getElementById("phone_3pl").value;
-        var pcrLabName = document.getElementById("pcr_lab_name").value;
-      //  var pcrLabCode = document.getElementById("pcr_lab_code").value;
+        var pcrlabSelect = document.getElementById("pcr_lab_name");
+        var pcrLabName = pcrlabSelect.options[pcrlabSelect.selectedIndex].text;
+       var pcrLabCode = pcrlabSelect.options[pcrlabSelect.selectedIndex].value;
         //var manifestID = document.getElementById("manifest_id").value;
         //var comment = document.getElementById("comment").value;
         //var  = document.getElementById("").value;
@@ -205,10 +206,12 @@ document.getElementById("number_samples").value = JSON.parse(localStorage.getIte
                 'riderName': riderName,
                 'riderPhoneNumber': riderPhoneNumber,
                 'pcrLabName': pcrLabName,
-                'pcrLabCode': 'test',
-                'samplePickUpOnTime':'yes'
+                'pcrLabCode': pcrLabCode,
+                'samplePickUpOnTime':'yes',
+                'samplePackagedBy':sender_full_name
                                         }
           manifestObj = JSON.stringify(manifestObj);
+        vlsamples = JSON.stringify(vlsamples);
 
         jq = jQuery;
 
