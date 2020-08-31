@@ -22,6 +22,7 @@ public class CheckSampleResult extends AbstractTask {
 	public void execute() {
 		
 		try {
+			System.out.println("STARTING SAMPLE RESULT RETRIEVAL");
 			sampleResultManager.pullManifestResultFromLIMS();
 		}
 		catch (SQLException ex) {

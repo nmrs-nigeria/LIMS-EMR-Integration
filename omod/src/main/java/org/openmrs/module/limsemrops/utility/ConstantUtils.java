@@ -57,7 +57,7 @@ public class ConstantUtils {
 	
 	public static final String POST_SAMPLES = "/samples/create.php";
 	
-	public static final String REQUEST_SAMPLE_RESULT = "/result";
+	public static final String REQUEST_SAMPLE_RESULT = "/result.php";
 	
 	//public enums
 	public enum SampleSpace {

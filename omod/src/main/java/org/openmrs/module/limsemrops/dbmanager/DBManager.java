@@ -326,6 +326,10 @@ public class DBManager {
 		
 	}
 	
+	public void updateManifestResultStatus() {
+		//   pStatement = conn.prepareStatement("update manifest")
+	}
+	
 	public List<Manifest> convertResultSetToManifestList(ResultSet resultSet) throws SQLException {
 
         List<Manifest> manifests = new ArrayList<>();

@@ -43,10 +43,12 @@ public class SampleResultManager {
 	}
 	
 	public void pullManifestResultFromLIMS() throws SQLException {
-
+		dBManager.openConnection();
         List<Manifest> pendingManifests = dBManager.getAllPendingManifest();
         if (!pendingManifests.isEmpty()) {
-            pendingManifests.parallelStream().forEach(a -> {
+            System.out.println("GOT SOME PENDING SAMPLES");
+            
+            pendingManifests.stream().forEach(a -> {
 
                 ResultRequest rr = new ResultRequest();
                 rr.setManifestID(a.getManifestID());
@@ -58,11 +60,14 @@ public class SampleResultManager {
 
                 try {
 
+                    System.out.println("About to request sample info online");
+                    
                     HttpResponse<VLResultResponse> sampleResponse
                             = exchangeLayer.requestManifestResultOnline(rr);
 
                     if (sampleResponse != null && sampleResponse.getStatus() == 200) {
                         try {
+                             System.out.println("Got sample results");
                             //got a result
                             updateManifestResultOnDB(sampleResponse.getBody());
                         } catch (SQLException ex) {
@@ -80,10 +85,12 @@ public class SampleResultManager {
 
         }
 
+        dBManager.closeConnection();
+
     }
 	
 	private void updateManifestResultOnDB(VLResultResponse vLResultResponse) throws SQLException, IOException {
-
+	dBManager.openConnection();
         List<VLSampleInformationFrontFacing> allManifestSamples = dBManager.getManifestSamples(vLResultResponse.getManifestID());
         //log sample result on DB.
         //update manifest info
@@ -117,12 +124,14 @@ public class SampleResultManager {
         });
         
         if(allManifestSamples.size() == vLResultResponse.getViralLoadTestReport().size()){
-            //update manifest result status to result available
+            //TODO: update manifest result status to result available
         }else{
         
-           // update result comment to count of result available.
+           //TODO: update result comment to count of result available.
             
         }
+
+        dBManager.closeConnection();
 
     }
 	

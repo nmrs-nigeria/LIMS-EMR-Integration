@@ -12,7 +12,7 @@ def id = config.id
     jq('#${ id }_button_manifest').click(function() {
     jq('#gen-wait').show();
 
-    jq.getJSON('${ ui.actionLink("limsemrops", "EMRExchange", "getDefaultPCRLabs") }')
+    jq.getJSON('${ ui.actionLink("limsemrops", "EMRExchange", "fetchSampleResult") }')
     .success(function(data) {
     jq('#gen-wait').hide();
     alert("Done working");
@@ -50,4 +50,10 @@ def id = config.id
     <br/>
     <p>Request Result</p>
 </a>
+
+<!-- <a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">
+    <i class="icon-refresh"></i>
+    <br/>
+    <p>Trigger Result Cron</p>
+</a> -->
 

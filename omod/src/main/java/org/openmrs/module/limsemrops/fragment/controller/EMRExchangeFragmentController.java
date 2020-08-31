@@ -25,6 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.limsemrops.jobs.CheckSampleResult;
 import org.openmrs.module.limsemrops.omodmodels.*;
 import org.openmrs.module.limsemrops.service.DBUtility;
 import org.openmrs.module.limsemrops.service.ExchangeLayer;
@@ -110,6 +111,11 @@ public class EMRExchangeFragmentController {
 		//            }
 		//
 		//        }
+	}
+	
+	public void fetchSampleResult() {
+		CheckSampleResult checkSampleResult = new CheckSampleResult();
+		checkSampleResult.execute();
 	}
 	
 	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate,
