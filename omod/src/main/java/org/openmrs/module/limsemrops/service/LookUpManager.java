@@ -23,9 +23,9 @@ import org.openmrs.module.limsemrops.utility.LabFormUtils;
  */
 public class LookUpManager {
 	
-	private ConceptService conceptService;
+	private final ConceptService conceptService;
 	
-	private LabFormUtils labFormUtils;
+	private final LabFormUtils labFormUtils;
 	
 	public LookUpManager() {
 		this.conceptService = Context.getService(ConceptService.class);

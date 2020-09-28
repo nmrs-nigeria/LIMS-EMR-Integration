@@ -32,13 +32,13 @@ import org.openmrs.module.limsemrops.utility.Utils;
  */
 public class ViralLoadInfo {
 	
-	private List<Integer> encounterIDList;
+	private final List<Integer> encounterIDList;
 	
-	private List<Obs> obsList;
+	private final List<Obs> obsList;
 	
-	private List<Encounter> encounterList;
+	private final List<Encounter> encounterList;
 	
-	private LabFormUtils labFormUtils;
+	private final LabFormUtils labFormUtils;
 	
 	private Map<Integer, String> labMappings;
 	
@@ -46,9 +46,9 @@ public class ViralLoadInfo {
 	
 	private Obs rovingObs;
 	
-	private DBUtility dBUtility;
+	private final DBUtility dBUtility;
 	
-	private ConstantUtils.SampleSpace sampleSpace;
+	private final ConstantUtils.SampleSpace sampleSpace;
 	
 	public ViralLoadInfo(List<Integer> encounterList, ConstantUtils.SampleSpace _sampleSpace) {
 

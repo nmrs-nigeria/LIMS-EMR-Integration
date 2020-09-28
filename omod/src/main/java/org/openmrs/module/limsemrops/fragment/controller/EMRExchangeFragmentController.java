@@ -56,11 +56,11 @@ public class EMRExchangeFragmentController {
 	
 	private static final Log LOG = LogFactory.getLog(EMRExchangeFragmentController.class);
 	
-	private ExchangeLayer exchangeLayer;
+	private final ExchangeLayer exchangeLayer;
 	
-	private DBUtility dBUtility;
+	private final DBUtility dBUtility;
 	
-	private LookUpManager lookUpManager;
+	private final LookUpManager lookUpManager;
 	
 	private ObjectMapper mapper;
 	
@@ -260,7 +260,7 @@ public class EMRExchangeFragmentController {
 	
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAllSavedManifest() {
-        
+
         mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         List<Manifest> manifests = dBUtility.getManifests();
@@ -270,7 +270,7 @@ public class EMRExchangeFragmentController {
         } catch (JsonProcessingException ex) {
             Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 	

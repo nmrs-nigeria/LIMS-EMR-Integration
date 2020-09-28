@@ -39,7 +39,7 @@ def id = config.id
     <p>Generate Manifest</p>
 </a>
 
-<a href="manifest_list.page"  class="button app big" style="font-size:12px;min-height: 10px;">
+<a href="manifestList.page"  class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-list"></i>
     <br/>
     <p>Manifests</p>
