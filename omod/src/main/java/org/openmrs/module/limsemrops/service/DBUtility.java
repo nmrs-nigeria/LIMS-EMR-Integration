@@ -127,10 +127,8 @@ public class DBUtility {
         List<Manifest> manifests = new ArrayList<>();
 
         try {
-            //this.ndrDBManager.openConnection();
+            this.ndrDBManager.openConnection();
             manifests = ndrDBManager.getAllManifest();
-            System.out.println("Response from DBUtility: " + new ObjectMapper().writeValueAsString(manifests));
-
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         } finally {

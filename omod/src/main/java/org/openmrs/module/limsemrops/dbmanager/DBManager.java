@@ -308,16 +308,13 @@ public class DBManager {
 	//        return conn;
 	//    }
 	public List<Manifest> getAllManifest() throws SQLException {
-		
-		// Connection conn = openLocalDBConnection();
+
 		pStatement = conn
 		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
 		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
 		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest");
 		
 		resultSet = pStatement.executeQuery();
-		
-		System.out.println("Result Set From DBManager: " + resultSet);
 		
 		return convertResultSetToManifestList(resultSet);
 		
@@ -374,8 +371,6 @@ public class DBManager {
 
             manifests.add(m);
         }
-
-        System.out.println("Response from Conversion DBManager: " + manifests.toString());
 
         return manifests;
 
