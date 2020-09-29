@@ -29,7 +29,7 @@ public class AuthModuleUtils {
 	}
 	
 	public static String extractKey(String key, String response) {
-		int startIndex = response.indexOf(String.format("%s\":\"", key), 0);
+		int startIndex = response.indexOf(String.format("%s\":\"", key));
 		int keyLength = key.length();
 		int endIndex = response.indexOf("\"", startIndex + keyLength + 3);
 		String actualToken = response.substring(startIndex + keyLength + 3, endIndex);

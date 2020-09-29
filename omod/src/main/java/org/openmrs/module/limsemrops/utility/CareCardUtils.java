@@ -15,8 +15,8 @@ import java.util.Map;
 public class CareCardUtils {
 
     //define all maps
-    private Map<Integer, String> conceptMappings = new HashMap<>();
-    private Map<Integer, Integer> integerConceptMappings = new HashMap<>();
+    private final Map<Integer, String> conceptMappings = new HashMap<>();
+    private final Map<Integer, Integer> integerConceptMappings = new HashMap<>();
 
     public final static int PREGNANCY_BREASTFEEDING_CONCEPT = 165050;
 
