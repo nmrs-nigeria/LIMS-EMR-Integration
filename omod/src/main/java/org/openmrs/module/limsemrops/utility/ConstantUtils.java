@@ -53,7 +53,11 @@ public class ConstantUtils {
 	public static final int RECENCY_INDENTIFIER_INDEX = 10;
 	
 	//URL
-	public static final String BASE_URL = "https://www.lims.ng/api";
+	//live
+	public static final String BASE_URL = "https://www.lims.ng/apidemo";
+	
+	//testing
+	//  public static final String BASE_URL = "https://www.lims.ng/api";
 	
 	public static final String POST_SAMPLES = "/samples/create.php";
 	

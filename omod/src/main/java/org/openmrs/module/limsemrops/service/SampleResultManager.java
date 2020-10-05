@@ -44,7 +44,7 @@ public class SampleResultManager {
 	
 	public void pullManifestResultFromLIMS() throws SQLException {
 		dBManager.openConnection();
-        List<Manifest> pendingManifests = dBManager.getAllPendingManifest();
+      List<Manifest> pendingManifests = dBManager.getAllPendingManifest();
         if (!pendingManifests.isEmpty()) {
             System.out.println("GOT SOME PENDING SAMPLES");
             
