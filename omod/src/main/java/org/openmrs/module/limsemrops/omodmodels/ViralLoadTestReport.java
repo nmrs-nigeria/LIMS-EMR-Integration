@@ -6,13 +6,14 @@
 package org.openmrs.module.limsemrops.omodmodels;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author MORRISON.I
  */
 public class ViralLoadTestReport {
 	
-	private PatientID patientID;
+	private List<PatientID> patientID;
 	
 	private String firstName;
 	
@@ -44,11 +45,11 @@ public class ViralLoadTestReport {
 	
 	private Boolean sampleTestable;
 	
-	public PatientID getPatientID() {
+	public List<PatientID> getPatientID() {
 		return patientID;
 	}
 	
-	public void setPatientID(PatientID patientID) {
+	public void setPatientID(List<PatientID> patientID) {
 		this.patientID = patientID;
 	}
 	

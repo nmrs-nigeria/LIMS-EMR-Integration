@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+ 
+    <!--
+        See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
+        documentation on this file.
+    
+        See http://www.liquibase.org/manual/home#available_database_refactorings
+        for a list of supported elements and attributes
+    -->
+ 
+    <changeSet id="limsemr-v1.0-0" author="Morrison Idiasirue" >
+        <comment>
+            insert menu link for the app
+        </comment>
+    
+        <sql><![CDATA[			
+               INSERT INTO `appframework_user_app`
+(`app_id`,
+`json`)
+VALUES
+('EMR-LIMS-Exchange',
+'{\r\n    \"id\": \"LIMS-EMR\",\r\n    \"description\": \"LIMS-EMR Integration module\",\r\n    \"order\": 0,\r\n    \"extensions\": [\r\n        {\r\n            \"id\": \"demoapp.homepageLink\",\r\n            \"extensionPointId\": \"org.openmrs.referenceapplication.homepageLink\",\r\n            \"type\": \"link\",\r\n            \"label\": \"EMR-LIMS Exchange\",\r\n            \"url\": \"limsemrops/limsemr.page\",\r\n            \"icon\": \"icon-exchange\",\r\n            \"requiredPrivilege\": \"Replace with a privilege name, or else remove\"\r\n        }\r\n    ]\r\n}'
+);
+		]]></sql>
+                
+    </changeSet>
+    
+    <changeSet id="limsemr-v1.1-0" author="Morrison Idiasirue" >
+        <createTable tableName="lims_auth_module">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column  name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>                      
+        </createTable>     
+    </changeSet>
+    
+    <changeSet id="limsemr-v1.1-1" author="Morrison Idiasirue" >
+        <createTable tableName="lims_manifest">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column  name="manifest_id" type="varchar(255)" >
+                <constraints nullable="false" unique="true" />
+            </column>
+            
+            <column  name="sample_space" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="test_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="referring_lab_state" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="referring_lab_lga" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_schedule_for_pickup" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="sample_pick_up_on_time" type="varchar(32)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="rider_total_samples_picked" type="int">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="rider_temp_at_pick_up" type="varchar(32)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="rider_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="rider_phone_number" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="pcr_lab_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="pcr_lab_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="result_status" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_created" type="datetime" defaultValueDate="now()" >
+                <constraints nullable="false"   />
+            </column>
+            
+            <column  name="created_by" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_modified" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="modified_by" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column> 
+                                                                  
+        </createTable>
+        
+    </changeSet>
+        
+    <changeSet id="limsemr-v1.1-2" author="Morrison Idiasirue" >
+        <createTable tableName="lims_manifest_samples">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column  name="manifest_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="patient_id" type="varchar(1024)">
+                <constraints nullable="false"/>
+            </column>
+        
+        
+            <column  name="firstname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="surname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sex" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="pregnantBreastFeedingStatus" type="int">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="age" type="int">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="dateOfBirth" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="sample_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sample_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="indication_vl_test" type="int">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="art_commencement_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="drugregimen" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="sample_ordered_by" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="sample_ordered_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="sample_collected_by" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sample_collected_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sample_collection_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="date_sample_sent" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+          
+            <column  name="encounter_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="sample_status" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+                
+            <column  name="rejection_reason" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+                           
+            <column  name="date_created" type="datetime" defaultValueDate="now()" >
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="created_by" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_modified" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="modified_by" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column> 
+                                                                  
+        </createTable>
+        
+        <addForeignKeyConstraint constraintName="sample_manifest_id_fkk"
+                                  baseTableName="lims_manifest_samples" baseColumnNames="manifest_id"
+                                  referencedTableName="lims_manifest" referencedColumnNames="manifest_id"/>
+        
+        <addForeignKeyConstraint constraintName="sample_encounter_id_fkk"
+                                        baseTableName="lims_manifest_samples" baseColumnNames="encounter_id"
+                                        referencedTableName="encounter" referencedColumnNames="encounter_id"/>
+        
+             
+    </changeSet>
+    
+    
+     <changeSet id="limsemr-v1.1-3" author="Morrison Idiasirue" >
+        <createTable tableName="lims_manifest_result">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column  name="manifest_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="patient_id" type="varchar(1024)">
+                <constraints nullable="false"/>
+            </column>
+        
+                
+            <column  name="sample_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+                
+            <column  name="pcr_lab_samplenumber" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+              <column  name="date_sample_receieved_at_pcrlab" type="datetime" >
+                <constraints nullable="false"/>
+            </column>
+            
+             <column  name="test_result" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+              <column  name="result_date" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+               <column  name="assay_date" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+                <column  name="approval_date" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+               <column  name="date_result_dispatched" type="datetime" >
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="sample_status" type="int" >
+                <constraints nullable="false"/>
+            </column>
+            
+              <column  name="sample_testable" type="varchar(2)" >
+                <constraints nullable="false"/>
+            </column>
+                       
+            <column  name="date_created" type="datetime" defaultValueDate="now()" >
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="created_by" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column  name="date_modified" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            
+            <column  name="modified_by" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column> 
+                                                                  
+        </createTable>
+        
+        <addForeignKeyConstraint constraintName="result_sample_manifest_id_fkk"
+                                  baseTableName="lims_manifest_samples" baseColumnNames="manifest_id"
+                                  referencedTableName="lims_manifest" referencedColumnNames="manifest_id"/>
+        
+             
+    </changeSet>
+    
+       
+</databaseChangeLog>

@@ -13,7 +13,7 @@ import java.util.Base64;
 
 public class AuthModule {
 	
-	private DBManager dbManager;
+	private final DBManager dbManager;
 	
 	private String cachedToken = null;
 	

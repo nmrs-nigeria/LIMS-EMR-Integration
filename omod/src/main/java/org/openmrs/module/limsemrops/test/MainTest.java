@@ -38,7 +38,7 @@ public class MainTest {
 
     }
 	
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		System.out.println(UUID.randomUUID().toString());
 		
 		//  Context.getConceptService().getConcept(84884).getAnswers().stream().forEach(a -> {

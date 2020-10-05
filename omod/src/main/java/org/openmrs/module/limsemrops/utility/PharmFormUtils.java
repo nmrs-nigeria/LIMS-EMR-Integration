@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public class PharmFormUtils {
      //define all maps
-    private Map<Integer, String> regimenCodeDescTextMap = new HashMap<>();
-    private Map<Integer, String> regimenMap = new HashMap<>();
+    private final Map<Integer, String> regimenCodeDescTextMap = new HashMap<>();
+    private final Map<Integer, String> regimenMap = new HashMap<>();
     
     
     public final static int CURRENT_REGIMEN_LINE_CONCEPT = 165708; // From Pharmacy Form 
@@ -107,14 +107,14 @@ public class PharmFormUtils {
         regimenMap.put(792, "4f");//"d4T-3TC-NVP"
         regimenMap.put(166074, "4g"); 
         regimenMap.put(162561, "5b"); //AZT-3TC-LPV/r //formaerlly 4n
-        regimenMap.put(162200, "5a");;//"ABC-3TC-LPV/r"
-        regimenMap.put(162561, "5b");;//"AZT-3TC-LPV/r"
-        regimenMap.put(162560, "5c");;//"d4T-3TC-LPV/r"
+        regimenMap.put(162200, "5a");//"ABC-3TC-LPV/r"
+        regimenMap.put(162561, "5b");//"AZT-3TC-LPV/r"
+        regimenMap.put(162560, "5c");//"d4T-3TC-LPV/r"
 
         //added latest regimen
         regimenMap.put(165525, "5d"); // ddi-3TC-NVP
 
-        regimenMap.put(165526, "1y");;//"ABC-3TC-ddi" //change 5e to 1y
+        regimenMap.put(165526, "1y");//"ABC-3TC-ddi" //change 5e to 1y
         regimenMap.put(165698, "6a"); //DRV/r + 2 NRTIs + 2 NNRTI
         regimenMap.put(165700, "6b"); //DRV/r +2NRTIs
         regimenMap.put(165688, "6c"); //DRV/r-DTG + 1-2 NRTIs

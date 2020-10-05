@@ -15,9 +15,9 @@ import java.util.Map;
 public class LabFormUtils {
 
     //define all maps
-    private Map<Integer, String> conceptMappings = new HashMap<>();
-    private Map<Integer, Integer> integerConceptMappings = new HashMap<>();
-    private Map<Integer, String> pcrLabs = new HashMap<>();
+    private final Map<Integer, String> conceptMappings = new HashMap<>();
+    private final Map<Integer, Integer> integerConceptMappings = new HashMap<>();
+    private final Map<Integer, String> pcrLabs = new HashMap<>();
 
     public LabFormUtils() {
         this.fillConceptMappings();

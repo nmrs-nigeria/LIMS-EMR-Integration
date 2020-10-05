@@ -22,9 +22,13 @@ import org.openmrs.module.limsemrops.utility.ConstantUtils;
  */
 public class PatientDemographics {
 	
-	private PatientIdentifier pepfarid, pidHospital, pidRecent;
+	private final PatientIdentifier pepfarid;
 	
-	private Patient patient;
+	private final PatientIdentifier pidHospital;
+	
+	private final PatientIdentifier pidRecent;
+	
+	private final Patient patient;
 	
 	public PatientDemographics(Patient p) {
 		this.patient = p;

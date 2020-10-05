@@ -18,7 +18,7 @@ import org.openmrs.module.BaseModuleActivator;
  */
 public class LimsemropsActivator extends BaseModuleActivator {
 	
-	private Log log = LogFactory.getLog(this.getClass());
+	private final Log log = LogFactory.getLog(this.getClass());
 	
 	/**
 	 * @see #started()

@@ -23,7 +23,7 @@ public class GeneralMapper {
 	public static ObjectMapper getCustomObjectMapper() {
 		return new ObjectMapper() {
 			
-			org.codehaus.jackson.map.ObjectMapper mapper = new org.codehaus.jackson.map.ObjectMapper();
+			final org.codehaus.jackson.map.ObjectMapper mapper = new org.codehaus.jackson.map.ObjectMapper();
 			
 			public String writeValue(Object value) {
 				try {
@@ -47,8 +47,7 @@ public class GeneralMapper {
 		};
 	}
 	
-	public static Result mapToSampleResultModel(ViralLoadTestReport viralLoadTestReport) throws JsonProcessingException,
-	        IOException {
+	public static Result mapToSampleResultModel(ViralLoadTestReport viralLoadTestReport) throws IOException {
 		com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper().configure(
 		    DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		

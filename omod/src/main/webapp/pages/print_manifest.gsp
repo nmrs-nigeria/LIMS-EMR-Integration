@@ -107,7 +107,7 @@ type="text/css" />
        jq('#rider_profile').append("<span>"+data.dateScheduleForPickup+"</span>");
 
     // manifest details     
- jq('#manifest_detail').append("<h2>Courier Details</h2>");
+ jq('#manifest_detail').append("<h2>Manifest Details</h2>");
  jq('#manifest_detail').append("<p>Manifest ID</p>");
  jq('#manifest_detail').append("<span>"+data.manifestID+"</span>");
   jq('#manifest_detail').append("<p>Total Sample</p>");

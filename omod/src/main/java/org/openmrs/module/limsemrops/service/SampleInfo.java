@@ -19,7 +19,7 @@ import org.openmrs.module.limsemrops.utility.ConstantUtils;
  */
 public class SampleInfo {
 	
-	private DBUtility dBUtility;
+	private final DBUtility dBUtility;
 	
 	private ViralLoadInfo viralLoadInfo;
 	

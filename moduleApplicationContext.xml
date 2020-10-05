@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Beans to add to the current Application context definition -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  		    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+  <!--  <context:component-scan base-package="org.openmrs.module.limsemrops" /> -->
+  <bean id="limsemrops.LimsemropsConfig" class="org.openmrs.module.limsemrops.LimsemropsConfig"/>
+
+    <bean id="limsemrops.LimsemropsDao" class="org.openmrs.module.limsemrops.api.dao.LimsemropsDao">
+        <property name="sessionFactory">
+            <ref bean="dbSessionFactory" />
+        </property>
+    </bean>
+
+
+    <!-- Wraps LimsemropsService methods in DB transactions and OpenMRS interceptors,
+    which set audit info like dateCreated, changedBy, etc.-->
+    <bean id="limsemrops.LimsemropsService"
+            class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+        <property name="target">
+            <bean class="org.openmrs.module.limsemrops.api.impl.LimsemropsServiceImpl">
+                <property name="dao" ref="limsemrops.LimsemropsDao" />
+            </bean>
+        </property>
+        <property name="preInterceptors">
+            <ref bean="serviceInterceptors" />
+        </property>
+        <property name="transactionAttributeSource">
+            <ref bean="transactionAttributeSource" />
+        </property>
+    </bean>
+
+    <!-- Adds LimsemropsService to OpenMRS context so it can be accessed
+    calling Context.getService(LimsemropsService.class) -->
+    <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>org.openmrs.module.limsemrops.api.LimsemropsService</value>
+                <ref bean="limsemrops.LimsemropsService" />
+            </list>
+        </property>
+    </bean>
+</beans>

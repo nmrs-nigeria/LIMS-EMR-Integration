@@ -56,11 +56,11 @@ public class EMRExchangeFragmentController {
 	
 	private static final Log LOG = LogFactory.getLog(EMRExchangeFragmentController.class);
 	
-	private ExchangeLayer exchangeLayer;
+	private final ExchangeLayer exchangeLayer;
 	
-	private DBUtility dBUtility;
+	private final DBUtility dBUtility;
 	
-	private LookUpManager lookUpManager;
+	private final LookUpManager lookUpManager;
 	
 	private ObjectMapper mapper;
 	
@@ -259,20 +259,20 @@ public class EMRExchangeFragmentController {
     }
 	
 	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getAllSavedManifest() {
-        
-        mapper = new ObjectMapper();
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        List<Manifest> manifests = dBUtility.getManifests();
-        String response = null;
-        try {
-            response = mapper.writeValueAsString(manifests);
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+	public String getAllSavedManifest() {
+		
+		mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		List<Manifest> manifests = dBUtility.getManifests();
+		String response = null;
+		try {
+			response = mapper.writeValueAsString(manifests);
+		}
+		catch (JsonProcessingException ex) {
+			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return response;
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getSavedManifestById(@RequestParam(value = "manifestId", required = true) String manifestId) {
