@@ -17,10 +17,10 @@
 	<url>https://wiki.openmrs.org/x/FQ4z</url>
 
 	<scm>
-		<connection>scm:git:git@github.com:openmrs/openmrs-module-limsemrops.git</connection>
-		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-limsemrops.git</developerConnection>
-		<url>https://github.com/openmrs/openmrs-module-limsemrops/</url>
-	  <tag>1.0.0</tag>
+		<connection>scm:git:http://git.mgic-nigeria.org/midiasirue/LIMS-EMR-Interoperatability.git</connection>
+		<developerConnection>scm:git:http://git.mgic-nigeria.org/midiasirue/LIMS-EMR-Interoperatability.git</developerConnection>
+		<url>http://git.mgic-nigeria.org/midiasirue/LIMS-EMR-Interoperatability.git</url>
+		<tag>HEAD</tag>
   </scm>
 
 	<modules>
