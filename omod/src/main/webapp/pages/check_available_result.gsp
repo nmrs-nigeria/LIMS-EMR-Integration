@@ -51,7 +51,7 @@
 
     function getResultFromLims(ManfID) {
         jq.ajax({
-           url: "${ ui.actionLink("limsemrops", "EMRExchange", "getAllSavedManifest") }",
+           url: "${ ui.actionLink("limsemrops", "EMRExchange", "") }",
            dataType: "json",
            success: function (response) {
               displayManaifestData(response);
