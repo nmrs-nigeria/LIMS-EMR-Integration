@@ -1,49 +1,72 @@
 <% ui.decorateWith("appui", "standardEmrPage") %>
-
+<% ui.includeJavascript("limsemrops", "bootstrap.js") %>
+<% ui.includeJavascript("limsemrops", "jquery-3.5.1.js") %>
+<% ui.includeCss("limsemrops", "bootstrap.css") %>
 <%= ui.resourceLinks() %>
-<script type="text/javascript" src="/openmrs/ms/uiframework/resource/uicommons/scripts/datetimepicker/bootstrap-datetimepicker.min.js?cache=1525344062488"></script>
-<link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488" type="text/css" />
 
-<% ui.includeCss("limsemrops", "bootstrap.min.css") %>
-<% ui.includeCss("limsemrops", "datatables.min.css") %>
-<% ui.includeCss("limsemrops", "docs/DataTables-1.10.21/css/jquery.bootstrap.min.css") %>
+<h2 style="text-decoration: underline; text-align: center;">List of Manifest Result</h2>
+<br>
+<script type="application/javascript">
+    var jq = jQuery;
 
+    function getPendingManifestList() {
+        jq("#pending-manifest-list-table").html("");
+        jq.ajax({
+            url: "${ ui.actionLink("limsemrops", "EMRExchange", "getAllSavedManifest") }",
+            dataType: "json",
+            success: function (response) {
+                displayManaifestData(response);
+            }
+        });
+    }
 
-   </br>
-    <h3>Results Available</h3>
-    <table id="example" class="display" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Manifest ID</th>
-                    <th>Facility ID</th>
-                    <th>Test Type</th>
+    function displayManaifestData(response) {
+        var myDataList = JSON.parse(response);
+        var content = "";
+        var count = 1;
+        content = "<table><thead><tr><th>S/N</th><th>Manifest ID</th><th>PCR Lab Name</th><th>PCR Lab Code</th><th>Test Type</th><th>Total Sample</th><th>Result Status</th><th>Date Created</th><th colspan='2'>Action</th></tr></thead><tbody>";
+        for (i = 0; i < myDataList.length; i++) {
+            var myManifestElement = myDataList[i];
+            content += "<tr>";
+            content += "<td>" + count + "</td>";
+            content += "<td>" + myManifestElement.manifestID + "</td>";
+            content += "<td>" + myManifestElement.pcrLabName + "</td>";
+            content += "<td>" + myManifestElement.pcrLabCode + "</td>";
+            content += "<td>" + myManifestElement.testType + "</td>";
+            content += "<td>" + myManifestElement.riderTotalSamplesPicked + "</td>";
+            content += "<td>" + myManifestElement.resultStatus + "</td>";
+            content += "<td>" + myManifestElement.dateCreated + "</td>";
+            content += "<td>";
+            content += "<i style=\"font-size: 20px;\" class=\"icon-edit edit-action\" title=\"Check & Update Result\" onclick=\"getResultFromLims('" + myManifestElement.manifestID + "')\"></i>";
+            content += "</td>";
+            content += "<td>";
+            content += "<i style=\"font-size: 20px;\" class=\"icon-eye-open\" title=\"View Result\" onclick=\"viewResult('" + myManifestElement.manifestID + "')\"></i>";
+            content += "</td>";
+            content += "</tr>";
+            count++;
+        }
+        content += "</tbody></table>";
+        jq("#pending-manifest-list-table").append(content);
+    }
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>r-FMCK162020-07-16</td>
-                    <td>Ro8QYYh2EVH</td>
-                    <td>Viral Load</td>
-                  </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                                    <th>Manifest ID</th>
-                                    <th>Facility ID</th>
-                                    <th>Test Type</th>
+    function getResultFromLims(ManfID) {
+        jq.ajax({
+           url: "${ ui.actionLink("limsemrops", "EMRExchange", "getAllSavedManifest") }",
+           dataType: "json",
+           success: function (response) {
+              displayManaifestData(response);
+           }
+        });
+        alert(ManfID);
+    }
 
-                                </tr>
-                </tr>
-            </tfoot>
-        </table>
-</br>
-<button type="submit" onclick="getResult_()">Check Result</button>
+    function viewResult(ManfID) {
+        alert(ManfID);
+    }
 
-
-
-<script>
-function getResult_(){
-window.location.assign("returned_result.page");
-}
+    getPendingManifestList();
 </script>
+
+<div id="pending-manifest-list-table">
+</div>
+<br>

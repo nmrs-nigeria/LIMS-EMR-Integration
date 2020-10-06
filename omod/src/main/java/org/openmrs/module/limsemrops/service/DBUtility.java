@@ -138,6 +138,21 @@ public class DBUtility {
         return manifests;
     }
 	
+	public List<Manifest> getPendingManifests() {
+        List<Manifest> manifests = new ArrayList<>();
+
+        try {
+            this.ndrDBManager.openConnection();
+            manifests = ndrDBManager.getAllPendingManifest();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        } finally {
+            this.ndrDBManager.closeConnection();
+        }
+
+        return manifests;
+    }
+	
 	public Manifest getManifestsbyId(String manifestId) {
 		Manifest manifest = null;
 		
