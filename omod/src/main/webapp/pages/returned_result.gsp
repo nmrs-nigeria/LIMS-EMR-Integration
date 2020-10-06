@@ -5,21 +5,7 @@
 <%= ui.resourceLinks() %>
 
 <h2 style="text-decoration: underline; text-align: center;">Manifest Result</h2>
-   </br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   </br> <br>
     <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
