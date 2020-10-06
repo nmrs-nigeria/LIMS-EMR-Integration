@@ -117,16 +117,15 @@ public class EMRExchangeFragmentController {
 		CheckSampleResult checkSampleResult = new CheckSampleResult();
 		checkSampleResult.execute();
 	}
-
-    @RequestMapping(method = RequestMethod.GET)
-    public String fetchSampleResultFromUIClick(@RequestParam(value = "manifestID") String manifestID) {
-	    String response = "success";
-        CheckSampleResult checkSampleResult = new CheckSampleResult();
-        checkSampleResult.executeProcess();
-
-
-        return "failed";
-    }
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public String fetchSampleResultFromUIClick(@RequestParam(value = "manifestID") String manifestID) {
+		String response = "success";
+		CheckSampleResult checkSampleResult = new CheckSampleResult();
+		checkSampleResult.executeProcess();
+		
+		return "failed";
+	}
 	
 	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate,
             @RequestParam(value = "sampleSpace") String sampleSpace) {

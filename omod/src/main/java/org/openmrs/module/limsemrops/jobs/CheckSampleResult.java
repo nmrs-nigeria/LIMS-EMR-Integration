@@ -28,7 +28,7 @@ public class CheckSampleResult extends AbstractTask {
 			Logger.getLogger(CheckSampleResult.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-
+	
 	public void executeProcess() {
 		try {
 			System.out.println("STARTING SAMPLE RESULT RETRIEVAL");

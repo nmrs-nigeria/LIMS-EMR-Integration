@@ -294,22 +294,22 @@ public class DBManager {
 		return convertResultSetToManifestList(resultSet);
 		
 	}
-
-    public List<Manifest> getAllPendingManifestById(String manifestID) throws SQLException {
-        pStatement = conn
-                .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
-                        + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
-                        + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where result_status = 'pending' and manifest_id = ? ");
-
-        pStatement.setString(1, manifestID);
-
-        resultSet = pStatement.executeQuery();
-
-        return convertResultSetToManifestList(resultSet);
-
-    }
-
-    public List<Manifest> getAllManifest() throws SQLException {
+	
+	public List<Manifest> getAllPendingManifestById(String manifestID) throws SQLException {
+		pStatement = conn
+		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
+		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
+		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where result_status = 'pending' and manifest_id = ? ");
+		
+		pStatement.setString(1, manifestID);
+		
+		resultSet = pStatement.executeQuery();
+		
+		return convertResultSetToManifestList(resultSet);
+		
+	}
+	
+	public List<Manifest> getAllManifest() throws SQLException {
 		
 		pStatement = conn
 		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "

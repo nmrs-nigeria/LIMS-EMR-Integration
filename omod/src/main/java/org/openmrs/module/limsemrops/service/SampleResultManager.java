@@ -87,8 +87,7 @@ public class SampleResultManager {
         dBManager.closeConnection();
 
     }
-
-
+	
 	private void updateManifestResultOnDB(VLResultResponse vLResultResponse) throws SQLException, IOException {
 	dBManager.openConnection();
         List<VLSampleInformationFrontFacing> allManifestSamples = dBManager.getManifestSamples(vLResultResponse.getManifestID());
@@ -186,8 +185,8 @@ public class SampleResultManager {
 		Context.getEncounterService().saveEncounter(labEncounter);
 		
 	}
-
-    public void pullManifestResultFromLIMSByClickFromUI(String manifestID) throws SQLException {
+	
+	public void pullManifestResultFromLIMSByClickFromUI(String manifestID) throws SQLException {
         dBManager.openConnection();
         List<Manifest> pendingManifests = dBManager.getAllPendingManifestById(manifestID);
         if (!pendingManifests.isEmpty()) {
@@ -233,6 +232,4 @@ public class SampleResultManager {
         dBManager.closeConnection();
 
     }
-
-
 }
