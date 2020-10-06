@@ -20,7 +20,6 @@ public class CheckSampleResult extends AbstractTask {
 	
 	@Override
 	public void execute() {
-		
 		try {
 			System.out.println("STARTING SAMPLE RESULT RETRIEVAL");
 			sampleResultManager.pullManifestResultFromLIMS();
@@ -28,7 +27,16 @@ public class CheckSampleResult extends AbstractTask {
 		catch (SQLException ex) {
 			Logger.getLogger(CheckSampleResult.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
+	}
+	
+	public void executeProcess() {
+		try {
+			System.out.println("STARTING SAMPLE RESULT RETRIEVAL");
+			sampleResultManager.pullManifestResultFromLIMS();
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(CheckSampleResult.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 	
 }

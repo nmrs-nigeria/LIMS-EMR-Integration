@@ -1,15 +1,25 @@
 <% ui.decorateWith("appui", "standardEmrPage") %>
-
+<% ui.includeJavascript("limsemrops", "bootstrap.js") %>
+<% ui.includeJavascript("limsemrops", "jquery-3.5.1.js") %>
+<% ui.includeCss("limsemrops", "bootstrap.css") %>
 <%= ui.resourceLinks() %>
-<script type="text/javascript" src="/openmrs/ms/uiframework/resource/uicommons/scripts/datetimepicker/bootstrap-datetimepicker.min.js?cache=1525344062488"></script>
-<link rel="stylesheet" href="/openmrs/ms/uiframework/resource/uicommons/styles/datetimepicker.css?cache=1525344062488" type="text/css" />
 
-<% ui.includeCss("limsemrops", "bootstrap.min.css") %>
-<% ui.includeCss("limsemrops", "datatables.min.css") %>
-<% ui.includeCss("limsemrops", "docs/DataTables-1.10.21/css/jquery.bootstrap.min.css") %>
-
+<h2 style="text-decoration: underline; text-align: center;">Manifest Result</h2>
    </br>
-    <h3>Results not available at this time</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
@@ -36,25 +46,21 @@
                 <td>PLASVIREC TESTING LAB</td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>visit Date</th>
-                    <th>Test Result</th>
-                    <th>Result Date</th>
-                    <th>Approval Date</th>
-                    <th>Sample Testable</th>
-                    <th>Sendig PCR Lab</th>
-                </tr>
-            </tfoot>
+
         </table>
 </br>
+
+
+
+
+
+
+
+
+
+
 <button id="button" type="submit" onclick="getResult_return()">Update Result</button>
 <button type="button" onclick="loadDoc()">Check Result</button>
-
-<% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
-<% ui.includeJavascript("limsemrops", "doc/jquery-3.5.1.js") %>
 
 <script>
 
@@ -73,9 +79,4 @@
             }**/);
         }
 
-function getResult_return(){
-window.location.assign("schedule_manifest.page");
-}
 </script>
-
-<!-- \$320,800 --!>

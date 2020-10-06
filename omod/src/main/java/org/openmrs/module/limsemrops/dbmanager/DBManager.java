@@ -5,7 +5,6 @@
  */
 package org.openmrs.module.limsemrops.dbmanager;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -42,7 +41,6 @@ public class DBManager {
 	private ResultSet resultSet = null;
 	
 	public DBManager() {
-		
 	}
 	
 	public void openConnection() throws SQLException {
@@ -297,18 +295,22 @@ public class DBManager {
 		
 	}
 	
-	//    public static Connection openLocalDBConnection() {
-	//        Connection conn = null;
-	//        try {
-	//            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-	//            conn = DriverManager.getConnection("jdbc:mysql://localhost:3308/nigeriamrs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&useSSL=false&serverTimezone=UTC","tobstech", "tobstech");
-	//        }catch (Exception e) {
-	//            System.out.println("Connection Error: " + e.toString());
-	//        }
-	//        return conn;
-	//    }
+	public List<Manifest> getAllPendingManifestById(String manifestID) throws SQLException {
+		pStatement = conn
+		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
+		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
+		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where result_status = 'pending' and manifest_id = ? ");
+		
+		pStatement.setString(1, manifestID);
+		
+		resultSet = pStatement.executeQuery();
+		
+		return convertResultSetToManifestList(resultSet);
+		
+	}
+	
 	public List<Manifest> getAllManifest() throws SQLException {
-
+		
 		pStatement = conn
 		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
 		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
