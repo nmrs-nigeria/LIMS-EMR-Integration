@@ -17,6 +17,8 @@ public class ConstantUtils {
 	
 	public final static String MANIFEST_SAMPLES_TABLE = "lims_manifest_samples";
 	
+	public final static String MANIFEST_SAMPLES_RESULT = "lims_manifest_result";
+	
 	public final static String AUTHMODULE_TABLE = "lims_auth_module";
 	
 	//forms
@@ -61,11 +63,15 @@ public class ConstantUtils {
 	
 	public static final String POST_SAMPLES = "/samples/create.php";
 	
-	public static final String REQUEST_SAMPLE_RESULT = "/result.php";
+	public static final String REQUEST_SAMPLE_RESULT = "/samples/result.php";
 	
 	//public enums
 	public enum SampleSpace {
 		VL, RECENCY, EID, COVID
+	}
+	
+	public enum ResultStatus {
+		PENDING, AVAILABLE
 	}
 	
 }

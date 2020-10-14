@@ -170,6 +170,17 @@ public class DBManager {
 		
 	}
 	
+	public int updateManifestResultStatus(String resultStatus, String creator, String manifestId) throws SQLException {
+		
+		pStatement = conn.prepareStatement("update " + ConstantUtils.MANIFEST_TABLE
+		        + " set result_status = ?, modified_by = ?, date_modified = NOW() where manifest_id = ? ");
+		pStatement.setString(1, resultStatus);
+		pStatement.setString(2, creator);
+		pStatement.setString(3, manifestId);
+		
+		return pStatement.executeUpdate();
+	}
+	
 	public int insertSampleResult(Result result) throws SQLException {
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -178,16 +189,16 @@ public class DBManager {
 		try {
 			pStatement = conn
 			        .prepareStatement("insert into "
-			                + ConstantUtils.MANIFEST_SAMPLES_TABLE
-			                + "(sample_id,manifest_id, patient_id, pcrLab_sample_number,date_sample_receievedat_pcrlab,test_result,result_date,"
-			                + "approval_date,assay_date,date_result_dispatched,sample_status,sample_testable ) "
-			                + "values(?,?,?,?,?,?,?,?,?,?,?,?)");
+			                + ConstantUtils.MANIFEST_SAMPLES_RESULT
+			                + "(sample_id,manifest_id, patient_id, pcr_lab_samplenumber,date_sample_receieved_at_pcrlab,test_result,result_date,"
+			                + "approval_date,assay_date,date_result_dispatched,sample_status,sample_testable,created_by ) "
+			                + "values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			
 			pStatement.setString(1, result.getSampleID());
 			pStatement.setString(2, result.getManifestID());
 			pStatement.setString(3, mapper.writeValueAsString(result.getPatientID()));
 			pStatement.setString(4, result.getPcrLabSampleNumber());
-			pStatement.setDate(5, new java.sql.Date(result.getDateSampleReceievedAtPCRLab().getTime()));
+			pStatement.setDate(5, new java.sql.Date(result.getDateSampleRecievedAtPCRLab().getTime()));
 			pStatement.setString(6, result.getTestResult());
 			pStatement.setDate(7, new java.sql.Date(result.getResultDate().getTime()));
 			pStatement.setDate(8, new java.sql.Date(result.getApprovalDate().getTime()));
@@ -195,6 +206,7 @@ public class DBManager {
 			pStatement.setDate(10, new java.sql.Date(result.getDateResultDispatched().getTime()));
 			pStatement.setString(11, result.getSampleStatus());
 			pStatement.setString(12, result.getSampleTestable());
+			pStatement.setString(13, result.getCreatedBy());
 			
 			pStatement.executeUpdate();
 			
@@ -285,6 +297,18 @@ public class DBManager {
 
     }
 	
+	public int updateSamplesResultStatus(String sample_status, String creator, String sampleID) throws SQLException {
+		
+		pStatement = conn.prepareStatement("update " + ConstantUtils.MANIFEST_SAMPLES_TABLE
+		        + " set sample_status = ?, modified_by = ?, date_modified = NOW() where sample_id = ? ");
+		pStatement.setString(1, sample_status);
+		pStatement.setString(2, creator);
+		pStatement.setString(3, sampleID);
+		
+		return pStatement.executeUpdate();
+		
+	}
+	
 	public List<Manifest> getAllPendingManifest() throws SQLException {
 		pStatement = conn
 		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
@@ -308,7 +332,7 @@ public class DBManager {
 	//        return conn;
 	//    }
 	public List<Manifest> getAllManifest() throws SQLException {
-
+		
 		pStatement = conn
 		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
 		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "

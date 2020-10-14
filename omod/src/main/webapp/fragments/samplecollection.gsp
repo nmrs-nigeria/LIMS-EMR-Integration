@@ -51,9 +51,9 @@ def id = config.id
     <p>Request Result</p>
 </a>
 
-<!-- <a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">
+ <a id="${ id }_button_manifest" class="button app big" style="font-size:12px;min-height: 10px;">
     <i class="icon-refresh"></i>
     <br/>
     <p>Trigger Result Cron</p>
-</a> -->
+</a>
 

@@ -7,17 +7,19 @@ package org.openmrs.module.limsemrops.omodmodels;
 
 import java.util.Date;
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * @author MORRISON.I
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ViralLoadTestReport {
 	
 	private List<PatientID> patientID;
 	
 	private String firstName;
 	
-	private String surName;
+	private String lastName;
 	
 	private String sex;
 	
@@ -29,7 +31,7 @@ public class ViralLoadTestReport {
 	
 	private Date visitDate;
 	
-	private Date dateSampleReceivedAtPCRLab;
+	private Date dateSampleRecievedAtPCRLab;
 	
 	private String testResult;
 	
@@ -61,12 +63,12 @@ public class ViralLoadTestReport {
 		this.firstName = firstName;
 	}
 	
-	public String getSurName() {
-		return surName;
+	public String getLastName() {
+		return lastName;
 	}
 	
-	public void setSurName(String surName) {
-		this.surName = surName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	public String getSex() {
@@ -109,12 +111,12 @@ public class ViralLoadTestReport {
 		this.visitDate = visitDate;
 	}
 	
-	public Date getDateSampleReceivedAtPCRLab() {
-		return dateSampleReceivedAtPCRLab;
+	public Date getDateSampleRecievedAtPCRLab() {
+		return dateSampleRecievedAtPCRLab;
 	}
 	
-	public void setDateSampleReceivedAtPCRLab(Date dateSampleReceivedAtPCRLab) {
-		this.dateSampleReceivedAtPCRLab = dateSampleReceivedAtPCRLab;
+	public void setDateSampleRecievedAtPCRLab(Date dateSampleRecievedAtPCRLab) {
+		this.dateSampleRecievedAtPCRLab = dateSampleRecievedAtPCRLab;
 	}
 	
 	public String getTestResult() {

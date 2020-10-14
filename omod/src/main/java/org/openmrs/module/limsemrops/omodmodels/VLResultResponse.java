@@ -5,11 +5,15 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.List;
 
 /**
  * @author MORRISON.I
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VLResultResponse {
 	
 	private String manifestID;
@@ -22,7 +26,7 @@ public class VLResultResponse {
 	
 	private String sendingPCRLabName;
 	
-	private Integer testType;
+	private String testType;
 	
 	private List<ViralLoadTestReport> viralLoadTestReport;
 	
@@ -66,11 +70,11 @@ public class VLResultResponse {
 		this.sendingPCRLabName = sendingPCRLabName;
 	}
 	
-	public Integer getTestType() {
+	public String getTestType() {
 		return testType;
 	}
 	
-	public void setTestType(Integer testType) {
+	public void setTestType(String testType) {
 		this.testType = testType;
 	}
 	

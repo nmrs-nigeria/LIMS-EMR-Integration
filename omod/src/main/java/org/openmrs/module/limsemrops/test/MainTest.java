@@ -5,14 +5,16 @@
  */
 package org.openmrs.module.limsemrops.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-import org.openmrs.api.context.Context;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.openmrs.module.limsemrops.omodmodels.ResultRequest;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleCollectionBatchManifest;
 import org.openmrs.module.limsemrops.service.DBUtility;
+import org.openmrs.module.limsemrops.service.ExchangeLayer;
 import org.openmrs.module.limsemrops.service.ViralLoadInfo;
 import org.openmrs.module.limsemrops.utility.ConstantUtils.SampleSpace;
 
@@ -39,11 +41,29 @@ public class MainTest {
     }
 	
 	public static void main(String[] args) {
-		System.out.println(UUID.randomUUID().toString());
+		//	System.out.println(UUID.randomUUID().toString());
 		
 		//  Context.getConceptService().getConcept(84884).getAnswers().stream().forEach(a -> {
 		//
 		// });
+		
+		ResultRequest resultRequest = new ResultRequest();
+		resultRequest.setManifestID("34CC7F1-70E6-4");
+		resultRequest.setReceivingPCRLabID("LIMS150002");
+		resultRequest.setReceivingPCRLabName("National Reference Laboratory Gaduwa (NRL) Abuja");
+		resultRequest.setSendingFacilityID("FH7LMnbnVlT");
+		resultRequest.setSendingFacilityName("Braithwaite Memorial Specialist Hospital");
+		resultRequest.setTestType("VL");
+		
+		ExchangeLayer exchangeLayer = new ExchangeLayer();
+		try {
+			//	HttpResponse<VLResultResponse> vLResultResponse = exchangeLayer.requestManifestResultOnline(resultRequest);
+			ObjectMapper mapper = new ObjectMapper();
+			System.out.println(mapper.writeValueAsString("kjfk"));
+		}
+		catch (Exception ex) {
+			Logger.getLogger(MainTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		
 	}
 	
