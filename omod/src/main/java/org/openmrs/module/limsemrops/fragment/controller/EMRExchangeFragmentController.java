@@ -118,6 +118,15 @@ public class EMRExchangeFragmentController {
 		checkSampleResult.execute();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public String fetchSampleResultFromUIClick(@RequestParam(value = "manifestID") String manifestID) {
+		String response = "success";
+		CheckSampleResult checkSampleResult = new CheckSampleResult();
+		checkSampleResult.executeProcess();
+		
+		return "failed";
+	}
+	
 	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate,
             @RequestParam(value = "sampleSpace") String sampleSpace) {
         
@@ -264,6 +273,22 @@ public class EMRExchangeFragmentController {
 		mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		List<Manifest> manifests = dBUtility.getManifests();
+		String response = null;
+		try {
+			response = mapper.writeValueAsString(manifests);
+		}
+		catch (JsonProcessingException ex) {
+			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return response;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public String getAllPendingManifest() {
+		
+		mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		List<Manifest> manifests = dBUtility.getPendingManifests();
 		String response = null;
 		try {
 			response = mapper.writeValueAsString(manifests);

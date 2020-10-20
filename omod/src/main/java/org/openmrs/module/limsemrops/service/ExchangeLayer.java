@@ -50,24 +50,4 @@ public class ExchangeLayer {
 		
 	}
 	
-	public static void main(String args[]) {
-		ResultRequest resultRequest = new ResultRequest();
-		resultRequest.setManifestID("34CC7F1-70E6-4");
-		resultRequest.setReceivingPCRLabID("LIMS150002");
-		resultRequest.setReceivingPCRLabName("National Reference Laboratory Gaduwa (NRL) Abuja");
-		resultRequest.setSendingFacilityID("FH7LMnbnVlT");
-		resultRequest.setSendingFacilityName("Braithwaite Memorial Specialist Hospital");
-		resultRequest.setTestType("VL");
-		
-		try {
-			HttpResponse<String> result = new ExchangeLayer().requestManifestResultOnline(resultRequest);
-			System.out.println(result.getStatus());
-			System.out.println(result.getBody());
-		}
-		catch (UnirestException ex) {
-			Logger.getLogger(ExchangeLayer.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		
-	}
-	
 }
