@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.lang3.StringUtils;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
@@ -37,23 +39,24 @@ import org.openmrs.notification.AlertService;
  * @author MORRISON.I
  */
 public class SampleResultManager {
-
-    DBManager dBManager;
-
-    ExchangeLayer exchangeLayer;
-
-    ObjectMapper mapper;
-    AlertService alertService;
-
-    public SampleResultManager() {
-        dBManager = new DBManager();
-        exchangeLayer = new ExchangeLayer();
-        mapper = new ObjectMapper();
-        alertService = Context.getService(AlertService.class);
-
-    }
-
-    public void pullManifestResultFromLIMS() throws SQLException {
+	
+	DBManager dBManager;
+	
+	ExchangeLayer exchangeLayer;
+	
+	ObjectMapper mapper;
+	
+	AlertService alertService;
+	
+	public SampleResultManager() {
+		dBManager = new DBManager();
+		exchangeLayer = new ExchangeLayer();
+		mapper = new ObjectMapper();
+		alertService = Context.getService(AlertService.class);
+		
+	}
+	
+	public void pullManifestResultFromLIMS() throws SQLException {
         dBManager.openConnection();
         List<Manifest> pendingManifests = dBManager.getAllPendingManifest();
         if (!pendingManifests.isEmpty()) {
@@ -101,8 +104,8 @@ public class SampleResultManager {
         dBManager.closeConnection();
 
     }
-
-    private void updateManifestResultOnDB(VLResultResponse vLResultResponse) throws SQLException, IOException {
+	
+	private void updateManifestResultOnDB(VLResultResponse vLResultResponse) throws SQLException, IOException {
         dBManager.openConnection();
         List<VLSampleInformationFrontFacing> allManifestSamples = dBManager.getManifestSamples(vLResultResponse.getManifestID());
         //log sample result on DB.
@@ -111,7 +114,6 @@ public class SampleResultManager {
         String createdBy = Context.getAuthenticatedUser().toString();
         StringBuilder sampleIdbuilder = new StringBuilder();
         StringBuilder patientIdBuilder = new StringBuilder();
-        
 
         vLResultResponse.getViralLoadTestReport().forEach(vl -> {
 
@@ -124,10 +126,10 @@ public class SampleResultManager {
                 dBManager.insertSampleResult(result);
 
                 //get any not null pID
-                PatientID pi = vl.getPatientID().stream().filter(a-> a.getIdNumber() != null).findFirst().get();
-                patientIdBuilder.append(pi);
+                PatientID pi = vl.getPatientID().stream().filter(a ->  !(a.getIdNumber().equals(StringUtils.EMPTY))).findFirst().get();
+                patientIdBuilder.append(pi.getIdNumber());
                 patientIdBuilder.append(",");
-                
+
                 sampleIdbuilder.append(vl.getSampleID());
                 sampleIdbuilder.append(",");
                 //TODO: update samples and manifest info
@@ -143,15 +145,6 @@ public class SampleResultManager {
 
                 dBManager.updateSamplesResultStatus(ConstantUtils.ResultStatus.AVAILABLE.toString(), Context.getAuthenticatedUser().toString(), vl.getSampleID());
 
-                //send notification
-                Alert alert = new Alert();
-                   String alertText =  MessageFormat
-                           .format("You have new sample result for samples with id {0} for patients with identifiers {1} on manifest {3}",
-                                   sampleIdbuilder.toString(),patientIdBuilder.toString(),vLResultResponse.getManifestID());
-                   
-                   alert.setText(alertText);
-                   alertService.saveAlert(alert);
-
             } catch (IOException ex) {
                 Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -164,64 +157,76 @@ public class SampleResultManager {
             dBManager.updateManifestResultStatus(ConstantUtils.ResultStatus.AVAILABLE.toString(), Context.getAuthenticatedUser().toString(), vLResultResponse.getManifestID());
         }
 
+        //send notification
+        String alertText = MessageFormat
+                .format("You have new sample result for samples with id {0} for patients with identifiers {1} on manifest {2} ",
+                        sampleIdbuilder.toString(), patientIdBuilder.toString(), vLResultResponse.getManifestID());
+        Alert alert = new Alert(alertText, Context.getAuthenticatedUser());
+        alert.setText(alertText);
+
+        alert.setUuid(UUID.randomUUID().toString());
+
+        alertService.saveAlert(alert);
+
         dBManager.closeConnection();
 
     }
-
-    private void updatePatientSampleRecordwithResult(int encounterId, Date dateSampleReceivedAtPCRLab,
-            Date dateResultDispatched, String testResult) {
-
-        Encounter labEncounter = Context.getEncounterService().getEncounter(encounterId);
-
-        Obs dateSampleReceivedAtPCRObs = new Obs();
-        dateSampleReceivedAtPCRObs.setConcept(Context.getConceptService().getConcept(
-                LabFormUtils.DATE_SAMPLE_RECEIVED_AT_PCR_LAB));
-        dateSampleReceivedAtPCRObs.setValueDate(dateSampleReceivedAtPCRLab);
-        dateSampleReceivedAtPCRObs.setObsDatetime(new Date());
-        dateSampleReceivedAtPCRObs.setPerson(labEncounter.getPatient());
-        dateSampleReceivedAtPCRObs.setEncounter(labEncounter);
-        dateSampleReceivedAtPCRObs.setUuid(UUID.randomUUID().toString());
-
-        labEncounter.addObs(dateSampleReceivedAtPCRObs);
-
-        Obs dateResultDispatchedObs = new Obs();
-        dateResultDispatchedObs.setConcept(Context.getConceptService()
-                .getConcept(LabFormUtils.DATE_RESULT_SENT_FROM_PCR_LAB));
-        dateResultDispatchedObs.setValueDate(dateResultDispatched);
-        dateResultDispatchedObs.setObsDatetime(new Date());
-        dateResultDispatchedObs.setPerson(labEncounter.getPatient());
-        dateResultDispatchedObs.setEncounter(labEncounter);
-        dateResultDispatchedObs.setUuid(UUID.randomUUID().toString());
-
-        labEncounter.addObs(dateResultDispatchedObs);
-
-        Obs dateResultReceivedAtFacilityObs = new Obs();
-        dateResultReceivedAtFacilityObs.setConcept(Context.getConceptService().getConcept(
-                LabFormUtils.DATE_RESULT_WAS_RECEIVED_AT_FACILITY));
-        dateResultReceivedAtFacilityObs.setValueDate(new Date());
-        dateResultReceivedAtFacilityObs.setObsDatetime(new Date());
-        dateResultReceivedAtFacilityObs.setPerson(labEncounter.getPatient());
-        dateResultReceivedAtFacilityObs.setEncounter(labEncounter);
-        dateResultReceivedAtFacilityObs.setUuid(UUID.randomUUID().toString());
-
-        labEncounter.addObs(dateResultReceivedAtFacilityObs);
-
-        try {
-            Obs testResultObs = new Obs();
-            testResultObs.setConcept(Context.getConceptService().getConcept(LabFormUtils.VIRAL_LOAD_RESULT));
-            testResultObs.setValueNumeric(Double.valueOf(testResult)); //TODO: change test result to text on NMRS Lab form.
-            testResultObs.setObsDatetime(new Date());
-            testResultObs.setPerson(labEncounter.getPatient());
-            testResultObs.setEncounter(labEncounter);
-            testResultObs.setUuid(UUID.randomUUID().toString());
-
-            labEncounter.addObs(testResultObs);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        Context.getEncounterService().saveEncounter(labEncounter);
-
-    }
-
+	
+	private void updatePatientSampleRecordwithResult(int encounterId, Date dateSampleReceivedAtPCRLab,
+	        Date dateResultDispatched, String testResult) {
+		
+		Encounter labEncounter = Context.getEncounterService().getEncounter(encounterId);
+		
+		Obs dateSampleReceivedAtPCRObs = new Obs();
+		dateSampleReceivedAtPCRObs.setConcept(Context.getConceptService().getConcept(
+		    LabFormUtils.DATE_SAMPLE_RECEIVED_AT_PCR_LAB));
+		dateSampleReceivedAtPCRObs.setValueDate(dateSampleReceivedAtPCRLab);
+		dateSampleReceivedAtPCRObs.setObsDatetime(new Date());
+		dateSampleReceivedAtPCRObs.setPerson(labEncounter.getPatient());
+		dateSampleReceivedAtPCRObs.setEncounter(labEncounter);
+		dateSampleReceivedAtPCRObs.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(dateSampleReceivedAtPCRObs);
+		
+		Obs dateResultDispatchedObs = new Obs();
+		dateResultDispatchedObs.setConcept(Context.getConceptService()
+		        .getConcept(LabFormUtils.DATE_RESULT_SENT_FROM_PCR_LAB));
+		dateResultDispatchedObs.setValueDate(dateResultDispatched);
+		dateResultDispatchedObs.setObsDatetime(new Date());
+		dateResultDispatchedObs.setPerson(labEncounter.getPatient());
+		dateResultDispatchedObs.setEncounter(labEncounter);
+		dateResultDispatchedObs.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(dateResultDispatchedObs);
+		
+		Obs dateResultReceivedAtFacilityObs = new Obs();
+		dateResultReceivedAtFacilityObs.setConcept(Context.getConceptService().getConcept(
+		    LabFormUtils.DATE_RESULT_WAS_RECEIVED_AT_FACILITY));
+		dateResultReceivedAtFacilityObs.setValueDate(new Date());
+		dateResultReceivedAtFacilityObs.setObsDatetime(new Date());
+		dateResultReceivedAtFacilityObs.setPerson(labEncounter.getPatient());
+		dateResultReceivedAtFacilityObs.setEncounter(labEncounter);
+		dateResultReceivedAtFacilityObs.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(dateResultReceivedAtFacilityObs);
+		
+		try {
+			Obs testResultObs = new Obs();
+			testResultObs.setConcept(Context.getConceptService().getConcept(LabFormUtils.VIRAL_LOAD_RESULT));
+			testResultObs.setValueNumeric(Double.valueOf(testResult)); //TODO: change test result to text on NMRS Lab form.
+			testResultObs.setObsDatetime(new Date());
+			testResultObs.setPerson(labEncounter.getPatient());
+			testResultObs.setEncounter(labEncounter);
+			testResultObs.setUuid(UUID.randomUUID().toString());
+			
+			labEncounter.addObs(testResultObs);
+		}
+		catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+		
+		Context.getEncounterService().saveEncounter(labEncounter);
+		
+	}
+	
 }
