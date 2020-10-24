@@ -12,11 +12,11 @@
                     <th>Last Name</th>
                     <th>First Name</th>
                     <th>visit Date</th>
-                    <th>Test Result</th>
-                    <th>Result Date</th>
-                    <th>Approval Date</th>
-                    <th>Sample Testable</th>
-                    <th>Sendig PCR Lab</th>
+                 // <th>Test Result</th>
+                 // <th>Result Date</th>
+                 // <th>Approval Date</th>
+                 // <th>Sample Testable</th>
+                    <th>Sending PCR Lab</th>
 
                 </tr>
             </thead>
