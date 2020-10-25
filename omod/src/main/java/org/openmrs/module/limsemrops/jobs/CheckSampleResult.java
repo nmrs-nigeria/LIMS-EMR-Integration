@@ -29,14 +29,4 @@ public class CheckSampleResult extends AbstractTask {
 		}
 	}
 	
-	public void executeProcess() {
-		try {
-			System.out.println("STARTING SAMPLE RESULT RETRIEVAL");
-			sampleResultManager.pullManifestResultFromLIMS();
-		}
-		catch (SQLException ex) {
-			Logger.getLogger(CheckSampleResult.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
-	
 }

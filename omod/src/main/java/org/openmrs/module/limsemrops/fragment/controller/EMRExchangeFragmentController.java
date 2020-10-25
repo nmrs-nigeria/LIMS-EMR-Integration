@@ -24,6 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
+import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.limsemrops.jobs.CheckSampleResult;
 import org.openmrs.module.limsemrops.omodmodels.*;
@@ -116,15 +117,6 @@ public class EMRExchangeFragmentController {
 	public void fetchSampleResult() {
 		CheckSampleResult checkSampleResult = new CheckSampleResult();
 		checkSampleResult.execute();
-	}
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public String fetchSampleResultFromUIClick(@RequestParam(value = "manifestID") String manifestID) {
-		String response = "success";
-		CheckSampleResult checkSampleResult = new CheckSampleResult();
-		checkSampleResult.executeProcess();
-		
-		return "failed";
 	}
 	
 	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate,
@@ -436,4 +428,5 @@ public class EMRExchangeFragmentController {
 		return restTemplate.exchange("https://lims.ng/api/samples/result.php", HttpMethod.GET, entity, String.class)
 		        .getBody();
 	}
+	
 }

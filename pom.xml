@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -10,7 +9,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>limsemrops</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Limsemrops</name>
 	<description>This module is use power the LIMS - EMR Interoperatability</description>
@@ -23,9 +22,9 @@
 <!--		<url>https://github.com/openmrs/openmrs-module-limsemrops/</url>-->
 <!--	</scm>-->
 	<scm>
-		<connection>scm:git:http://git.mgic-nigeria.org/midiasirue/LIMS-EMR-Interoperatability.git</connection>
-		<developerConnection>scm:git:http://git.mgic-nigeria.org/midiasirue/LIMS-EMR-Interoperatability.git</developerConnection>
-		<url>http://git.mgic-nigeria.org/midiasirue/LIMS-EMR-Interoperatability.git</url>
+		<connection>scm:git:git@github.com:openmrs/openmrs-module-limsemrops.git</connection>
+		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-limsemrops.git</developerConnection>
+		<url>https://github.com/openmrs/openmrs-module-limsemrops/</url>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -93,6 +92,18 @@
     </properties>
 
 	<!-- added by toyeeb to deploy module to bintray -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<scmCommentPrefix>[skip ci] [maven-release-plugin]</scmCommentPrefix>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<distributionManagement>
 		<repository>
 			<id>bintray-nmrs-nigeria-maven</id>
