@@ -1,7 +1,10 @@
 package org.openmrs.module.limsemrops.omodmodels;
 
 import java.util.Date;
+import java.util.List;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Result {
 	
 	private String id;
@@ -10,11 +13,11 @@ public class Result {
 	
 	private String manifestID;
 	
-	private String patientID;
+	private List<PatientID> patientID;
 	
 	private String pcrLabSampleNumber;
 	
-	private Date dateSampleReceievedAtPCRLab;
+	private Date dateSampleRecievedAtPCRLab;
 	
 	private String testResult;
 	
@@ -29,6 +32,8 @@ public class Result {
 	private String sampleStatus;
 	
 	private String sampleTestable;
+	
+	private String createdBy;
 	
 	public String getId() {
 		return id;
@@ -54,11 +59,11 @@ public class Result {
 		this.manifestID = manifestID;
 	}
 	
-	public String getPatientID() {
+	public List<PatientID> getPatientID() {
 		return patientID;
 	}
 	
-	public void setPatientID(String patientID) {
+	public void setPatientID(List<PatientID> patientID) {
 		this.patientID = patientID;
 	}
 	
@@ -70,12 +75,12 @@ public class Result {
 		this.pcrLabSampleNumber = pcrLabSampleNumber;
 	}
 	
-	public Date getDateSampleReceievedAtPCRLab() {
-		return dateSampleReceievedAtPCRLab;
+	public Date getDateSampleRecievedAtPCRLab() {
+		return dateSampleRecievedAtPCRLab;
 	}
 	
-	public void setDateSampleReceievedAtPCRLab(Date dateSampleReceievedAtPCRLab) {
-		this.dateSampleReceievedAtPCRLab = dateSampleReceievedAtPCRLab;
+	public void setDateSampleRecievedAtPCRLab(Date dateSampleRecievedAtPCRLab) {
+		this.dateSampleRecievedAtPCRLab = dateSampleRecievedAtPCRLab;
 	}
 	
 	public String getTestResult() {
@@ -132,6 +137,14 @@ public class Result {
 	
 	public void setSampleTestable(String sampleTestable) {
 		this.sampleTestable = sampleTestable;
+	}
+	
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 	
 }

@@ -17,6 +17,8 @@ public class ConstantUtils {
 	
 	public final static String MANIFEST_SAMPLES_TABLE = "lims_manifest_samples";
 	
+	public final static String MANIFEST_SAMPLES_RESULT = "lims_manifest_result";
+	
 	public final static String AUTHMODULE_TABLE = "lims_auth_module";
 	
 	//forms
@@ -53,15 +55,23 @@ public class ConstantUtils {
 	public static final int RECENCY_INDENTIFIER_INDEX = 10;
 	
 	//URL
-	public static final String BASE_URL = "https://www.lims.ng/api";
+	//live
+	public static final String BASE_URL = "https://www.lims.ng/apidemo";
+	
+	//testing
+	//  public static final String BASE_URL = "https://www.lims.ng/api";
 	
 	public static final String POST_SAMPLES = "/samples/create.php";
 	
-	public static final String REQUEST_SAMPLE_RESULT = "/result.php";
+	public static final String REQUEST_SAMPLE_RESULT = "/samples/result.php";
 	
 	//public enums
 	public enum SampleSpace {
 		VL, RECENCY, EID, COVID
+	}
+	
+	public enum ResultStatus {
+		PENDING, AVAILABLE
 	}
 	
 }
