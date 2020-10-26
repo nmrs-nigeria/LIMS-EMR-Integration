@@ -9,7 +9,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>limsemrops</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Limsemrops</name>
 	<description>This module is use power the LIMS - EMR Interoperatability</description>
@@ -25,7 +25,6 @@
 		<connection>scm:git:git@github.com:openmrs/openmrs-module-limsemrops.git</connection>
 		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-limsemrops.git</developerConnection>
 		<url>https://github.com/openmrs/openmrs-module-limsemrops/</url>
-		<tag>HEAD</tag>
 	</scm>
 
 
@@ -40,7 +39,7 @@
             <dependency>
                 <groupId>org.openmrs.distro</groupId>
                 <artifactId>referenceapplication</artifactId>
-                <version>2.3.1</version>
+                <version>2.7.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -92,23 +91,23 @@
     </properties>
 
 	<!-- added by toyeeb to deploy module to bintray -->
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<scmCommentPrefix>[skip ci] [maven-release-plugin]</scmCommentPrefix>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	<distributionManagement>
-		<repository>
-			<id>bintray-nmrs-nigeria-maven</id>
-			<name>nmrs-nigeria-maven</name>
-			<url>https://api.bintray.com/maven/nmrs-nigeria/maven/openmrs-module-lims/;publish=1</url>
-		</repository>
-	</distributionManagement>
+<!--	<build>-->
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-release-plugin</artifactId>-->
+<!--				<version>2.5.1</version>-->
+<!--				<configuration>-->
+<!--					<scmCommentPrefix>[skip ci] [maven-release-plugin]</scmCommentPrefix>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
+<!--	</build>-->
+<!--	<distributionManagement>-->
+<!--		<repository>-->
+<!--			<id>bintray-nmrs-nigeria-maven</id>-->
+<!--			<name>nmrs-nigeria-maven</name>-->
+<!--			<url>https://api.bintray.com/maven/nmrs-nigeria/maven/openmrs-module-lims/;publish=1</url>-->
+<!--		</repository>-->
+<!--	</distributionManagement>-->
 </project>
