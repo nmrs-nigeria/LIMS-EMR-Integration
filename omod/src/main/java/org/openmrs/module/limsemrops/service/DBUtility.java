@@ -5,18 +5,14 @@
  */
 package org.openmrs.module.limsemrops.service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.codehaus.jackson.map.ObjectMapper;
 import org.openmrs.Patient;
 import org.openmrs.module.limsemrops.dbmanager.DBManager;
 import org.openmrs.module.limsemrops.omodmodels.Manifest;
+import org.openmrs.module.limsemrops.omodmodels.Result;
 import org.openmrs.module.limsemrops.omodmodels.VLSampleInformationFrontFacing;
 import org.openmrs.module.limsemrops.utility.ConstantUtils;
 
@@ -184,6 +180,22 @@ public class DBUtility {
         }
 
         return vLSampleInformationFrontFacings;
+
+    }
+	
+	public List<Result> getManifestResult(String manifestId) {
+
+        List<Result> results = new ArrayList<>();
+        try {
+            this.ndrDBManager.openConnection();
+            results = ndrDBManager.getResultByManifestId(manifestId);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        } finally {
+            this.ndrDBManager.closeConnection();
+        }
+
+        return results;
 
     }
 }

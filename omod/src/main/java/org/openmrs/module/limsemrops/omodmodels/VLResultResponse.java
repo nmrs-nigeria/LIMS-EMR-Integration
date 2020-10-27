@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * @author MORRISON.I
  */
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VLResultResponse {
 	
@@ -26,7 +25,7 @@ public class VLResultResponse {
 	
 	private String sendingPCRLabName;
 	
-	private String testType;
+	private Integer testType;
 	
 	private List<ViralLoadTestReport> viralLoadTestReport;
 	
@@ -70,11 +69,11 @@ public class VLResultResponse {
 		this.sendingPCRLabName = sendingPCRLabName;
 	}
 	
-	public String getTestType() {
+	public Integer getTestType() {
 		return testType;
 	}
 	
-	public void setTestType(String testType) {
+	public void setTestType(Integer testType) {
 		this.testType = testType;
 	}
 	

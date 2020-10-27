@@ -17,7 +17,7 @@ public class Result {
 	
 	private String pcrLabSampleNumber;
 	
-	private Date dateSampleRecievedAtPCRLab;
+	private Date dateSampleReceivedAtPCRLab;
 	
 	private String testResult;
 	
@@ -75,12 +75,12 @@ public class Result {
 		this.pcrLabSampleNumber = pcrLabSampleNumber;
 	}
 	
-	public Date getDateSampleRecievedAtPCRLab() {
-		return dateSampleRecievedAtPCRLab;
+	public Date getDateSampleReceivedAtPCRLab() {
+		return dateSampleReceivedAtPCRLab;
 	}
 	
-	public void setDateSampleRecievedAtPCRLab(Date dateSampleRecievedAtPCRLab) {
-		this.dateSampleRecievedAtPCRLab = dateSampleRecievedAtPCRLab;
+	public void setDateSampleReceivedAtPCRLab(Date dateSampleReceivedAtPCRLab) {
+		this.dateSampleReceivedAtPCRLab = dateSampleReceivedAtPCRLab;
 	}
 	
 	public String getTestResult() {

@@ -11,6 +11,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +24,7 @@ import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.limsemrops.dbmanager.DBManager;
 import org.openmrs.module.limsemrops.omodmodels.Manifest;
+import org.openmrs.module.limsemrops.omodmodels.ManifestResultResponse;
 import org.openmrs.module.limsemrops.omodmodels.PatientID;
 import org.openmrs.module.limsemrops.omodmodels.Result;
 import org.openmrs.module.limsemrops.omodmodels.ResultRequest;
@@ -48,17 +50,19 @@ public class SampleResultManager {
 	
 	AlertService alertService;
 	
-	public SampleResultManager() {
-		dBManager = new DBManager();
-		exchangeLayer = new ExchangeLayer();
-		mapper = new ObjectMapper();
-		alertService = Context.getService(AlertService.class);
-		
-	}
+	List<ManifestResultResponse> manifestResultResponses;
 	
-	public void pullManifestResultFromLIMS() throws SQLException {
-        dBManager.openConnection();
-        List<Manifest> pendingManifests = dBManager.getAllPendingManifest();
+	public SampleResultManager() {
+        dBManager = new DBManager();
+        exchangeLayer = new ExchangeLayer();
+        mapper = new ObjectMapper();
+        alertService = Context.getService(AlertService.class);
+        manifestResultResponses = new ArrayList<>();
+
+    }
+	
+	public List<ManifestResultResponse> pullManifestResultFromLIMS(List<Manifest> pendingManifests) throws SQLException {
+
         if (!pendingManifests.isEmpty()) {
             System.out.println("GOT SOME PENDING SAMPLES");
 
@@ -91,6 +95,8 @@ public class SampleResultManager {
                         } catch (Exception ex) {
                             Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                    } else {
+                        manifestResultResponses.add(new ManifestResultResponse(a.getManifestID(), "No"));
                     }
 
                 } catch (UnirestException ex) {
@@ -102,6 +108,8 @@ public class SampleResultManager {
         }
 
         dBManager.closeConnection();
+
+        return manifestResultResponses;
 
     }
 	
@@ -126,7 +134,7 @@ public class SampleResultManager {
                 dBManager.insertSampleResult(result);
 
                 //get any not null pID
-                PatientID pi = vl.getPatientID().stream().filter(a ->  !(a.getIdNumber().equals(StringUtils.EMPTY))).findFirst().get();
+                PatientID pi = vl.getPatientID().stream().filter(a -> !(a.getIdNumber().equals(StringUtils.EMPTY))).findFirst().get();
                 patientIdBuilder.append(pi.getIdNumber());
                 patientIdBuilder.append(",");
 
@@ -139,7 +147,7 @@ public class SampleResultManager {
 
                 if (encounterId != null) {
 
-                    updatePatientSampleRecordwithResult(encounterId, result.getDateSampleRecievedAtPCRLab(), result.getDateResultDispatched(), result.getTestResult());
+                    updatePatientSampleRecordwithResult(encounterId, result.getDateSampleReceivedAtPCRLab(), result.getDateResultDispatched(), result.getTestResult());
 
                 }
 
@@ -155,6 +163,7 @@ public class SampleResultManager {
 
         if (!vLResultResponse.getViralLoadTestReport().isEmpty()) {
             dBManager.updateManifestResultStatus(ConstantUtils.ResultStatus.AVAILABLE.toString(), Context.getAuthenticatedUser().toString(), vLResultResponse.getManifestID());
+            manifestResultResponses.add(new ManifestResultResponse(vLResultResponse.getManifestID(), "Yes"));
         }
 
         //send notification
@@ -229,51 +238,51 @@ public class SampleResultManager {
 		
 	}
 	
-	public void pullManifestResultFromLIMSByClickFromUI(String manifestID) throws SQLException {
-        dBManager.openConnection();
-        List<Manifest> pendingManifests = dBManager.getAllPendingManifestById(manifestID);
-        if (!pendingManifests.isEmpty()) {
-            System.out.println("GOT SOME PENDING SAMPLES");
-
-            pendingManifests.stream().forEach(a -> {
-
-                ResultRequest rr = new ResultRequest();
-                rr.setManifestID(a.getManifestID());
-                rr.setReceivingPCRLabID(a.getPcrLabCode());
-                rr.setReceivingPCRLabName(a.getPcrLabName());
-                rr.setSendingFacilityID(Utils.getFacilityDATIMId());
-                rr.setSendingFacilityName(Utils.getFacilityName());
-                rr.setTestType(a.getTestType());
-
-                try {
-
-                    System.out.println("About to request sample info online");
-
-                    HttpResponse<String> sampleResponse
-                            = exchangeLayer.requestManifestResultOnline(rr);
-
-                    if (sampleResponse != null && sampleResponse.getStatus() == 200) {
-                        try {
-                            System.out.println("Got sample results");
-                            //got a result
-                             VLResultResponse resultResponse = mapper.readValue(sampleResponse.getBody(), VLResultResponse.class);
-                            updateManifestResultOnDB(resultResponse);
-
-                        } catch (SQLException ex) {
-                            Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (IOException ex) {
-                            Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-
-                } catch (UnirestException ex) {
-                    Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            });
-
-        }
-        dBManager.closeConnection();
-
-    }
+	//    public void pullManifestResultFromLIMSByClickFromUI(String manifestID) throws SQLException {
+	//        dBManager.openConnection();
+	//        List<Manifest> pendingManifests = dBManager.getAllPendingManifestById(manifestID);
+	//        if (!pendingManifests.isEmpty()) {
+	//            System.out.println("GOT SOME PENDING SAMPLES");
+	//
+	//            pendingManifests.stream().forEach(a -> {
+	//
+	//                ResultRequest rr = new ResultRequest();
+	//                rr.setManifestID(a.getManifestID());
+	//                rr.setReceivingPCRLabID(a.getPcrLabCode());
+	//                rr.setReceivingPCRLabName(a.getPcrLabName());
+	//                rr.setSendingFacilityID(Utils.getFacilityDATIMId());
+	//                rr.setSendingFacilityName(Utils.getFacilityName());
+	//                rr.setTestType(a.getTestType());
+	//
+	//                try {
+	//
+	//                    System.out.println("About to request sample info online");
+	//
+	//                    HttpResponse<String> sampleResponse
+	//                            = exchangeLayer.requestManifestResultOnline(rr);
+	//
+	//                    if (sampleResponse != null && sampleResponse.getStatus() == 200) {
+	//                        try {
+	//                            System.out.println("Got sample results");
+	//                            //got a result
+	//                            VLResultResponse resultResponse = mapper.readValue(sampleResponse.getBody(), VLResultResponse.class);
+	//                            updateManifestResultOnDB(resultResponse);
+	//
+	//                        } catch (SQLException ex) {
+	//                            Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
+	//                        } catch (IOException ex) {
+	//                            Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
+	//                        }
+	//                    }
+	//
+	//                } catch (UnirestException ex) {
+	//                    Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
+	//                }
+	//
+	//            });
+	//
+	//        }
+	//        dBManager.closeConnection();
+	//
+	//    }
 }

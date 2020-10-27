@@ -196,7 +196,7 @@ public class DBManager {
 			pStatement.setString(2, result.getManifestID());
 			pStatement.setString(3, mapper.writeValueAsString(result.getPatientID()));
 			pStatement.setString(4, result.getPcrLabSampleNumber());
-			pStatement.setDate(5, new java.sql.Date(result.getDateSampleRecievedAtPCRLab().getTime()));
+			pStatement.setDate(5, new java.sql.Date(result.getDateSampleReceivedAtPCRLab().getTime()));
 			pStatement.setString(6, result.getTestResult());
 			pStatement.setDate(7, new java.sql.Date(result.getResultDate().getTime()));
 			pStatement.setDate(8, new java.sql.Date(result.getApprovalDate().getTime()));
@@ -217,6 +217,54 @@ public class DBManager {
 		return response.intValue();
 		
 	}
+	
+	public List<Result> getResultByManifestId(String manifestId) throws SQLException, IOException {
+
+        String sql = "SELECT id, manifest_id, patient_id, sample_id, pcr_lab_samplenumber, date_sample_receieved_at_pcrlab, test_result, result_date, assay_date, approval_date, date_result_dispatched, sample_status, sample_testable, date_created, created_by, date_modified, modified_by\n"
+                + "FROM " + ConstantUtils.MANIFEST_SAMPLES_RESULT + " where manifest_id = ? ";
+
+        pStatement = conn.prepareStatement(sql);
+        pStatement.setString(1, manifestId);
+        ResultSet resultSet = pStatement.executeQuery();
+        
+//         if (resultSet.getString("patient_id") != null) {
+//                vl.setPatientID(mapper.readValue(resultSet.getString("patient_id"), new TypeReference<List<PatientID>>() {
+//                }));
+//            }
+        
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Result> results = new ArrayList<>();
+        while(resultSet.next()){
+            Result result = new Result();
+            result.setApprovalDate(resultSet.getDate("approval_date"));
+            result.setAssayDate(resultSet.getDate("assay_date"));
+            result.setCreatedBy(resultSet.getString("created_by"));
+            result.setDateResultDispatched(resultSet.getDate("date_result_dispatched"));
+            result.setDateSampleReceivedAtPCRLab(resultSet.getDate("date_sample_receieved_at_pcrlab"));
+            result.setId(String.valueOf(resultSet.getInt("id")));
+            result.setManifestID(resultSet.getString("manifest_id"));
+            if (resultSet.getString("patient_id") != null) {
+                result.setPatientID(mapper.readValue(resultSet.getString("patient_id"), new TypeReference<List<PatientID>>() {
+                }));
+            }
+            
+            result.setPcrLabSampleNumber(resultSet.getString("pcr_lab_samplenumber"));
+            result.setResultDate(resultSet.getDate("result_date"));
+            result.setSampleID(resultSet.getString("sample_id"));
+            result.setSampleStatus(resultSet.getString("sample_status"));
+            result.setSampleTestable(resultSet.getString("sample_testable"));
+            result.setTestResult(resultSet.getString("test_result"));
+            
+            results.add(result);
+            
+            
+        }
+        
+        
+        return results;
+
+    }
 	
 	public int insertManifestSamples(List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings, String manifestID, String createdBy, Date dateSampleSent) throws SQLException {
 
@@ -369,7 +417,7 @@ public class DBManager {
 		//   pStatement = conn.prepareStatement("update manifest")
 	}
 	
-	public List<Manifest> convertResultSetToManifestList(ResultSet resultSet) throws SQLException {
+	private List<Manifest> convertResultSetToManifestList(ResultSet resultSet) throws SQLException {
 
         List<Manifest> manifests = new ArrayList<>();
 

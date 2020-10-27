@@ -19,7 +19,7 @@ public class ViralLoadTestReport {
 	
 	private String firstName;
 	
-	private String lastName;
+	private String surName;
 	
 	private String sex;
 	
@@ -31,7 +31,7 @@ public class ViralLoadTestReport {
 	
 	private Date visitDate;
 	
-	private Date dateSampleRecievedAtPCRLab;
+	private Date dateSampleReceivedAtPCRLab;
 	
 	private String testResult;
 	
@@ -63,12 +63,12 @@ public class ViralLoadTestReport {
 		this.firstName = firstName;
 	}
 	
-	public String getLastName() {
-		return lastName;
+	public String getSurName() {
+		return surName;
 	}
 	
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setSurName(String surName) {
+		this.surName = surName;
 	}
 	
 	public String getSex() {
@@ -111,12 +111,12 @@ public class ViralLoadTestReport {
 		this.visitDate = visitDate;
 	}
 	
-	public Date getDateSampleRecievedAtPCRLab() {
-		return dateSampleRecievedAtPCRLab;
+	public Date getDateSampleReceivedAtPCRLab() {
+		return dateSampleReceivedAtPCRLab;
 	}
 	
-	public void setDateSampleRecievedAtPCRLab(Date dateSampleRecievedAtPCRLab) {
-		this.dateSampleRecievedAtPCRLab = dateSampleRecievedAtPCRLab;
+	public void setDateSampleReceivedAtPCRLab(Date dateSampleReceivedAtPCRLab) {
+		this.dateSampleReceivedAtPCRLab = dateSampleReceivedAtPCRLab;
 	}
 	
 	public String getTestResult() {
