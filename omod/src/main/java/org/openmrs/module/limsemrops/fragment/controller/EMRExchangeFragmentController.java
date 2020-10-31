@@ -126,39 +126,46 @@ public class EMRExchangeFragmentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> fetchSampleResultFromUI() {
-
-        List<Manifest> manifests = dBUtility.getPendingManifests();
-        List<ManifestResultResponse> manifestResultResponses;
-        String response = Type.EMPTYSTRING;
-        try {
-            manifestResultResponses = sampleResultManager.pullManifestResultFromLIMS(manifests);
-            response = mapper.writeValueAsString(manifestResultResponses);
-        } catch (SQLException ex) {
-            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+	public String fetchSampleResultFromUI() {
+		
+		List<Manifest> manifests = dBUtility.getPendingManifests();
+		List<ManifestResultResponse> manifestResultResponses;
+		String response = Type.EMPTYSTRING;
+		try {
+			manifestResultResponses = sampleResultManager.pullManifestResultFromLIMS(manifests);
+			if (manifestResultResponses.isEmpty()) {
+				response = "EMPTY";
+			} else {
+				response = mapper.writeValueAsString(manifestResultResponses);
+			}
+		}
+		catch (SQLException ex) {
+			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		catch (JsonProcessingException ex) {
+			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return response;
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getResultByManifestId(@RequestParam(value = "manifestId") String manifestId) {
-
-        List<Result> results;
-        String response = Type.EMPTYSTRING;
-        results = dBUtility.getManifestResult(manifestId);
-        try {
-            response = mapper.writeValueAsString(results);
-
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-
-    }
+	public String getResultByManifestId(@RequestParam(value = "manifestId") String manifestId) {
+		List<Result> results;
+		String response = Type.EMPTYSTRING;
+		results = dBUtility.getManifestResult(manifestId);
+		try {
+			if (results.isEmpty()) {
+				response = "EMPTY";
+			} else {
+				mapper = new ObjectMapper();
+				response = mapper.writeValueAsString(results);
+			}
+		}
+		catch (JsonProcessingException ex) {
+			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return response;
+	}
 	
 	public String searchVLSamples(@RequestParam(value = "startDate") Date startDate, @RequestParam(value = "endDate") Date endDate,
             @RequestParam(value = "sampleSpace") String sampleSpace) {
@@ -348,20 +355,19 @@ public class EMRExchangeFragmentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 	
-	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getManifestSamples(@RequestParam(value = "manifestId") String manifestId) {
-        mapper = new ObjectMapper();
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        List<VLSampleInformationFrontFacing> manifestSamples = dBUtility.getSamplesByManifestId(manifestId);
-        String response = null;
-        try {
-            response = mapper.writeValueAsString(manifestSamples);
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+	public String getManifestSamples(@RequestParam(value = "manifestId") String manifestId) {
+		mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		List<VLSampleInformationFrontFacing> manifestSamples = dBUtility.getSamplesByManifestId(manifestId);
+		String response = null;
+		try {
+			response = mapper.writeValueAsString(manifestSamples);
+		}
+		catch (JsonProcessingException ex) {
+			Logger.getLogger(EMRExchangeFragmentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return response;
+	}
 	
 	private List<VLSampleInformation> updateDateSampleSent(List<VLSampleInformationFrontFacing> allVLSamplefromUI, Date dateSampleSent) {
 

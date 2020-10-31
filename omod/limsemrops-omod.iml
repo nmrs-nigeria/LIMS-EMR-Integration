@@ -12,7 +12,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.openmrs.module:limsemrops-api:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="limsemrops-api" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.web:openmrs-web:1.11.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:jsp-api:2.0" level="project" />
@@ -48,11 +48,12 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.struts:struts-taglib:1.3.8" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.struts:struts-tiles:1.3.8" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.web:openmrs-web:tests:1.11.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:uiframework-api:3.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:uiframework-api:3.13.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.github.jknack:handlebars:1.3.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.antlr:antlr4-runtime:4.2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.antlr:antlr4-annotations:4.2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.mozilla:rhino:1.7R4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.owasp.encoder:encoder:1.2" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:1.6" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20160212" level="project" />
@@ -67,10 +68,10 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.4" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:htmlformentry-api:2.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:htmlformentry-api:3.4.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.joda:joda-convert:1.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.anotheria:ano-web:2.1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:htmlformentryui-api:1.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.module:htmlformentryui-api:1.6.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.openmrs.api:openmrs-api:1.11.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.commons:commons-lang3:3.1" level="project" />

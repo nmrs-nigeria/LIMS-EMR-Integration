@@ -106,11 +106,8 @@ public class SampleResultManager {
             });
 
         }
-
         dBManager.closeConnection();
-
         return manifestResultResponses;
-
     }
 	
 	private void updateManifestResultOnDB(VLResultResponse vLResultResponse) throws SQLException, IOException {

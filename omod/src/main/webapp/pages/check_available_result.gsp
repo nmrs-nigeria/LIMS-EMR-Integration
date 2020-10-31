@@ -53,21 +53,77 @@
 
     function getResultFromLims(ManfID) {
         jq.ajax({
-           url: "${ ui.actionLink("limsemrops", "EMRExchange", "fetchSampleResult") }",
+           url: "${ ui.actionLink("limsemrops", "EMRExchange", "fetchSampleResultFromUI") }",
            dataType: "json",
            success: function (response) {
-             displayDialogNotification();
+             displayDialogNotification(response, ManfID);
            }
         });
     }
 
-    function displayDialogNotification() {
-        jq('#myModal').modal('show');
-    }
+    function displayDialogNotification(response, ManfID) {
+            var cont = "";
+            if(response == "EMPTY"){
+              cont = "<p><em> Result is currently not available. The <b>Result Status</b> column will be updated once result is available.</em></p>";
+            }else{
+              var resp = JSON.parse(response);
+              for (i = 0; i < resp.length; i++) {
+                  var res = resp[i];
+                  var r = res.manifestId;
+                  var isR = res.isResultAvailable;
+                  var avail = false;
+                  if(r == ManfID){
+                    if(isR != "No"){
+                        cont = "<p><em> Result is now available. Click on the eye icon to view result details.</em></p>";
+                    }
+                  }
+              }
+            }
+            var element = document.getElementById("result");
+            element.innerHTML = cont;
+            jq('#myModal').modal('show');
+        }
 
     function viewResult(ManfID) {
-        jq('#myResultModal').modal('show');
+         jq.ajax({
+             url: "${ ui.actionLink("limsemrops", "EMRExchange", "getResultByManifestId") }",
+             dataType: "json",
+             data: {manifestId: ManfID},
+             success: function (response) {
+                 displayResultDetailDialog(response, ManfID);
+             }
+         });
     }
+
+        function displayResultDetailDialog(response, ManfID) {
+                    var conts = "";
+                    var counter = 1;
+                    conts = "<table>";
+                    conts += "<tr><th>S/N</th><th>Manifest ID</th><th>PCR Lab Sample No.</th><th>Date Sample Recieved at PCR Lab</th><th>Test Result</th><th>Sample Status</th><th>Sample Testable</th><th>Result Date</th><th>Assay Date</th><th>Approval Date</th></tr>";
+                    if(response != "EMPTY"){
+                      var resps = JSON.parse(response);
+                      for (i = 0; i < resps.length; i++) {
+                        var resultElement = resps[i];
+                        conts += "<tr>";
+                        conts += "<td>" + counter + "</td>";
+                        conts += "<td>" + resultElement.manifestID + "</td>";
+                        conts += "<td>" + resultElement.pcrLabSampleNumber + "</td>";
+                        conts += "<td>" + resultElement.dateSampleReceivedAtPCRLab + "</td>";
+                        conts += "<td>" + resultElement.testResult + "</td>";
+                        conts += "<td>" + resultElement.sampleStatus + "</td>";
+                        conts += "<td>" + resultElement.sampleTestable + "</td>";
+                        conts += "<td>" + resultElement.resultDate + "</td>";
+                        conts += "<td>" + resultElement.assayDate + "</td>";
+                        conts += "<td>" + resultElement.approvalDate + "</td>";
+                        conts += "<tr>";
+                        counter++;
+                      }
+                    }
+                    conts += "</table>";
+                    var element = document.getElementById("result-details");
+                    element.innerHTML = conts;
+                    jq('#myResultModal').modal('show');
+                }
 
     getPendingManifestList();
 
@@ -78,9 +134,8 @@
 <br>
 
 <!-- Modal -->
-
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #00463f;">
         <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><i class="icon-folder-open"></i> Result Notification</h5>
@@ -88,8 +143,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <p><em> Result verification in progress. The <b>Result Status</b> column will be updated once result is available.</em></p>
+      <div class="modal-body" id="result">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" style="color: black" data-dismiss="modal">Ok</button>
@@ -100,7 +154,7 @@
 
 <!-- View Result Modal -->
 <div class="modal fade" id="myResultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #00463f;">
         <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><i class="icon-folder-open"></i> Result Details</h5>
@@ -108,39 +162,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <table>
-            <tr>
-                <th>Fullname: </th><td></td>
-            </tr>
-            <tr>
-                <th>Manifest ID: </th><td></td>
-            </tr>
-            <tr>
-                <th>PCR Lab Sample No.:</th><td></td>
-            </tr>
-            <tr>
-                <th>Date Sample Recieved at PCR Lab: </th><td></td>
-            </tr>
-            <tr>
-                <th>Test Result: </th><td></td>
-            </tr>
-            <tr>
-                <th>Sample Status:</th><td></td>
-            </tr>
-            <tr>
-                <th>Sample Testable: </th><td></td>
-            </tr>
-            <tr>
-                <th>Result Date: </th><td></td>
-            </tr>
-            <tr>
-                <th>Assay Date:</th><td></td>
-            </tr>
-            <tr>
-                <th>Approval Date:</th><td></td>
-            </tr>
-        </table>
+      <div class="modal-body" id="result-details">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" style="color: black" data-dismiss="modal">Ok</button>
