@@ -30,7 +30,7 @@ type="text/css" />
             </div-->
 
             <div class="header-sub-text">
-                Manifest Created By: JOHN DOE <br>
+                Manifest Created By: <br>
                 Facility Contact: 08011111111 <br>
                 Date Created: 04 - 08 - 2020
             </div>
