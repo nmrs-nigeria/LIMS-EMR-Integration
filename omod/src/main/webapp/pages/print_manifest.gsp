@@ -61,7 +61,7 @@ type="text/css" />
                         </tr>
                     </thead>
                     <tbody id="sample_body">
-          
+
                     </tbody>
                 </table>
             </div>
@@ -88,84 +88,72 @@ type="text/css" />
 
     }).success(function (data) {
     data = JSON.parse(data.body);
-    console.log(data);    
+    console.log(data);
     if(data != ""){
-    //pcr lab details
+        //pcr lab details
         jq('#pcr_details').append("<h2>PCR Details</h2>");
         jq('#pcr_details').append("<p>Destination</p>");
-         jq('#pcr_details').append("<span>"+data.pcrLabName+"</span>");
-          jq('#pcr_details').append("<p>PCR Lab Code</p>");
-         jq('#pcr_details').append("<span>"+data.pcrLabCode+"</span>");
+        jq('#pcr_details').append("<span>"+data.pcrLabName+"</span>");
+        jq('#pcr_details').append("<p>PCR Lab Code</p>");
+        jq('#pcr_details').append("<span>"+data.pcrLabCode+"</span>");
 
-    // rider profile
-         jq('#rider_profile').append("<h2>Courier Details</h2>");
-         jq('#rider_profile').append("<p>Courier Name</p>");
-         jq('#rider_profile').append("<span>"+data.riderName+"</span>");
-         jq('#rider_profile').append("<p>Courier Contact</p>");
+        // rider profile
+        jq('#rider_profile').append("<h2>Courier Details</h2>");
+        jq('#rider_profile').append("<p>Courier Name</p>");
+        jq('#rider_profile').append("<span>"+data.riderName+"</span>");
+        jq('#rider_profile').append("<p>Courier Contact</p>");
         jq('#rider_profile').append("<span>"+data.riderPhoneNumber+"</span>");
         jq('#rider_profile').append("<p>Pickup Date</p>");
-       jq('#rider_profile').append("<span>"+data.dateScheduleForPickup+"</span>");
+        jq('#rider_profile').append("<span>"+data.dateScheduleForPickup+"</span>");
 
-    // manifest details     
- jq('#manifest_detail').append("<h2>Manifest Details</h2>");
- jq('#manifest_detail').append("<p>Manifest ID</p>");
- jq('#manifest_detail').append("<span>"+data.manifestID+"</span>");
-  jq('#manifest_detail').append("<p>Total Sample</p>");
- jq('#manifest_detail').append("<span>"+data.riderTotalSamplesPicked+"</span>");
- jq('#manifest_detail').append("<p>Test type</p>");
- jq('#manifest_detail').append("<span>"+data.testType+"</span>");
-  jq('#manifest_detail').append("<p>Result Status</p>");
-  jq('#manifest_detail').append("<span>"+data.resultStatus+"</span>");
+        // manifest details
+        jq('#manifest_detail').append("<h2>Manifest Details</h2>");
+        jq('#manifest_detail').append("<p>Manifest ID</p>");
+        jq('#manifest_detail').append("<span>"+data.manifestID+"</span>");
+        jq('#manifest_detail').append("<p>Total Sample</p>");
+        jq('#manifest_detail').append("<span>"+data.riderTotalSamplesPicked+"</span>");
+        jq('#manifest_detail').append("<p>Test type</p>");
+        jq('#manifest_detail').append("<span>"+data.testType+"</span>");
+        jq('#manifest_detail').append("<p>Result Status</p>");
+        jq('#manifest_detail').append("<span>"+data.resultStatus+"</span>");
 
     }
     })
     .error(function (xhr, status, err) {
     console.log(err);
     });
-
 
 </script>
 
 <script>
     jq = jQuery;
     //  localStorage.setItem("manifestid", "01D96B3-9B2F-4");
-    var manifestID =    localStorage.getItem("manifestid");
+    var manifestID =  localStorage.getItem("manifestid");
     console.log(manifestID);
-
     jq.ajax({
-            url: "${ ui.actionLink("limsemrops", "EMRExchange", "getManifestSamples") }",
-    dataType: "json",
-    data: {
-    'manifestId':manifestID
-    }
-
-    }).success(function (data) {
-    data = JSON.parse(data.body);
-    console.log(data);    
-    for(var i=0;i<data.length;i++) {
-
-        var sn = i+1;
-        jq('#sample_body').append('<tr>');
-      jq('#sample_body').append("<td>"+sn+"</td>");
-     jq('#sample_body').append("<td>"+data[i].sampleID+"</td>");
-      jq('#sample_body').append("<td>"+data[i].patientID[0].idNumber+"</td>");
-      jq('#sample_body').append("<td>"+data[i].sampleCollectionDate+"</td>");
-      jq('#sample_body').append("<td>"+data[i].sampleType+"</td>");
- jq('#sample_body').append('</tr>');
- 
-    }
-    })
-    .error(function (xhr, status, err) {
-    console.log(err);
+        url: "${ ui.actionLink("limsemrops", "EMRExchange", "getManifestSamples") }",
+        dataType: "json",
+        data: {manifestId: manifestID },
+        success: function (response) {
+            var respons = JSON.parse(response);
+            console.log(respons);
+            for(var i=0;i<respons.length;i++) {
+                var sn = i+1;
+                jq('#sample_body').append('<tr>');
+                jq('#sample_body').append("<td>"+sn+"</td>");
+                jq('#sample_body').append("<td>"+respons[i].sampleID+"</td>");
+                jq('#sample_body').append("<td>"+respons[i].patientID[0].idNumber+"</td>");
+                jq('#sample_body').append("<td>"+respons[i].sampleCollectionDate+"</td>");
+                jq('#sample_body').append("<td>"+respons[i].sampleType+"</td>");
+                jq('#sample_body').append('</tr>');
+            }
+        }
     });
-
-
-
 </script>
 
 <script>
     function printDoc(){
-    window.print();
+        window.print();
     }
 </script>
 <% ui.includeJavascript("limsemrops", "bootstrap.min.js") %>
