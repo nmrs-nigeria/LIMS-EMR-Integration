@@ -114,4 +114,8 @@ public class AuthModule {
 		this.dbManager = new DBManager();
 	}
 	
+	public void getTempToken() {
+		
+	}
+	
 }

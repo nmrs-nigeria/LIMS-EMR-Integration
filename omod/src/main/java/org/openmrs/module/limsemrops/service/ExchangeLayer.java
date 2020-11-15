@@ -10,10 +10,13 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.body.RequestBodyEntity;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.module.limsemrops.omodmodels.ResultRequest;
 import org.openmrs.module.limsemrops.omodmodels.SampleCollectionManifest;
+import org.openmrs.module.limsemrops.omodmodels.TempAuth;
 import org.openmrs.module.limsemrops.omodmodels.VLResultResponse;
 import org.openmrs.module.limsemrops.utility.ConstantUtils;
 import org.openmrs.module.limsemrops.utility.GeneralMapper;
@@ -34,6 +37,7 @@ public class ExchangeLayer {
 			System.out.println(response.getBody());
 			return true;
 		}
+		
 		System.out.println("REQUEST FAILED");
 		return false;
 		
@@ -45,8 +49,23 @@ public class ExchangeLayer {
 		
 		HttpResponse<String> response = Unirest.post(ConstantUtils.BASE_URL + ConstantUtils.REQUEST_SAMPLE_RESULT)
 		        .header("Content-Type", "application/json").body(resultRequest).asString();
-		
 		return response;
+		
+	}
+	
+	public String requestTokenFromLims() throws UnirestException {
+		
+		TempAuth tempAuth = new TempAuth();
+		
+		Unirest.setObjectMapper(GeneralMapper.getCustomObjectMapper());
+		
+		HttpResponse<JsonNode> response = Unirest.post(ConstantUtils.BASE_URL + ConstantUtils.TOKEN_REQUEST_URL)
+		        .header("Content-Type", "application/json").body(tempAuth).asJson();
+		if (response != null && response.getStatus() == 200) {
+			return response.getBody().getObject().getString("jwt");
+		}
+		
+		return null;
 		
 	}
 	

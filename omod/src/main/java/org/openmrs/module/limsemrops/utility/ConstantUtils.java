@@ -60,10 +60,11 @@ public class ConstantUtils {
 	
 	//testing
 	//  public static final String BASE_URL = "https://www.lims.ng/api";
-	
 	public static final String POST_SAMPLES = "/samples/create.php";
 	
 	public static final String REQUEST_SAMPLE_RESULT = "/samples/result.php";
+	
+	public static final String TOKEN_REQUEST_URL = "/login.php";
 	
 	//public enums
 	public enum SampleSpace {

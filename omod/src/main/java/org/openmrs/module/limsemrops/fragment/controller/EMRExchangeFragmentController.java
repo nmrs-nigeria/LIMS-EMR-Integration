@@ -131,6 +131,8 @@ public class EMRExchangeFragmentController {
 		List<Manifest> manifests = dBUtility.getPendingManifests();
 		List<ManifestResultResponse> manifestResultResponses;
 		String response = Type.EMPTYSTRING;
+		mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		try {
 			manifestResultResponses = sampleResultManager.pullManifestResultFromLIMS(manifests);
 			if (manifestResultResponses.isEmpty()) {
@@ -153,11 +155,13 @@ public class EMRExchangeFragmentController {
 		List<Result> results;
 		String response = Type.EMPTYSTRING;
 		results = dBUtility.getManifestResult(manifestId);
+		mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		try {
 			if (results.isEmpty()) {
 				response = "EMPTY";
 			} else {
-				mapper = new ObjectMapper();
+				
 				response = mapper.writeValueAsString(results);
 			}
 		}
@@ -258,6 +262,13 @@ public class EMRExchangeFragmentController {
 
             SampleCollectionManifest sampleCollectionManifest = new SampleCollectionManifest();
             sampleCollectionManifest.setViralloadManifest(vLSampleCollectionBatchManifest);
+            
+            String token = this.exchangeLayer.requestTokenFromLims();
+            if(token != null){
+            sampleCollectionManifest.setToken(token);
+            }else{
+             return new ResponseEntity<>("Could not process request:Auth problem", HttpStatus.BAD_REQUEST);
+            }
 
             String manifestJsonString = mapper.writeValueAsString(sampleCollectionManifest);
 

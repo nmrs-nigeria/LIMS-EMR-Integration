@@ -62,53 +62,70 @@ public class SampleResultManager {
     }
 	
 	public List<ManifestResultResponse> pullManifestResultFromLIMS(List<Manifest> pendingManifests) throws SQLException {
-
-        if (!pendingManifests.isEmpty()) {
-            System.out.println("GOT SOME PENDING SAMPLES");
-
-            //    AtomicInteger availableResultCount = new AtomicInteger(0);
-            pendingManifests.stream().forEach(a -> {
-
-                ResultRequest rr = new ResultRequest();
-                rr.setManifestID(a.getManifestID());
-                rr.setReceivingPCRLabID(a.getPcrLabCode());
-                rr.setReceivingPCRLabName(a.getPcrLabName());
-                rr.setSendingFacilityID(Utils.getFacilityDATIMId());
-                rr.setSendingFacilityName(Utils.getFacilityName());
-                rr.setTestType(a.getTestType());
-
-                try {
-
-                    System.out.println("About to request sample info online");
-
-                    HttpResponse<String> sampleResponse
-                            = exchangeLayer.requestManifestResultOnline(rr);
-
-                    if (sampleResponse != null && sampleResponse.getStatus() == 200 && sampleResponse.getBody() != null) {
-                        try {
-
-                            System.out.println("Got sample results");
-                            System.out.println(sampleResponse.getBody());
-                            VLResultResponse resultResponse = mapper.readValue(sampleResponse.getBody(), VLResultResponse.class);
-                            //got a result
-                            updateManifestResultOnDB(resultResponse);
-                        } catch (Exception ex) {
-                            Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } else {
-                        manifestResultResponses.add(new ManifestResultResponse(a.getManifestID(), "No"));
-                    }
-
-                } catch (UnirestException ex) {
-                    Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            });
-
-        }
-        dBManager.closeConnection();
-        return manifestResultResponses;
-    }
+		
+		if (!pendingManifests.isEmpty()) {
+			System.out.println("GOT SOME PENDING SAMPLES");
+			boolean authFailed = false;
+			
+			//    AtomicInteger availableResultCount = new AtomicInteger(0);
+			for (Manifest a : pendingManifests) {
+				
+				ResultRequest rr = new ResultRequest();
+				rr.setManifestID(a.getManifestID());
+				rr.setReceivingPCRLabID(a.getPcrLabCode());
+				rr.setReceivingPCRLabName(a.getPcrLabName());
+				rr.setSendingFacilityID(Utils.getFacilityDATIMId());
+				rr.setSendingFacilityName(Utils.getFacilityName());
+				rr.setTestType(a.getTestType());
+				
+				try {
+					
+					System.out.println("About to request for token");
+					String token = exchangeLayer.requestTokenFromLims();
+					if (token != null) {
+						rr.setToken(token);
+					} else {
+						System.out.println("Error: could not process request");
+						authFailed = true;
+						break;
+					}
+					
+					System.out.println("About to request sample info online");
+					
+					HttpResponse<String> sampleResponse = exchangeLayer.requestManifestResultOnline(rr);
+					
+					if (sampleResponse != null && sampleResponse.getStatus() == 200 && sampleResponse.getBody() != null) {
+						try {
+							
+							System.out.println("Got sample results");
+							System.out.println(sampleResponse.getBody());
+							VLResultResponse resultResponse = mapper.readValue(sampleResponse.getBody(),
+							    VLResultResponse.class);
+							//got a result
+							updateManifestResultOnDB(resultResponse);
+						}
+						catch (Exception ex) {
+							Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					} else {
+						manifestResultResponses.add(new ManifestResultResponse(a.getManifestID(), "No"));
+					}
+					
+				}
+				catch (UnirestException ex) {
+					Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
+				}
+				
+			}
+			if (authFailed) {
+				return null;
+				
+			}
+			
+		}
+		dBManager.closeConnection();
+		return manifestResultResponses;
+	}
 	
 	private void updateManifestResultOnDB(VLResultResponse vLResultResponse) throws SQLException, IOException {
         dBManager.openConnection();
