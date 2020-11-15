@@ -62,6 +62,8 @@ public class ExchangeLayer {
 		HttpResponse<JsonNode> response = Unirest.post(ConstantUtils.BASE_URL + ConstantUtils.TOKEN_REQUEST_URL)
 		        .header("Content-Type", "application/json").body(tempAuth).asJson();
 		if (response != null && response.getStatus() == 200) {
+			System.out.println("Token request was successful");
+			System.out.println(response.getBody().getObject().getString("jwt"));
 			return response.getBody().getObject().getString("jwt");
 		}
 		

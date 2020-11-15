@@ -13,8 +13,6 @@ import java.io.Serializable;
  */
 public class SampleCollectionManifest implements Serializable {
 	
-	private String token;
-	
 	private VLSampleCollectionBatchManifest viralLoadManifest;
 	
 	private EIDSampleCollectionBatchManifest eidManifest;
@@ -34,14 +32,6 @@ public class SampleCollectionManifest implements Serializable {
 	
 	public void setEidManifest(EIDSampleCollectionBatchManifest eidManifest) {
 		this.eidManifest = eidManifest;
-	}
-	
-	public String getToken() {
-		return token;
-	}
-	
-	public void setToken(String token) {
-		this.token = token;
 	}
 	
 }

@@ -265,7 +265,7 @@ public class EMRExchangeFragmentController {
             
             String token = this.exchangeLayer.requestTokenFromLims();
             if(token != null){
-            sampleCollectionManifest.setToken(token);
+            sampleCollectionManifest.getViralloadManifest().setToken(token);
             }else{
              return new ResponseEntity<>("Could not process request:Auth problem", HttpStatus.BAD_REQUEST);
             }
