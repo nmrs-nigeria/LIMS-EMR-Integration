@@ -131,7 +131,7 @@
     </tr>
     <tr>
         <td></td>
-        <td><button type="submit" onclick="getFormvalue_geo()">Save Manifest</button></td>
+        <td><button type="submit" onclick="getFormvalue_geo()">Save and Send Manifest</button></td>
         <td></td>
         <td></td>
     </tr>

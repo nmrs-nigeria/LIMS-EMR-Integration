@@ -22,6 +22,8 @@ public class ResultRequest {
 	
 	private String manifestID;
 	
+	private String token;
+	
 	public String getSendingFacilityID() {
 		return sendingFacilityID;
 	}
@@ -68,6 +70,14 @@ public class ResultRequest {
 	
 	public void setManifestID(String manifestID) {
 		this.manifestID = manifestID;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+	
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 }

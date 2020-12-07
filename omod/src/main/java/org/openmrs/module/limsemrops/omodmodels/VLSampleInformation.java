@@ -48,10 +48,13 @@ public class VLSampleInformation implements Serializable {
 	
 	private Date sampleOrderDate;
 	
+	// Invalidate for scale-up
 	private String sampleCollectedBy;
 	
+	// Invalidate for scale-up
 	private Date sampleCollectionDate;
 	
+	// Invalidate for scale-up
 	private Date sampleCollectionTime;
 	
 	private Date dateSampleSent;

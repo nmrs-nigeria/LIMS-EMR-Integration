@@ -11,15 +11,15 @@ package org.openmrs.module.limsemrops.utility;
 public class ConstantUtils {
 	
 	//tables Names
-	public final static String ENCOUNTER_TABLE = "encounter";
+	public final static String ENCOUNTER_TABLE = "";
 	
-	public final static String MANIFEST_TABLE = "lims_manifest";
+	public final static String MANIFEST_TABLE = "";
 	
-	public final static String MANIFEST_SAMPLES_TABLE = "lims_manifest_samples";
+	public final static String MANIFEST_SAMPLES_TABLE = "";
 	
-	public final static String MANIFEST_SAMPLES_RESULT = "lims_manifest_result";
+	public final static String MANIFEST_SAMPLES_RESULT = "";
 	
-	public final static String AUTHMODULE_TABLE = "lims_auth_module";
+	public final static String AUTHMODULE_TABLE = "";
 	
 	//forms
 	public final static int Laboratory_Encounter_Type_Id = 11;
@@ -56,14 +56,14 @@ public class ConstantUtils {
 	
 	//URL
 	//live
-	public static final String BASE_URL = "https://www.lims.ng/apidemo";
+	public static final String BASE_URL = "";
 	
 	//testing
-	// public static final String BASE_URL = "https://www.lims.ng/api";
+	public static final String POST_SAMPLES = "";
 	
-	public static final String POST_SAMPLES = "/samples/create.php";
+	public static final String REQUEST_SAMPLE_RESULT = "";
 	
-	public static final String REQUEST_SAMPLE_RESULT = "/samples/result.php";
+	public static final String TOKEN_REQUEST_URL = "";
 	
 	//public enums
 	public enum SampleSpace {

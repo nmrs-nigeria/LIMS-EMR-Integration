@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class VLSampleCollectionBatchManifest implements Serializable {
 	
+	private String token;
+	
 	private String manifestID;
 	
 	private String sendingFacilityID;
@@ -122,6 +124,14 @@ public class VLSampleCollectionBatchManifest implements Serializable {
 	
 	public void setCourierContact(String courierContact) {
 		this.courierContact = courierContact;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+	
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 }
