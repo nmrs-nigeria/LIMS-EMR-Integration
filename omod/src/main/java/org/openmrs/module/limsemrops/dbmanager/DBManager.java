@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.openmrs.module.limsemrops.dbmanager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -14,11 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import org.openmrs.Patient;
 import org.openmrs.module.limsemrops.omodmodels.Auth;
 import org.openmrs.module.limsemrops.omodmodels.DBConnection;
@@ -54,8 +51,8 @@ public class DBManager {
 
         String sqlStr = "select encounter_id from " + ConstantUtils.ENCOUNTER_TABLE + " where encounter_type = "
                 + ConstantUtils.Laboratory_Encounter_Type_Id
-                + " and encounter_datetime >= ? "
-                + "and encounter_datetime <= ? and `voided` = 0 ";
+                + " and DATE(encounter_datetime) between ? "
+                + "and ? and `voided` = 0 ";
 
         pStatement = conn.prepareStatement(sqlStr);
 
@@ -76,9 +73,9 @@ public class DBManager {
 	public List<Integer> getRecentRecencyClientEncounter(Date startDate, Date endDate) throws SQLException {
 
         String sqlStr = "select encounter_id from " + ConstantUtils.ENCOUNTER_TABLE + " where encounter_type = "
-                + ConstantUtils.Laboratory_Encounter_Type_Id
-                + " and encounter_datetime >= ? "
-                + "and encounter_datetime <= ? and `voided` = 0 ";
+                + ConstantUtils.Client_Intake_Form_Encounter_Type_Id
+                + " and DATE(encounter_datetime) between ? "
+                + "and ? and `voided` = 0 ";
 
         pStatement = conn.prepareStatement(sqlStr);
 
@@ -120,6 +117,21 @@ public class DBManager {
 
     }
 	
+	//    public String getFacilityName() throws SQLException {
+	//
+	//        String facility_name = null;
+	//
+	//        String sqlStr = "select property_value from global_property where property = 'Facility_Name'";
+	//
+	//        pStatement = conn.prepareStatement(sqlStr);
+	//        resultSet = pStatement.executeQuery();
+	//
+	//        if (resultSet.next()) {
+	//            facility_name = resultSet.getString("property_value");
+	//        }
+	//
+	//        return facility_name;
+	//    }
 	public List<Integer> getEnrollmentAndPharmacyEncounter(Patient p) throws SQLException {
 
         pStatement = conn.prepareStatement("select * from encounter where encounter_type in (?,?) and patient_id = ?  and voided = 0");
@@ -145,7 +157,7 @@ public class DBManager {
 		                + ConstantUtils.MANIFEST_TABLE
 		                + "(manifest_id,sample_space,result_status,created_by,test_type,referring_lab_state,referring_lab_lga,"
 		                + "date_schedule_for_pickup,sample_pick_up_on_time,rider_total_samples_picked,rider_temp_at_pick_up,rider_name,"
-		                + "rider_phone_number,pcr_lab_name,pcr_lab_code) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		                + "rider_phone_number,pcr_lab_name,pcr_lab_code,feedback) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		pStatement.setString(1, manifest.getManifestID());
 		pStatement.setString(2, manifest.getSampleSpace());
 		pStatement.setString(3, manifest.getResultStatus());
@@ -153,7 +165,12 @@ public class DBManager {
 		pStatement.setString(5, manifest.getTestType());
 		pStatement.setString(6, manifest.getReferringLabState());
 		pStatement.setString(7, manifest.getReferringLabLga());
-		pStatement.setDate(8, new java.sql.Date(manifest.getDateScheduleForPickup().getTime()));
+		if (manifest.getDateScheduleForPickup() != null) {
+			pStatement.setDate(8, new java.sql.Date(manifest.getDateScheduleForPickup().getTime()));
+		} else {
+			pStatement.setDate(8, null);
+		}
+		
 		pStatement.setString(9, manifest.getSamplePickUpOnTime());
 		pStatement.setInt(10, manifest.getRiderTotalSamplesPicked());
 		pStatement.setString(11, manifest.getRiderTempAtPickUp());
@@ -161,6 +178,7 @@ public class DBManager {
 		pStatement.setString(13, manifest.getRiderPhoneNumber());
 		pStatement.setString(14, manifest.getPcrLabName());
 		pStatement.setString(15, manifest.getPcrLabCode());
+		pStatement.setString(16, manifest.getFeedback());
 		
 		int response = pStatement.executeUpdate();
 		
@@ -226,16 +244,14 @@ public class DBManager {
         pStatement = conn.prepareStatement(sql);
         pStatement.setString(1, manifestId);
         ResultSet resultSet = pStatement.executeQuery();
-        
+
 //         if (resultSet.getString("patient_id") != null) {
 //                vl.setPatientID(mapper.readValue(resultSet.getString("patient_id"), new TypeReference<List<PatientID>>() {
 //                }));
 //            }
-        
-
         ObjectMapper mapper = new ObjectMapper();
         List<Result> results = new ArrayList<>();
-        while(resultSet.next()){
+        while (resultSet.next()) {
             Result result = new Result();
             result.setApprovalDate(resultSet.getDate("approval_date"));
             result.setAssayDate(resultSet.getDate("assay_date"));
@@ -245,23 +261,26 @@ public class DBManager {
             result.setId(String.valueOf(resultSet.getInt("id")));
             result.setManifestID(resultSet.getString("manifest_id"));
             if (resultSet.getString("patient_id") != null) {
-                result.setPatientID(mapper.readValue(resultSet.getString("patient_id"), new TypeReference<List<PatientID>>() {
-                }));
+
+                List<PatientID> readValue = mapper.readValue(resultSet.getString("patient_id"), new TypeReference<List<PatientID>>() {
+                });
+                readValue = readValue.stream()
+                        .sorted(Comparator.comparing(PatientID::getIdTypeCode))
+                        .collect(Collectors.toList());
+                result.setPatientID(readValue);
             }
-            
+
             result.setPcrLabSampleNumber(resultSet.getString("pcr_lab_samplenumber"));
             result.setResultDate(resultSet.getDate("result_date"));
             result.setSampleID(resultSet.getString("sample_id"));
             result.setSampleStatus(resultSet.getString("sample_status"));
             result.setSampleTestable(resultSet.getString("sample_testable"));
             result.setTestResult(resultSet.getString("test_result"));
-            
+
             results.add(result);
-            
-            
+
         }
-        
-        
+
         return results;
 
     }
@@ -270,6 +289,10 @@ public class DBManager {
 
         ObjectMapper mapper = new ObjectMapper();
         AtomicInteger response = new AtomicInteger(0);
+
+//     vLSampleInformationFrontFacings =   vLSampleInformationFrontFacings.stream()
+//                .sorted(Comparator.comparing(VLSampleInformationFrontFacing::getSampleID))
+//                .collect(Collectors.toList());
 
         vLSampleInformationFrontFacings.stream().forEach(a -> {
 
@@ -355,11 +378,19 @@ public class DBManager {
 		
 	}
 	
+	public int deleteManifestResult(String manifestId) throws SQLException {
+		
+		pStatement = conn
+		        .prepareStatement("delete from " + ConstantUtils.MANIFEST_SAMPLES_RESULT + " where manifest_id = ?");
+		pStatement.setString(1, manifestId);
+		return pStatement.executeUpdate();
+	}
+	
 	public List<Manifest> getAllPendingManifest() throws SQLException {
 		pStatement = conn
 		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
 		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
-		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where result_status = 'pending' ");
+		                + "result_status, date_created, created_by, date_modified, modified_by,feedback FROM lims_manifest where result_status = 'pending' ORDER BY date_created DESC");
 		
 		resultSet = pStatement.executeQuery();
 		
@@ -371,7 +402,7 @@ public class DBManager {
 		pStatement = conn
 		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
 		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
-		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where result_status = 'pending' and manifest_id = ? ");
+		                + "result_status, date_created, created_by, date_modified, modified_by,feedback FROM lims_manifest where result_status = 'pending' and manifest_id = ? ORDER BY date_created DESC ");
 		
 		pStatement.setString(1, manifestID);
 		
@@ -386,7 +417,7 @@ public class DBManager {
 		pStatement = conn
 		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
 		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
-		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest");
+		                + "result_status, date_created, created_by, date_modified, modified_by,feedback FROM lims_manifest ORDER BY date_created DESC");
 		
 		resultSet = pStatement.executeQuery();
 		
@@ -398,7 +429,7 @@ public class DBManager {
 		pStatement = conn
 		        .prepareStatement("SELECT id, manifest_id, sample_space, test_type, referring_lab_state, referring_lab_lga, date_schedule_for_pickup, sample_pick_up_on_time, rider_total_samples_picked, rider_temp_at_pick_up, "
 		                + "rider_name, rider_phone_number, pcr_lab_name, pcr_lab_code, "
-		                + "result_status, date_created, created_by, date_modified, modified_by FROM lims_manifest where manifest_id = ? ");
+		                + "result_status, date_created, created_by, date_modified, modified_by,feedback FROM lims_manifest where manifest_id = ? ORDER BY date_created DESC ");
 		
 		pStatement.setString(1, manifestID);
 		
@@ -442,7 +473,8 @@ public class DBManager {
             m.setSampleSpace(resultSet.getString("sample_space"));//VL or RECENT
             m.setTestType(resultSet.getString("test_type"));
             m.setDateCreated(resultSet.getDate("date_created"));
-
+            m.setFeedback(resultSet.getString("feedback"));
+            m.setFacility(Utils.getFacilityName());
             manifests.add(m);
         }
 
@@ -456,7 +488,7 @@ public class DBManager {
                 + "sample_type, indication_vl_test, art_commencement_date, drugregimen, "
                 + "sample_ordered_by, sample_ordered_date, sample_collected_by, sample_collected_date, "
                 + "date_sample_sent, encounter_id, date_created,sample_status,rejection_reason, created_by, sample_collection_time, date_modified, modified_by"
-                + " FROM lims_manifest_samples where manifest_id = ? ");
+                + " FROM lims_manifest_samples where manifest_id = ? ORDER BY sample_id ASC ");
 
         pStatement.setString(1, manifestId);
 

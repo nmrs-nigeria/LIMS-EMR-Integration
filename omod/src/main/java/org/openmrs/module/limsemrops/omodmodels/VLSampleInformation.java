@@ -5,6 +5,7 @@
  */
 package org.openmrs.module.limsemrops.omodmodels;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
@@ -14,50 +15,52 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 /**
  * @author MORRISON.I
  */
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VLSampleInformation implements Serializable {
 	
-	private List<PatientID> patientID;
+	public List<PatientID> patientID;
 	
-	private String firstName;
+	public String firstName;
 	
-	private String surName;
+	public String surName;
 	
-	private String sex;
+	public String sex;
 	
 	//enum 1 .. 4
-	private String pregnantBreastFeedingStatus;
+	public String pregnantBreastFeedingStatus;
 	
-	private Integer age;
+	public Integer age;
 	
-	private Date dateOfBirth;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "WAT")
+	public Date dateOfBirth;
 	
-	private String sampleID;
+	public String sampleID;
 	
-	private String sampleType;
+	public String sampleType;
 	
 	//1 .. 7
-	private Integer indicationVLTest;
+	public Integer indicationVLTest;
 	
-	private Date artCommencementDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "WAT")
+	public Date artCommencementDate;
 	
-	private String drugRegimen;
+	public String drugRegimen;
 	
-	private String sampleOrderedBy;
+	public String sampleOrderedBy;
 	
-	private Date sampleOrderDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "WAT")
+	public Date sampleOrderDate;
 	
-	// Invalidate for scale-up
-	private String sampleCollectedBy;
+	public String sampleCollectedBy;
 	
-	// Invalidate for scale-up
-	private Date sampleCollectionDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "WAT")
+	public Date sampleCollectionDate;
 	
-	// Invalidate for scale-up
-	private Date sampleCollectionTime;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "WAT")
+	public Date sampleCollectionTime;
 	
-	private Date dateSampleSent;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "WAT")
+	public Date dateSampleSent;
 	
 	@JsonProperty("patientID")
 	public List<PatientID> getPatientID() {
@@ -108,6 +111,7 @@ public class VLSampleInformation implements Serializable {
 		this.age = age;
 	}
 	
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -140,6 +144,7 @@ public class VLSampleInformation implements Serializable {
 		this.indicationVLTest = indicationVLTest;
 	}
 	
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	public Date getArtCommencementDate() {
 		return artCommencementDate;
 	}
@@ -164,6 +169,7 @@ public class VLSampleInformation implements Serializable {
 		this.sampleOrderedBy = sampleOrderedBy;
 	}
 	
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	public Date getSampleOrderDate() {
 		return sampleOrderDate;
 	}
@@ -180,6 +186,7 @@ public class VLSampleInformation implements Serializable {
 		this.sampleCollectedBy = sampleCollectedBy;
 	}
 	
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	public Date getSampleCollectionDate() {
 		return sampleCollectionDate;
 	}
@@ -188,6 +195,7 @@ public class VLSampleInformation implements Serializable {
 		this.sampleCollectionDate = sampleCollectionDate;
 	}
 	
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	public Date getSampleCollectionTime() {
 		return sampleCollectionTime;
 	}
@@ -196,6 +204,7 @@ public class VLSampleInformation implements Serializable {
 		this.sampleCollectionTime = sampleCollectionTime;
 	}
 	
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	public Date getDateSampleSent() {
 		return dateSampleSent;
 	}

@@ -217,14 +217,27 @@ public class ViralLoadInfo {
 			}
 			
 			//order by and sample collected by //TODO: NOT IMPLEMENTED FOR RECENCY //Plan B use the provider as value
-			rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
-			if (rovingObs != null) {
-				String sampleCollectedBy = rovingObs.getValueText();
-				String splitCollectedBy = sampleCollectedBy.split(" - ")[1];
-				vLSampleInformation.setSampleOrderedBy(splitCollectedBy);
-				vLSampleInformation.setSampleCollectedBy(splitCollectedBy);
+			try {
+				String sampleCollectedBy = e.getEncounterProviders().stream().findFirst().get().getProvider().getName();
+				//System.out.println("name of clinician: " + sampleCollectedBy);
+				//String sampleCollectedBy = rovingObs.getValueText();
+				//String splitCollectedBy = sampleCollectedBy.split(" - ")[1];
+				vLSampleInformation.setSampleOrderedBy(sampleCollectedBy);
+				vLSampleInformation.setSampleCollectedBy(sampleCollectedBy);
+			}
+			catch (Exception ex) {
+				System.out.println(ex.getMessage());
 			}
 			
+			//			rovingObs = Utils.extractObs(LabFormUtils.REPORTED_BY, this.obsList);
+			//			if (rovingObs != null) {
+			//				String sampleCollectedBy = e.getEncounterProviders().stream().findFirst().get().getProvider().getName();
+			//                                System.out.println("name of clinician: "+sampleCollectedBy);
+			//				//String sampleCollectedBy = rovingObs.getValueText();
+			//				String splitCollectedBy = sampleCollectedBy.split(" - ")[1];
+			//				vLSampleInformation.setSampleOrderedBy(splitCollectedBy);
+			//				vLSampleInformation.setSampleCollectedBy(splitCollectedBy);
+			//			}
 			// sample collection date
 			rovingObs = Utils.extractObs(LabFormUtils.SAMPLE_COLLECTION_DATE, this.obsList);
 			if (rovingObs != null) {

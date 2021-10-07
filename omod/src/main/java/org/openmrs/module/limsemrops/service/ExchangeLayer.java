@@ -5,15 +5,21 @@
  */
 package org.openmrs.module.limsemrops.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.body.RequestBodyEntity;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.ws.Response;
+import org.openmrs.module.limsemrops.omodmodels.Feedback;
+import org.openmrs.module.limsemrops.omodmodels.ManifestResponse;
 import org.openmrs.module.limsemrops.omodmodels.ResultRequest;
 import org.openmrs.module.limsemrops.omodmodels.SampleCollectionManifest;
 import org.openmrs.module.limsemrops.omodmodels.TempAuth;
@@ -26,7 +32,7 @@ import org.openmrs.module.limsemrops.utility.GeneralMapper;
  */
 public class ExchangeLayer {
 	
-	public boolean sendSamplesOnline(String sampleCollectionManifest) throws UnirestException {
+	public ManifestResponse sendSamplesOnline(String sampleCollectionManifest) throws UnirestException {
 		
 		Unirest.setObjectMapper(GeneralMapper.getCustomObjectMapper());
 		
@@ -35,10 +41,28 @@ public class ExchangeLayer {
 		
 		if (response != null && response.getStatus() == 200) {
 			System.out.println(response.getBody());
-			return true;
+			return new ManifestResponse(response.getStatus(), response.getBody(), true);
 		}
 		
 		System.out.println("REQUEST FAILED");
+		System.out.println(response.getBody());
+		return new ManifestResponse(response.getStatus(), response.getBody(), false);
+		
+	}
+	
+	public boolean logSamplesOnline(String sampleCollectionManifest) throws UnirestException {
+		
+		Unirest.setObjectMapper(GeneralMapper.getCustomObjectMapper());
+		
+		HttpResponse<String> response = Unirest.post(ConstantUtils.REMOTE_SERVER_URL)
+		        .header("Content-Type", "application/json").body(sampleCollectionManifest).asString();
+		
+		if (response != null && response.getStatus() == 200) {
+			System.out.println(response.getBody());
+			return true;
+		}
+		
+		System.out.println("LOGGING SAMPLES FAILED");
 		return false;
 		
 	}

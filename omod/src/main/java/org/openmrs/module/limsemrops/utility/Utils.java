@@ -5,6 +5,8 @@
  */
 package org.openmrs.module.limsemrops.utility;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -150,4 +152,10 @@ public class Utils {
         }
         return null;
     }
+	
+	public static Gson getGsonObject() {
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").serializeNulls().create();
+		
+		return gson;
+	}
 }

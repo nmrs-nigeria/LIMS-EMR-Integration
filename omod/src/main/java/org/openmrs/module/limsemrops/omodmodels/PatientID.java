@@ -35,4 +35,9 @@ public class PatientID implements Serializable {
 		this.idTypeCode = idTypeCode;
 	}
 	
+	@Override
+	public String toString() {
+		return "PatientID{" + "idNumber=" + idNumber + ", idTypeCode=" + idTypeCode + '}';
+	}
+	
 }

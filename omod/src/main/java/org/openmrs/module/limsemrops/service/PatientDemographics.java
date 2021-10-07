@@ -61,7 +61,7 @@ public class PatientDemographics {
 
         if (this.pidRecent != null) {
             patientID.setIdNumber(this.pidRecent.getIdentifier());
-            patientID.setIdTypeCode("RECENT");
+            patientID.setIdTypeCode("RECENCY");
             patientIdList.add(patientID);
         }
 
@@ -106,7 +106,7 @@ public class PatientDemographics {
         if (this.pidRecent != null) {
             patientID = new PatientID();
             patientID.setIdNumber(this.pidRecent.getIdentifier());
-            patientID.setIdTypeCode("RECENT");
+            patientID.setIdTypeCode("RECENCY");
             patientIdList.add(patientID);
         }
 

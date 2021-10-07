@@ -52,6 +52,10 @@ public class Manifest {
 	
 	private String samplePackagedBy;
 	
+	private String feedback;
+	
+	private String facility;
+	
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -204,4 +208,19 @@ public class Manifest {
 		this.samplePackagedBy = samplePackagedBy;
 	}
 	
+	public String getFeedback() {
+		return feedback;
+	}
+	
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
+	
+	public String getFacility() {
+		return facility;
+	}
+	
+	public void setFacility(String facility) {
+		this.facility = facility;
+	}
 }

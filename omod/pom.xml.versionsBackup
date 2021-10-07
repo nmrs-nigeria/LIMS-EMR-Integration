@@ -3,8 +3,7 @@
     <parent>
         <groupId>org.openmrs.module</groupId>
         <artifactId>limsemrops</artifactId>
-        <version>1.0.4</version>
-        <!--<version>1.0.4-SNAPSHOT</version>-->
+        <version>1.0.3.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>limsemrops-omod</artifactId>
@@ -16,7 +15,7 @@
         <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>limsemrops-api</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.3.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.openmrs.web</groupId>

@@ -15,8 +15,8 @@ public class TempAuth {
 	private String password;
 	
 	public TempAuth() {
-		this.email = "nmrs@lims.ng";
-		this.password = "nmrs@2020!";
+		this.email = "EMAIL_VALUE";
+		this.password = "PASSWORD_VALUE";
 	}
 	
 	public String getEmail() {

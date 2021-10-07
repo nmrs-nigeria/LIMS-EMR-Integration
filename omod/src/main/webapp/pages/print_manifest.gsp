@@ -30,9 +30,9 @@ type="text/css" />
             </div-->
 
             <div class="header-sub-text">
-                Manifest Created By: <br>
-                Facility Contact: <br>
-                Date Created: 04 - 08 - 2020
+                <p id="manifest_prepared_by">Manifest Created By: </p>
+                <p id="originating_facility">Facility Name: </p>
+                <p id="date_prepared">Date Created: </p>
             </div>
             <br>
             <div class="manifest-details">
@@ -87,9 +87,15 @@ type="text/css" />
     }
 
     }).success(function (data) {
-    data = JSON.parse(data.body);
+    data = JSON.parse(data);
     console.log(data);
     if(data != ""){
+    
+    //prefill headers
+    jq('#manifest_prepared_by').text('Manifest Created by: '+data.createdBy);
+    jq('#originating_facility').text('Facility Name: '+data.facility);
+    jq('#date_prepared').text('Date created: '+new Date().toUTCString());
+    
         //pcr lab details
         jq('#pcr_details').append("<h2>PCR Details</h2>");
         jq('#pcr_details').append("<p>Destination</p>");

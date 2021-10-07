@@ -41,11 +41,17 @@ public class LabFormUtils {
     public final static int DATE_CHECKED = 164984;
     public final static int DATE_REPORTED = 1644984;
     public final static int REPORTED_BY = 164982;
+    public final static int RESULT_DATE = 166423;
+    public final static int ASSAY_DATE = 166424;
+    public final static int APPROVAL_DATE = 166425;
+    public final static int ALPHA_NUMERIC_TEST_RESULT = 166422;
+    public final static int NUMERIC_VALUE = 166426;
+    
 
     private void fillConceptMappings() {
         conceptMappings.put(1000, "WB");
         conceptMappings.put(165568, "DBS");
-
+        conceptMappings.put(1002, "PLASMA");
     }
 
     private void fillIntegerConceptMappings() {

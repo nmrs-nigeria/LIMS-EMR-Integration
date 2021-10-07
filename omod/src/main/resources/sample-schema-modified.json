@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EMR Sample Registration Request",
+              "type": "object",
+              "properties": {
+                
+                "patientID": {
+                  "type": "array",
+                  "minItems":1,
+                  "uniqueItems": true,
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "idNumber": {
+                          "type": "string",
+                          "minLength":5,
+                          "maxLength":15
+                        },
+                        "idTypeCode": {
+                          "type": "string",
+                          "minLength":6,
+                          "maxLength":15,
+                          "enum": ["HOSPITALNO", "RECENCY", "CLIENTID"]
+                        }
+                      },
+                      "required": [
+                        "idNumber",
+                        "idTypeCode"
+                      ]
+                    }
+                  ]
+                },
+                "firstName": {
+                  "type": "string",
+				          "minLength": 2,
+				          "maxLength": 32
+                },
+                "surName": {
+                  "type": "string",
+				          "minLength": 2,
+				          "maxLength": 32
+                },
+                "sex": {
+                  "type": "string",
+				          "minLength": 1,
+                  "maxLength": 1,
+                  "enum": ["F", "M", "N", "U"]
+                },
+                "pregnantBreastFeedingStatus": {
+                  "type": "string",
+				          "minLength": 1,
+                  "maxLength": 1,
+                  "enum": ["1","2","3","4"]
+                },
+                "age": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 200
+                },
+                "dateOfBirth": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "sampleID": {
+                  "type": "string",
+				          "minLength": 10,
+				          "maxLength": 20
+                },
+                "sampleType": {
+                  "type": "string",
+				          "minLength": 2,
+                  "maxLength": 3,
+                  "enum": ["DBS","WB","PLASMA"]
+                },
+                "indicationVLTest": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 7
+                },
+                "artCommencementDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "drugRegimen": {
+                  "type": "string",
+                  "minLength":2,
+                  "maxLength": 2,
+                   "enum": ["1a","1b","1c","1d","1e","1f","1g","1h","1m","1n","1o","1p","1q","1r","1s","1u","1v","1w","1x","1y","1z","1k","2a","2b","2c","2d","2e","2f","2h","2i","2j","2k","2m","2n","2o","2p","2q","2r","2s","2t","2u","2v","2w","2x","2y","2g","3a","3b","3c","3d","3e","3f","3g","3h","3i","3j","3k","3m","3n","3o","3p","3q","3r","3s","3t","3u","3v","3w","3x","4c","4d","4f","4g","5a","5c","5d","5f","6a","6b","6c","6d","6e","6f","6g"]
+                },
+                "sampleOrderedBy": {
+                  "type": "string",
+                  "minLength":3,
+                  "maxLength": 20
+                },
+                "sampleOrderDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "sampleCollectedBy": {
+                  "type": "string",
+                  "minLength":3,
+                  "maxLength": 20
+                },
+                "sampleCollectionDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "sampleCollectionTime": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "dateSampleSent": {
+                  "type": "string",
+                  "format": "date"
+                }
+              },
+              "required": [
+                "patientID",
+                "firstName",
+                "surName",
+                "sex",
+                "age",
+                "dateOfBirth",
+                "sampleID",
+                "sampleType",
+                "indicationVLTest",
+                "sampleOrderedBy",
+                "sampleOrderDate",
+                "sampleCollectedBy",
+                "sampleCollectionDate",
+                "sampleCollectionTime",
+                "dateSampleSent"
+              ]                
+	  }

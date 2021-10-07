@@ -9,7 +9,8 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>limsemrops</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.4</version>
+       <!--<version>1.0.4-SNAPSHOT</version> -->
 	<packaging>pom</packaging>
 	<name>Limsemrops</name>
 	<description>This module is use power the LIMS - EMR Interoperatability</description>

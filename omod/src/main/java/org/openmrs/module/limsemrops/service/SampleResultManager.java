@@ -8,17 +8,24 @@ package org.openmrs.module.limsemrops.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import info.debatty.java.stringsimilarity.Levenshtein;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
@@ -52,16 +59,70 @@ public class SampleResultManager {
 	
 	List<ManifestResultResponse> manifestResultResponses;
 	
+	private final String[] nonNumericLimsResult = { "tnd", "<20", "<40", ">10000000", "target not detected", "<29", "<400",
+	        "<20 cp/ml", "<20 copies/ml", "<40 copies/ml", "<40 cp/ml", "not detected", "< 40", "< 20" };
+	
+	Map<String, String> nonNumericLimsResultMap = new HashMap();
+	
+	Map<String, Integer> nonNumericResultConceptMap = new HashMap();
+	
+	private void loadNonNumericResultMap() {
+		nonNumericLimsResultMap.put("<20", "19");
+		nonNumericLimsResultMap.put("<29", "28");
+		nonNumericLimsResultMap.put("<40", "39");
+		nonNumericLimsResultMap.put("<400", "399");
+		nonNumericLimsResultMap.put("<80", "79");
+		nonNumericLimsResultMap.put("Invalid", null);
+		nonNumericLimsResultMap.put(">10000000", null);
+		nonNumericLimsResultMap.put("Aborted", null);
+		nonNumericLimsResultMap.put("Double entry", null);
+		nonNumericLimsResultMap.put("Duplicate", null);
+		nonNumericLimsResultMap.put("Failed", null);
+		nonNumericLimsResultMap.put("Failed twice", null);
+		nonNumericLimsResultMap.put("Incomplete number", null);
+		nonNumericLimsResultMap.put("Incomplete entry", null);
+		nonNumericLimsResultMap.put("Target Not Detected", "0");
+		nonNumericLimsResultMap.put("tnd", "0");
+		nonNumericLimsResultMap.put("Wrong entry", null);
+		nonNumericLimsResultMap.put("Numeric Value", null);
+		
+	}
+	
+	private void loadNonNumericResultConcept() {
+		nonNumericResultConceptMap.put("<20", 166407);
+		nonNumericResultConceptMap.put("<29", 166408);
+		nonNumericResultConceptMap.put("<40", 166409);
+		nonNumericResultConceptMap.put("<400", 166410);
+		nonNumericResultConceptMap.put("<80", 166411);
+		nonNumericResultConceptMap.put("Invalid", 163611);
+		nonNumericResultConceptMap.put(">10000000", 166412);
+		nonNumericResultConceptMap.put("Aborted", 166413);
+		nonNumericResultConceptMap.put("Double entry", 166414);
+		nonNumericResultConceptMap.put("Duplicate", 166415);
+		nonNumericResultConceptMap.put("Failed", 166416);
+		nonNumericResultConceptMap.put("Failed twice", 166417);
+		nonNumericResultConceptMap.put("Incomplete number", 166418);
+		nonNumericResultConceptMap.put("Incomplete entry", 166419);
+		nonNumericResultConceptMap.put("Target Not Detected", 166420);
+		nonNumericResultConceptMap.put("tnd", 166420);
+		nonNumericResultConceptMap.put("Wrong entry", 166421);
+		nonNumericResultConceptMap.put("Numeric Value", 166426);
+		
+	}
+	
 	public SampleResultManager() {
         dBManager = new DBManager();
         exchangeLayer = new ExchangeLayer();
         mapper = new ObjectMapper();
         alertService = Context.getService(AlertService.class);
         manifestResultResponses = new ArrayList<>();
+        loadNonNumericResultConcept();
+        loadNonNumericResultMap();
 
     }
 	
-	public List<ManifestResultResponse> pullManifestResultFromLIMS(List<Manifest> pendingManifests) throws SQLException {
+	public List<ManifestResultResponse> pullManifestResultFromLIMS(List<Manifest> pendingManifests, boolean clearOldRecords)
+	        throws SQLException {
 		
 		if (!pendingManifests.isEmpty()) {
 			System.out.println("GOT SOME PENDING SAMPLES");
@@ -101,6 +162,12 @@ public class SampleResultManager {
 							System.out.println(sampleResponse.getBody());
 							VLResultResponse resultResponse = mapper.readValue(sampleResponse.getBody(),
 							    VLResultResponse.class);
+							
+							if (clearOldRecords) {
+								dBManager.openConnection();
+								dBManager.deleteManifestResult(a.getManifestID());
+							}
+							
 							//got a result
 							updateManifestResultOnDB(resultResponse);
 						}
@@ -161,7 +228,7 @@ public class SampleResultManager {
 
                 if (encounterId != null) {
 
-                    updatePatientSampleRecordwithResult(encounterId, result.getDateSampleReceivedAtPCRLab(), result.getDateResultDispatched(), result.getTestResult());
+                    updatePatientSampleRecordwithResult(encounterId, result);
 
                 }
 
@@ -195,15 +262,14 @@ public class SampleResultManager {
 
     }
 	
-	private void updatePatientSampleRecordwithResult(int encounterId, Date dateSampleReceivedAtPCRLab,
-	        Date dateResultDispatched, String testResult) {
+	private void updatePatientSampleRecordwithResult(int encounterId, Result result) {
 		
 		Encounter labEncounter = Context.getEncounterService().getEncounter(encounterId);
 		
 		Obs dateSampleReceivedAtPCRObs = new Obs();
 		dateSampleReceivedAtPCRObs.setConcept(Context.getConceptService().getConcept(
 		    LabFormUtils.DATE_SAMPLE_RECEIVED_AT_PCR_LAB));
-		dateSampleReceivedAtPCRObs.setValueDate(dateSampleReceivedAtPCRLab);
+		dateSampleReceivedAtPCRObs.setValueDate(result.getDateSampleReceivedAtPCRLab());
 		dateSampleReceivedAtPCRObs.setObsDatetime(new Date());
 		dateSampleReceivedAtPCRObs.setPerson(labEncounter.getPatient());
 		dateSampleReceivedAtPCRObs.setEncounter(labEncounter);
@@ -214,7 +280,7 @@ public class SampleResultManager {
 		Obs dateResultDispatchedObs = new Obs();
 		dateResultDispatchedObs.setConcept(Context.getConceptService()
 		        .getConcept(LabFormUtils.DATE_RESULT_SENT_FROM_PCR_LAB));
-		dateResultDispatchedObs.setValueDate(dateResultDispatched);
+		dateResultDispatchedObs.setValueDate(result.getDateResultDispatched());
 		dateResultDispatchedObs.setObsDatetime(new Date());
 		dateResultDispatchedObs.setPerson(labEncounter.getPatient());
 		dateResultDispatchedObs.setEncounter(labEncounter);
@@ -233,16 +299,71 @@ public class SampleResultManager {
 		
 		labEncounter.addObs(dateResultReceivedAtFacilityObs);
 		
+		Obs resultDate = new Obs();
+		resultDate.setConcept(Context.getConceptService().getConcept(LabFormUtils.RESULT_DATE));
+		resultDate.setValueDate(result.getResultDate());
+		resultDate.setObsDatetime(new Date());
+		resultDate.setPerson(labEncounter.getPatient());
+		resultDate.setEncounter(labEncounter);
+		resultDate.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(resultDate);
+		
+		Obs assayDate = new Obs();
+		assayDate.setConcept(Context.getConceptService().getConcept(LabFormUtils.ASSAY_DATE));
+		assayDate.setValueDate(result.getAssayDate());
+		assayDate.setObsDatetime(new Date());
+		assayDate.setPerson(labEncounter.getPatient());
+		assayDate.setEncounter(labEncounter);
+		assayDate.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(assayDate);
+		
+		Obs approvalDate = new Obs();
+		approvalDate.setConcept(Context.getConceptService().getConcept(LabFormUtils.APPROVAL_DATE));
+		approvalDate.setValueDate(result.getApprovalDate());
+		approvalDate.setObsDatetime(new Date());
+		approvalDate.setPerson(labEncounter.getPatient());
+		approvalDate.setEncounter(labEncounter);
+		approvalDate.setUuid(UUID.randomUUID().toString());
+		
+		labEncounter.addObs(approvalDate);
+		
 		try {
 			Obs testResultObs = new Obs();
 			testResultObs.setConcept(Context.getConceptService().getConcept(LabFormUtils.VIRAL_LOAD_RESULT));
-			testResultObs.setValueNumeric(Double.valueOf(testResult)); //TODO: change test result to text on NMRS Lab form.
+			String alphaNumericValue = null;
+			
+			if (isNumeric(result.getTestResult())) {
+				testResultObs.setValueNumeric(Double.valueOf(result.getTestResult()));
+				alphaNumericValue = "Numeric Value";
+			} else {
+				alphaNumericValue = compareNonNumericString(result.getTestResult());
+				String derivedNumericValue = nonNumericLimsResultMap.get(alphaNumericValue);
+				if (derivedNumericValue != null) {
+					testResultObs.setValueNumeric(Double.valueOf(derivedNumericValue));
+					
+				}
+			}
+			
 			testResultObs.setObsDatetime(new Date());
 			testResultObs.setPerson(labEncounter.getPatient());
 			testResultObs.setEncounter(labEncounter);
 			testResultObs.setUuid(UUID.randomUUID().toString());
 			
 			labEncounter.addObs(testResultObs);
+			
+			Obs alphaNumericResult = new Obs();
+			alphaNumericResult.setConcept(Context.getConceptService().getConcept(LabFormUtils.ALPHA_NUMERIC_TEST_RESULT));
+			alphaNumericResult.setValueCoded(Context.getConceptService().getConcept(
+			    nonNumericResultConceptMap.get(alphaNumericValue)));
+			alphaNumericResult.setObsDatetime(new Date());
+			alphaNumericResult.setPerson(labEncounter.getPatient());
+			alphaNumericResult.setEncounter(labEncounter);
+			alphaNumericResult.setUuid(UUID.randomUUID().toString());
+			
+			labEncounter.addObs(alphaNumericResult);
+			
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -252,51 +373,34 @@ public class SampleResultManager {
 		
 	}
 	
-	//    public void pullManifestResultFromLIMSByClickFromUI(String manifestID) throws SQLException {
-	//        dBManager.openConnection();
-	//        List<Manifest> pendingManifests = dBManager.getAllPendingManifestById(manifestID);
-	//        if (!pendingManifests.isEmpty()) {
-	//            System.out.println("GOT SOME PENDING SAMPLES");
-	//
-	//            pendingManifests.stream().forEach(a -> {
-	//
-	//                ResultRequest rr = new ResultRequest();
-	//                rr.setManifestID(a.getManifestID());
-	//                rr.setReceivingPCRLabID(a.getPcrLabCode());
-	//                rr.setReceivingPCRLabName(a.getPcrLabName());
-	//                rr.setSendingFacilityID(Utils.getFacilityDATIMId());
-	//                rr.setSendingFacilityName(Utils.getFacilityName());
-	//                rr.setTestType(a.getTestType());
-	//
-	//                try {
-	//
-	//                    System.out.println("About to request sample info online");
-	//
-	//                    HttpResponse<String> sampleResponse
-	//                            = exchangeLayer.requestManifestResultOnline(rr);
-	//
-	//                    if (sampleResponse != null && sampleResponse.getStatus() == 200) {
-	//                        try {
-	//                            System.out.println("Got sample results");
-	//                            //got a result
-	//                            VLResultResponse resultResponse = mapper.readValue(sampleResponse.getBody(), VLResultResponse.class);
-	//                            updateManifestResultOnDB(resultResponse);
-	//
-	//                        } catch (SQLException ex) {
-	//                            Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
-	//                        } catch (IOException ex) {
-	//                            Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
-	//                        }
-	//                    }
-	//
-	//                } catch (UnirestException ex) {
-	//                    Logger.getLogger(SampleResultManager.class.getName()).log(Level.SEVERE, null, ex);
-	//                }
-	//
-	//            });
-	//
-	//        }
-	//        dBManager.closeConnection();
-	//
-	//    }
+	private String compareNonNumericString(String nonNumerictestResult) {
+        Map<Double, String> resultMap = new HashMap<>();
+        Levenshtein ld = new Levenshtein();
+
+        nonNumericLimsResultMap.keySet().stream()
+                .forEach(a -> {
+                    double rr = ld.distance(nonNumerictestResult, a);
+                    resultMap.put(rr, a);
+                });
+
+        double minDistance = resultMap.keySet().stream()
+                .mapToDouble(b -> b)
+                .min().orElseThrow(NoSuchElementException::new);
+
+        return resultMap.get(minDistance);
+
+    }
+	
+	public static boolean isNumeric(String stringResult) {
+		if (stringResult == null) {
+			return false;
+		}
+		try {
+			double d = Double.parseDouble(stringResult);
+		}
+		catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
 }

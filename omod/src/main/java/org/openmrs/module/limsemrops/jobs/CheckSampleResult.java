@@ -29,7 +29,7 @@ public class CheckSampleResult extends AbstractTask {
 			dBManager.openConnection();
 			List<Manifest> pendingManifests = dBManager.getAllPendingManifest();
 			System.out.println("STARTING SAMPLE RESULT RETRIEVAL");
-			sampleResultManager.pullManifestResultFromLIMS(pendingManifests);
+			sampleResultManager.pullManifestResultFromLIMS(pendingManifests, true);
 		}
 		catch (SQLException ex) {
 			Logger.getLogger(CheckSampleResult.class.getName()).log(Level.SEVERE, null, ex);

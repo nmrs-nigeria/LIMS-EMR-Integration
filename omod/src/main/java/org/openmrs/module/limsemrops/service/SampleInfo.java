@@ -42,4 +42,14 @@ public class SampleInfo {
 		
 	}
 	
+	public List<VLSampleInformationFrontFacing> searchLabEncounters(List<Integer> labEncounterIds,
+	        ConstantUtils.SampleSpace sampleSpace) {
+		
+		this.viralLoadInfo = new ViralLoadInfo(labEncounterIds, sampleSpace);
+		
+		List<VLSampleInformationFrontFacing> vLSampleInformationFrontFacings = this.viralLoadInfo.searchLabEncounter();
+		
+		return vLSampleInformationFrontFacings;
+	}
+	
 }
